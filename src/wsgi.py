@@ -1,5 +1,5 @@
 """
-WSGI config for butturnut_squash project.
+WSGI config for CS 326 project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

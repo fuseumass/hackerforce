@@ -1,1 +1,1 @@
-web: gunicorn butturnut_squash.wsgi
+web: gunicorn src.wsgi

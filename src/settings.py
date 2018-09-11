@@ -1,5 +1,5 @@
 """
-Django settings for butturnut_squash project on Heroku. For more info, see:
+Django settings for CS 326 project on Heroku. For more info, see:
 https://github.com/heroku/heroku-django-template
 
 For more information on this file, see
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'butturnut_squash.urls'
+ROOT_URLCONF = 'src.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'butturnut_squash.wsgi.application'
+WSGI_APPLICATION = 'src.wsgi.application'
 
 
 # Database
