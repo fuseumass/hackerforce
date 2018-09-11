@@ -15,11 +15,6 @@ cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 to help you author documents using markdown.
 
 ## Deployment to Heroku
-
-    $ git init
-    $ git add -A
-    $ git commit -m "Initial commit"
-
     $ heroku create
     $ git push heroku master
 
