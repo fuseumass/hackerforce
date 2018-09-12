@@ -10,15 +10,60 @@ this repository:
   requested as part of the submission.
 * `src` - this folder is used for your project code.
 
-Please read the [markdown
-cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-to help you author documents using markdown.
+Please read the [markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to help you author documents using markdown.
+
+## Environment Setup
+
+### Setup the VM after installing Virtualbox and Vagrant
+
+```sh
+$ git clone https://github.com/umass-cs-326/326_progenv.git && cd 326_progenv
+$ vagrant up
+$ vagrant ssh
+$ echo "cd /vagrant" >> ~/.bashrc
+```
+
+### Installing latest python version and pipenv
+
+```sh
+# install python3.7 from source
+$ sudo apt-get upgrade
+$ sudo apt-get dist-upgrade -y
+$ sudo apt-get install -y build-essential python-dev python-setuptools python-pip python-smbus libncursesw5-dev libgdbm-dev libc6-dev zlib1g-dev libsqlite3-dev tk-dev libssl-dev openssl libffi-dev
+$ cd /usr/src
+$ sudo git clone --single-branch -b 3.7 https://github.com/python/cpython.git && cd cpython
+$ sudo ./configure
+$ sudo make
+$ sudo make altinstall
+
+# update pip
+$ pip3.7 install --user --upgrade pip
+
+# install pipenv
+$ pip3.7 install --user pipenv
+
+# since we're sticking with python3.7 you can alias pip3.7
+$ echo "alias pip='pip3.7'" >> ~/.bashrc
+```
+
+### Installing the project
+
+``` sh
+$ cd /vagrant
+$ git clone https://github.com/326-queue/project.git && cd project
+$ pipenv install
+$ pipenv shell
+```
+
+
 
 ## Deployment to Heroku
-    $ heroku create
-    $ git push heroku master
+```sh
+$ heroku create
+$ git push heroku master
 
-    $ heroku run python manage.py migrate
+$ heroku run python manage.py migrate
+```
 
 See also, a [ready-made application](https://github.com/heroku/python-getting-started), ready to deploy.
 
