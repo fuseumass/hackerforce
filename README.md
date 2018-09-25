@@ -18,52 +18,52 @@ Please read the [markdown cheatsheet](https://github.com/adam-p/markdown-here/wi
 
 ```sh
 # install vm via vagrantfile
-$ git clone https://github.com/umass-cs-326/326_progenv.git && cd 326_progenv
-$ vagrant up
-$ vagrant ssh
+git clone https://github.com/umass-cs-326/326_progenv.git && cd 326_progenv
+vagrant up
+vagrant ssh
 # start in local /vagrant folder by default
-$ echo "cd /vagrant" >> ~/.bashrc
+echo "cd /vagrant" >> ~/.bashrc
 ```
 
 ### Installing latest python version and pipenv
 
 ```sh
 # install python3.7 from source
-$ sudo apt-get upgrade
-$ sudo apt-get dist-upgrade -y
-$ sudo apt-get install -y build-essential python-dev python-setuptools python-pip python-smbus libncursesw5-dev libgdbm-dev libc6-dev zlib1g-dev libsqlite3-dev tk-dev libssl-dev openssl libffi-dev
-$ cd /usr/src
-$ sudo git clone --single-branch -b 3.7 https://github.com/python/cpython.git && cd cpython
-$ sudo ./configure
-$ sudo make
-$ sudo make altinstall
+sudo apt-get upgrade
+sudo apt-get dist-upgrade -y
+sudo apt-get install -y build-essential python-dev python-setuptools python-pip python-smbus libncursesw5-dev libgdbm-dev libc6-dev zlib1g-dev libsqlite3-dev tk-dev libssl-dev openssl libffi-dev
+cd /usr/src
+sudo git clone --single-branch -b 3.7 https://github.com/python/cpython.git && cd cpython
+sudo ./configure
+sudo make
+sudo make altinstall
 
 # update pip
-$ pip3.7 install --user --upgrade pip
+pip3.7 install --user --upgrade pip
 
 # install pipenv
-$ pip3.7 install --user pipenv
+pip3.7 install --user pipenv
 ```
 
 ### Installing the project
 
 ``` sh
-$ cd /vagrant
-$ git clone https://github.com/326-queue/project.git && cd project
-$ pipenv install
-$ pipenv shell
-$ python manage.py migrate
-$ python manage.py runserver
+cd /vagrant
+git clone https://github.com/326-queue/project.git && cd project
+pipenv install
+pipenv shell
+python manage.py migrate
+python manage.py runserver
 ```
 
 
 
 ## Deployment to Heroku
 ```sh
-$ heroku create
-$ git push heroku master
+heroku create
+git push heroku master
 
-$ heroku run python manage.py migrate
+heroku run python manage.py migrate
 ```
 
 See also, a [ready-made application](https://github.com/heroku/python-getting-started), ready to deploy.
