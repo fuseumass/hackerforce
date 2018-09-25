@@ -12,5 +12,6 @@ django-heroku = "*"
 gunicorn = "*"
 django = "*"
 django-tabler = "*"
+"django-bootstrap4" = "*"
 
 [dev-packages]
