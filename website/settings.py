@@ -30,6 +30,9 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    ###################
+    ### Dependecies ###
+    ###################
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,8 +43,13 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    # CSS
     'bootstrap4',
-    'django_tabler'
+    'django_tabler',
+    ####################
+    ### Project Apps ###
+    ####################
+    'core',
 ]
 
 MIDDLEWARE = [
