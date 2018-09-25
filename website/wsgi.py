@@ -1,5 +1,5 @@
 """
-WSGI config for CS 326 project.
+WSGI config for website.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
