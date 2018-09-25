@@ -17,9 +17,11 @@ Please read the [markdown cheatsheet](https://github.com/adam-p/markdown-here/wi
 ### Setup the VM after installing Virtualbox and Vagrant
 
 ```sh
+# install vm via vagrantfile
 $ git clone https://github.com/umass-cs-326/326_progenv.git && cd 326_progenv
 $ vagrant up
 $ vagrant ssh
+# start in local /vagrant folder by default
 $ echo "cd /vagrant" >> ~/.bashrc
 ```
 
@@ -41,9 +43,6 @@ $ pip3.7 install --user --upgrade pip
 
 # install pipenv
 $ pip3.7 install --user pipenv
-
-# since we're sticking with python3.7 you can alias pip3.7
-$ echo "alias pip='pip3.7'" >> ~/.bashrc
 ```
 
 ### Installing the project
@@ -53,6 +52,8 @@ $ cd /vagrant
 $ git clone https://github.com/326-queue/project.git && cd project
 $ pipenv install
 $ pipenv shell
+$ python manage.py migrate
+$ python manage.py runserver
 ```
 
 
