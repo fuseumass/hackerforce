@@ -13,5 +13,6 @@ gunicorn = "*"
 django = "*"
 django-tabler = "*"
 "django-bootstrap4" = "*"
+django-jinja = "*"
 
 [dev-packages]
