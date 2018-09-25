@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # CSS
     'bootstrap4',
-    'django_tabler',
+    #'django_tabler',
     ####################
     ### Project Apps ###
     ####################
