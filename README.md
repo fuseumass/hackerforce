@@ -59,6 +59,16 @@ python manage.py runserver
 
 
 ## Deployment to Heroku
+Install heroku-cli if you don't have it
+```
+# linux
+curl https://cli-assets.heroku.com/install.sh | sh
+
+# mac
+brew install heroku/brew/heroku
+```
+
+Deploy
 ```sh
 heroku create
 git push heroku master
