@@ -28,21 +28,29 @@ echo "cd /vagrant" >> ~/.bashrc
 ### Installing latest python version and pipenv
 
 ```sh
-# install python3.7 from source
+# install python3.6 from source
 sudo apt-get upgrade
 sudo apt-get dist-upgrade -y
 sudo apt-get install -y build-essential python-dev python-setuptools python-pip python-smbus libncursesw5-dev libgdbm-dev libc6-dev zlib1g-dev libsqlite3-dev tk-dev libssl-dev openssl libffi-dev
 cd /usr/src
-sudo git clone --single-branch -b 3.7 https://github.com/python/cpython.git && cd cpython
+sudo git clone --single-branch -b 3.6 https://github.com/python/cpython.git && cd cpython
 sudo ./configure
 sudo make
 sudo make altinstall
 
 # update pip
-pip3.7 install --user --upgrade pip
+pip3.6 install --user --upgrade pip
 
 # install pipenv
-pip3.7 install --user pipenv
+pip3.6 install --user pipenv
+```
+
+### Installing with pyenv on MacOS
+```sh
+brew install pyenv
+pyenv install-latest 3.6
+# you can either set your global pythonversion to 3.6 or run a shell
+pyenv global 3.6.6
 ```
 
 ### Installing the project
