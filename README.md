@@ -25,32 +25,23 @@ vagrant ssh
 echo "cd /vagrant" >> ~/.bashrc
 ```
 
-### Installing latest python version and pipenv
-
+### Installing Python 3.6 with Pyenv and installing Pyenv
 ```sh
-# install python3.6 from source
-sudo apt-get upgrade
-sudo apt-get dist-upgrade -y
-sudo apt-get install -y build-essential python-dev python-setuptools python-pip python-smbus libncursesw5-dev libgdbm-dev libc6-dev zlib1g-dev libsqlite3-dev tk-dev libssl-dev openssl libffi-dev
-cd /usr/src
-sudo git clone --single-branch -b 3.6 https://github.com/python/cpython.git && cd cpython
-sudo ./configure
-sudo make
-sudo make altinstall
+# Anaconda comes with python3.6, so using the latest Anaconda distro will also work in place of pyenv
 
-# update pip
-pip3.6 install --user --upgrade pip
+# MacOS
+brew install pyenv
+
+# Linux
+git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+
+# install python3.6
+pyenv install 3.6.6
 
 # install pipenv
-pip3.6 install --user pipenv
-```
-
-### Installing with pyenv on MacOS
-```sh
-brew install pyenv
-pyenv install-latest 3.6
-# you can either set your global pythonversion to 3.6 or run a shell
-pyenv global 3.6.6
+pip install --user pipenv
 ```
 
 ### Installing the project
