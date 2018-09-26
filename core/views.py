@@ -1,13 +1,13 @@
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'index.jinja')
+    return render(request, 'index.html')
 
 def contacts(request):
-    return render(request, 'contacts.jinja')
+    return render(request, 'contacts.html')
 
 def companies(request):
-    return render(request, 'companies.jinja')
+    return render(request, 'companies.html')
 
 def email(request):
-    return render(request, 'email.jinja')
+    return render(request, 'email.html')
