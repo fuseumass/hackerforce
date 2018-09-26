@@ -31,7 +31,7 @@ DEBUG = True
 
 INSTALLED_APPS = [
     ###################
-    ### Dependecies ###
+    ### Dependencies ###
     ###################
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django_jinja',
     # CSS
     'bootstrap4',
-    #'django_tabler',
+    'django_tabler',
     ####################
     ### Project Apps ###
     ####################
