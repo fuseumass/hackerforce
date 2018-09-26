@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django_jinja',
     # CSS
     'bootstrap4',
-    'django_tabler',
     ####################
     ### Project Apps ###
     ####################
