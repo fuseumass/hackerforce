@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'themify';
-  src: url("./fonts/themify/themify.eot?-fvbane");
-  src: url("./fonts/themify/themify.eot?#iefix-fvbane") format("embedded-opentype"), url("./fonts/themify/themify.woff?-fvbane") format("woff"), url("./fonts/themify/themify.ttf?-fvbane") format("truetype"), url("./fonts/themify/themify.svg?-fvbane#themify") format("svg");
+  src: url("fonts/themify/themify.eot?-fvbane");
+  src: url("fonts/themify/themify.eot?#iefix-fvbane") format("embedded-opentype"), url("fonts/themify/themify.woff?-fvbane") format("woff"), url("fonts/themify/themify.ttf?-fvbane") format("truetype"), url("fonts/themify/themify.svg?-fvbane#themify") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -1450,8 +1450,8 @@
  */
 @font-face {
   font-family: 'weathericons';
-  src: url("../fonts/weathericons/weathericons-regular-webfont.eot");
-  src: url("../fonts/weathericons/weathericons-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/weathericons/weathericons-regular-webfont.woff2") format("woff2"), url("../fonts/weathericons/weathericons-regular-webfont.woff") format("woff"), url("../fonts/weathericons/weathericons-regular-webfont.ttf") format("truetype"), url("../fonts/weathericons/weathericons-regular-webfont.svg#weather_iconsregular") format("svg");
+  src: url("fonts/weathericons/weathericons-regular-webfont.eot");
+  src: url("fonts/weathericons/weathericons-regular-webfont.eot?#iefix") format("embedded-opentype"), url("fonts/weathericons/weathericons-regular-webfont.woff2") format("woff2"), url("fonts/weathericons/weathericons-regular-webfont.woff") format("woff"), url("fonts/weathericons/weathericons-regular-webfont.ttf") format("truetype"), url("fonts/weathericons/weathericons-regular-webfont.svg#weather_iconsregular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
