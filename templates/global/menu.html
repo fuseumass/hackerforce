@@ -1,14 +1,22 @@
 <div class="header d-lg-flex p-0">
 	<div class="container">
 		<div class="row align-items-center">
+
 			<div class="col-lg-3 ml-auto">
 				<form class="input-icon my-3 my-lg-0">
-					<input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
-					<div class="input-icon-addon">
+                    <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
+
+                    <div class="input-icon-addon">
 						<i class="fe fe-search"></i>
 					</div>
 				</form>
-			</div>
+            </div>
+            <div>
+                <a href="{{ url('core:settings') }}">
+                    <style> .fe-settings { font-size: 18pt } </style>
+                    <i class="fe fe-settings"></i>
+                </a>
+            </div>
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     {% set menu = ['dashboard', 'contacts', 'companies', 'email'] %}
