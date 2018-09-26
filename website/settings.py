@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # HTML
     'django_jinja',
-    # CSS
-    'bootstrap4',
     ####################
     ### Project Apps ###
     ####################
