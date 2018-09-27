@@ -22,7 +22,7 @@
             {# additional css #}
         {% endblock css %}
     </head>
-    <header>
+    <body>
         {% block header %}
             {% include 'global/header.html' %}
         {% endblock %}
@@ -30,13 +30,10 @@
         {% block menu %}
             {% include 'global/menu.html' %}
         {% endblock %}
-    </header>
-    <body>
-        <div class="page">
-            {% block content %}
-                {# page contents #}
-            {% endblock content %}
-        </div>
+
+        {% block content %}
+            {# page contents #}
+        {% endblock content %}
 
         {% block footer %}
             {% include 'global/footer.html' %}
