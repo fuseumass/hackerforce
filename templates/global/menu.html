@@ -22,7 +22,6 @@
                     {% set menu = ['dashboard', 'contacts', 'companies', 'email'] %}
                     {% set icons = {'dashboard': 'fe fe-home', 'contacts': 'fe fe-users', 'companies': 'fe fe-share-2', 'email': 'fe fe-mail'} %}
 
-
                     {% for item in menu %}
                         <li class="nav-item">
                             <a href="{{ url('core:' + item) }}" class="nav-link">
