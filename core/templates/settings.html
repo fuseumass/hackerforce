@@ -5,10 +5,14 @@
 {% endblock %}
 
 {% block content %}
-    {# main Context goes here #}
-    Settings!
-{% endblock %}
-
-{% block js %}
-    {# import javascript here if you want it otherwise delete this block #}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% include 'cards/form-profile.html' %}
+            </div>
+            <div class="col-lg-4">
+                {% include 'cards/form-email-preferences.html' %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
