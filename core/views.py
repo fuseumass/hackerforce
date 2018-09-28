@@ -11,3 +11,6 @@ def companies(request):
 
 def email(request):
     return render(request, 'email.html')
+
+def settings(request):
+    return render(request, 'settings.html')
