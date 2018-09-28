@@ -22,7 +22,7 @@ Many aspects of the application are similar to the CRM tool known as SalesForce 
 
 # Important Data
 
-There are 5 main data objects that the application needs to manage. Users, Hackathons, Companies, Sponsorships, Contacts, and Emails. These data objects will be specified below.
+There are 6 main data objects that the application needs to manage. Users, Hackathons, Companies, Sponsorships, Contacts, and Emails. These data objects will be specified below.
 
 ## Users
 Users represent users of the tool. There need to be various permission sets for all of the users, and they should be able to edit their own basic settings such as their email, password, avatar and so on.
