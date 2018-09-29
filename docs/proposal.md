@@ -89,8 +89,36 @@ The idea with this is that a user should be able to perform any of the following
 and then send an email with attachments to that selection at a scheduled date/time.
 
 # User Interface
+## Log In
+Every application needs a log-in page :)
 
-Provide a description and images of the user interface your
-application will intend on supporting.
+![login wireframe](imgs/login_wireframe.png)
 
-![example image](imgs/chick.jpg)
+## Dashboard
+The dashboard page is designed to give any user an at a glance overview of important information all on one page. Additionally it has some quick links to common actions that a user can take. Eventually the UI of the dashboard could be customizable for each user-group.
+
+![dashboard wirefreme](imgs/dash_wireframe.png)
+As shown above, the dashboard contains charts and graphs that allow the user to see the progress of the current hackathon. Additionally they can edit the current hackathon.
+
+## Companies
+The companies page contains a table that shows all of the companies along with at a glance information about their status and so on. The page contains a search bar and the table can be sorted by its headings.
+
+![companies wireframe](imgs/companyWireframe.png)
+The page shown above is just the view for all companies, but eventually there will exist standard CRUD pages and functionality for each company object.
+
+## Contacts
+The contacts page contains a table that shows all of the contacts along with at a glance information about them. It contains a search bar and the table can be sorted based on its headings.
+
+![contacts wireframe](imgs/contactsWireframe.png)
+The page shown above is just the view for all contacts, but eventually there will exist standard CRUD pages and functionality for each contact object.
+
+## Emails
+The UI for emails is designed to mirror a typical email inbox as much as possible in order to see familliar to the user. On the right there are 3 folders that show the various categories of emails. The sent box shows a history of all emails that have been sent by the tool. The drafts folder shows emails that have been written but not sent or scheduled yet. And finally the outbox contains emails that have been written and scheduled but not sent yet.
+
+![email wireframe](imgs/emailWireframe.png)
+The page shown in the above wireframe is the compose page which can be accessed from any of the above pages and is the default (currently) that appears when the email tab is selected from the navbar.
+
+## Settings
+The settings page is where each user can edit their individual profile and customize their own information.
+
+![settings wireframe](imgs/settings_wireframe.png)
