@@ -92,12 +92,12 @@ and then send an email with attachments to that selection at a scheduled date/ti
 ## Log In
 Every application needs a log-in page :)
 
-![login wireframe](imgs/login_wireframe.png)
+![login wireframe](imgs/log-in_wireframe.png)
 
 ## Dashboard
 The dashboard page is designed to give any user an at a glance overview of important information all on one page. Additionally it has some quick links to common actions that a user can take. Eventually the UI of the dashboard could be customizable for each user-group.
 
-![dashboard wirefreme](imgs/dash_wireframe.png)
+![dashboard wireframe](imgs/dashboard_wireframe.png)
 As shown above, the dashboard contains charts and graphs that allow the user to see the progress of the current hackathon. Additionally they can edit the current hackathon.
 
 ### Screenshot
