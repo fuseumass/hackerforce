@@ -12,5 +12,14 @@ def companies(request):
 def email(request):
     return render(request, 'email.html')
 
+def drafts(request):
+    return render(request, 'emailDrafts.html')
+
+def sent(request):
+    return render(request, 'sentEmails.html')
+
+def outbox(request):
+    return render(request, 'outbox.html')
+
 def settings(request):
     return render(request, 'settings.html')
