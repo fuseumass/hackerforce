@@ -33,7 +33,7 @@
 			</tr>
 		</thead>
         <tbody>
-        	{% for name, fields, length, modified in 
+        	{% for name, fields, length, modified in
 				[('HackUmass Sponsorship', [0,], 1, 1),
 				('Sponsorship Guidelines', [2,], 3, 1),
 				('First Follow-up', [1,], 2, 1),
@@ -45,7 +45,7 @@
                 	<input class="custom-control-input" name="example-inline-checkbox1" value="option1" checked="" type="checkbox">
                 	<span class="custom-control-label"></span>
                 	</label>
-            	</div>            
+            	</div>
             </td>
             <td><a href="invoice.html" class="text-inherit">{{ name }}</a></td>
             <td>
@@ -75,18 +75,18 @@
             	{%if modified == 1%}
            			<span class="status-icon bg-secondary"></span> kfredericks
            		{% endif %}
- 
-            	
+
+
             </td>
             <td class="text-right">
 
 				<div class="item-action dropdown">
 					<button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
 					<a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
-					<div class="dropdown-menu dropdown-menu-right">				
-						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-calendar"></i> Schedule </a>				
-						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-paperclip"></i> Attach File </a>								
-						<div class="dropdown-divider"></div>				
+					<div class="dropdown-menu dropdown-menu-right">
+						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-calendar"></i> Schedule </a>
+						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-paperclip"></i> Attach File </a>
+						<div class="dropdown-divider"></div>
 						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete </a>
 					</div>
 				</div>
@@ -101,7 +101,7 @@
         </tbody>
     	</table>
     </div>
-    </div>  
+    </div>
 </div>
 </div>
 {% endblock %}

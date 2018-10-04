@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     ### Project Apps ###
     ####################
     'core',
+    'emails',
 ]
 
 MIDDLEWARE = [

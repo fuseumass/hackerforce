@@ -20,5 +20,6 @@ admin.autodiscover()
 
 urlpatterns = [
     path('', include('core.urls')),
+    path('email/', include('emails.urls')),
     path('admin/', admin.site.urls),
 ]

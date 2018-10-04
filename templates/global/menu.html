@@ -19,17 +19,30 @@
             </div>
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                    {% set menu = ['dashboard', 'contacts', 'companies', 'email'] %}
-                    {% set icons = {'dashboard': 'fe fe-home', 'contacts': 'fe fe-users', 'companies': 'fe fe-share-2', 'email': 'fe fe-mail'} %}
-
-                    {% for item in menu %}
-                        <li class="nav-item">
-                            <a href="{{ url('core:' + item) }}" class="nav-link">
-                                <i class="{{ icons[item] }}"></i>
-                                {{ item.capitalize() }}
-                            </a>
-                        </li>
-                    {% endfor %}
+                    <li class="nav-item">
+                        <a href="{{ url('core:dashboard') }}" class="nav-link">
+                            <i class="fe fe-home"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('core:contacts') }}" class="nav-link">
+                            <i class="fe fe-users"></i>
+                            Contacts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('core:companies') }}" class="nav-link">
+                            <i class="fe fe-share-2"></i>
+                            Companies
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('emails:emails') }}" class="nav-link">
+                            <i class="fe fe-mail"></i>
+                            Email
+                        </a>
+                    </li>
                 </ul>
             </div>
 		</div>
