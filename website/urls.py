@@ -19,10 +19,11 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = [
-    path('', include('core.urls')),
+    path('', include('dashboard.urls')),
     path('admin/', admin.site.urls),
     path('companies/', include('companies.urls')),
     path('contacts/', include('contacts.urls')),
+    path('dashboard/', include('dashboard.urls')),
     path('email/', include('emails.urls')),
     path('settings/', include('profiles.urls')),
 ]

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'core',
     'companies',
     'contacts',
+    'dashboard',
     'emails',
     'profiles',
 ]
