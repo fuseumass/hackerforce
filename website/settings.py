@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'companies',
     'contacts',
     'emails',
+    'profiles',
 ]
 
 MIDDLEWARE = [
