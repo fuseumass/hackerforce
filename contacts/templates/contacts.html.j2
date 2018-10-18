@@ -1,4 +1,4 @@
-{% extends 'global/base.html' %}
+{% extends 'global/base.html.j2' %}
 
 {% block content %}
 <div class = "my-3 my-md-5">
@@ -6,7 +6,7 @@
 
 <div class = "card">
     <div class="card-header">
-        <h3 class="card-title">Drafts</h3>
+        <h3 class="card-title">Contacts</h3>
         <div class ="col-lg-6 ml-auto">
 	    	<div class="row gutters-xs">
                 <div class="col">
@@ -23,20 +23,20 @@
         <thead>
             <tr>
             	<th class="w-1">Checked</th>
-				<th>Subject</th>
-				<th>Tags</th>
-				<th>Length</th>
-				<th>Last Update</th>
+				<th>Name</th>
+				<th>Contacted</th>
+				<th>Phone #</th>
+				<th>Email</th>
 				<th>Modified By</th>
 				<th></th>
 				<th></th>
 			</tr>
 		</thead>
         <tbody>
-        	{% for name, fields, length, modified in
-				[('HackUmass Sponsorship', [0,], 1, 1),
-				('Sponsorship Guidelines', [2,], 3, 1),
-				('First Follow-up', [1,], 2, 1),
+        	{% for name, fields, phone, email, modified in
+				[('Kevin Fredericks', [0,], '(111)-111-1111', 'kfredericks@umass.edu', 1),
+				('Ishan Khatri', [1,], '(222)-222-2222', 'ikhatri@umass.edu', 1),
+				('Cory Lanza', [1,], '(333)-333-3333', 'clanza@umass.edu', 1),
 				] %}
         	<tr>
             <td>
@@ -47,30 +47,19 @@
                 	</label>
             	</div>
             </td>
-            <td><a href="invoice.html" class="text-inherit">{{ name }}</a></td>
+            <td><a href="invoice.html.j2" class="text-inherit">{{ name }}</a></td>
             <td>
             	{% for field in fields %}
             		{% if field == 0 %}
-            			<span class="tag tag-blue">Init Contact</span>
+            			<span class>No</span>
             		{% endif %}
             		{% if field == 1 %}
-            			<span class="tag tag-green">Init Follow-up</span>
-            		{% endif %}
-            		{% if field == 2 %}
-            			<span class="tag tag-purple">General Info</span>
+            			<span class>Yes</span>
             		{% endif %}
             	{% endfor %}
             </td>
-            {%if length == 1%}
-           		<td> <span class="tag tag-green">Small</span> </td>
-           	{% endif %}
-            {%if length == 2%}
-           		<td> <span class="tag tag-yellow">Medium</span> </td>
-           	{% endif %}
-            {%if length == 3%}
-           		<td> <span class="tag tag-red">Large</span> </td>
-           	{% endif %}
-            <td> 27 Sep 2018 </td>
+            <td><a href="invoice.html.j2" class="text-inherit">{{ phone }}</a></td>
+            <td><a href="invoice.html.j2" class="text-inherit">{{ email }}</a></td>
             <td>
             	{%if modified == 1%}
            			<span class="status-icon bg-secondary"></span> kfredericks

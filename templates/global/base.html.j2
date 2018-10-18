@@ -25,11 +25,11 @@
     </head>
     <body>
         {% block header %}
-            {% include 'global/header.html' %}
+            {% include 'global/header.html.j2' %}
         {% endblock %}
 
         {% block menu %}
-            {% include 'global/menu.html' %}
+            {% include 'global/menu.html.j2' %}
         {% endblock %}
 
         {% block content %}
@@ -37,7 +37,7 @@
         {% endblock content %}
 
         {% block footer %}
-            {% include 'global/footer.html' %}
+            {% include 'global/footer.html.j2' %}
         {% endblock %}
         <script src="{{ static("tabler/js/require.min.js") }}"></script>
         <script>

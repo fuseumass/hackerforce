@@ -1,4 +1,4 @@
-{% extends 'global/base.html' %}
+{% extends 'global/base.html.j2' %}
 
 {% block content %}
 <div class = "my-3 my-md-5">
@@ -57,7 +57,7 @@
                 	</label>
             	</div>            
             </td>
-            <td><a href="invoice.html" class="text-inherit">{{ name }}</a></td>
+            <td><a href="invoice.html.j2" class="text-inherit">{{ name }}</a></td>
             <td>
             	{% for field in fields %}
             		{% if field == 0 %}
