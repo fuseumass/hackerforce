@@ -48,7 +48,11 @@ INSTALLED_APPS = [
     ####################
     ### Project Apps ###
     ####################
-    'core',
+    'companies',
+    'contacts',
+    'dashboard',
+    'emails',
+    'profiles',
 ]
 
 MIDDLEWARE = [
