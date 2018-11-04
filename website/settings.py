@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # HTML
     'django_jinja',
+    'widget_tweaks',
     ####################
     ### Project Apps ###
     ####################
@@ -118,6 +119,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+AUTH_USER_MODEL = 'profiles.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
