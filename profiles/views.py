@@ -12,7 +12,9 @@ def register(request):
       raw_password = form.cleaned_data.get('password1')
       user = authenticate(username=username, password=raw_password)
       login_auth(request, user)
-      return redirect('home')
+      return redirect('/')
+    else:
+      print(form.errors)
   else:
     form = RegistrationForm()
   return render(request, 'register.html.j2', {'form': form})

@@ -34,6 +34,14 @@
         <img src="{{ static("img/HUM_logo.png") }}">
     </div>
 
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
 <form class="card" action="" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
@@ -44,7 +52,8 @@
             <div class="form-group">
                 <label class="form-label">{{field.label}}</label>
                 {% if field.label == "Username" %}
-                    <input type="text" class="form-control" placeholder="Username">
+                    {# <input type="text" class="form-control" placeholder="Username"> #}
+                    {{ field }}
                 {% else %}
                     {{ field }}
                 {% endif %}
