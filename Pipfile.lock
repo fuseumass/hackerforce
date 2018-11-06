@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f23c4a26b1afa0c08840da56c74fda8dfbdf0baf68e51e315853d1395cfd249c"
+            "sha256": "0fac78b9cbdb84bc6a4fc76bcb31cbc16bb528bdee4016687b9ca3894b38ae96"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,13 @@
         ]
     },
     "default": {
+        "babel": {
+            "hashes": [
+                "sha256:6778d85147d5d85345c14a26aada5e478ab04e39b078b0745ee6870c2b5cf669",
+                "sha256:8cba50f48c529ca3fa18cf81fa9403be176d374ac4d60738b839122dfaaa3d23"
+            ],
+            "version": "==2.6.0"
+        },
         "dj-database-url": {
             "hashes": [
                 "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163",
@@ -25,11 +32,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:04f2e423f2e60943c02bd2959174b844f7d1bcd19eabb7f8e4282999958021fd",
-                "sha256:e1cc1cd6b658aa4e052f5f2b148bfda08091d7c3558529708342e37e4e33f72c"
+                "sha256:acdcc1f61fdb0a0c82a1d3bf1879a414e7732ea894a7632af7f6d66ec7ab5bb3",
+                "sha256:efbcad7ebb47daafbcead109b38a5bd519a3c3cd92c6ed0f691ff97fcdd16b45"
             ],
             "index": "pypi",
-            "version": "==2.1.1"
+            "version": "==2.1.2"
         },
         "django-heroku": {
             "hashes": [
@@ -46,6 +53,13 @@
             ],
             "index": "pypi",
             "version": "==2.4.1"
+        },
+        "django-phonenumber-field": {
+            "hashes": [
+                "sha256:08257904750d7329b2b11dd9d8d6b7ceb261980db555bb426d9900fa390e2a4c"
+            ],
+            "index": "pypi",
+            "version": "==2.0.1"
         },
         "gunicorn": {
             "hashes": [
@@ -67,6 +81,13 @@
                 "sha256:a6be69091dac236ea9c6bc7d012beab42010fa914c459791d627dad4910eb665"
             ],
             "version": "==1.0"
+        },
+        "phonenumbers": {
+            "hashes": [
+                "sha256:670ccaa36eb2c4c05902e461f78e480403257507351b3c98660f2c7f15eb9474",
+                "sha256:8e9664ce0a838c81f4fb3e4d271c76859d26bde57242d64fe1632ab636f5319f"
+            ],
+            "version": "==8.9.15"
         },
         "psycopg2": {
             "hashes": [

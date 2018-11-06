@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # HTML
     'django_jinja',
+    # Models
+    'phonenumber_field',
     ####################
     ### Project Apps ###
     ####################
