@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import password_validation
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
 # from django.contrib.auth.models import User
 # from django.conf import settings
 from profiles.models import User
@@ -28,8 +28,19 @@ class RegistrationForm(UserCreationForm):
 
 
   class Meta:
-    model = User # User # settings.AUTH_USER_MODEL
+    model = User
     fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
     widgets = {
       'username': forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'placeholder': 'Username'})
     }
+
+class AuthenticationFormWithInactives(AuthenticationForm):
+    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'type': 'text', 'class': 'form-control', 'placeholder': 'Username'}))
+    password = forms.CharField(
+        label=("Password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'type':'password', 'class':'form-control', 'placeholder':'Password'}),
+    )
+    
+    def confirm_login_allowed(self, user):
+        pass

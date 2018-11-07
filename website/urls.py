@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.contrib import admin
 admin.autodiscover()
 
-from profiles.views import register, login
+from profiles.views import register, login, logout
 
 urlpatterns = [
     path('', include('dashboard.urls')),
@@ -28,5 +28,6 @@ urlpatterns = [
     path('email/', include('emails.urls')),
     path('settings/', include('profiles.urls')),
     path('register/', register, name='register'),
-    path('login/', login, name='login')
+    path('login/', login, name='login'),
+    path('logout/', logout, name='logout')
 ]

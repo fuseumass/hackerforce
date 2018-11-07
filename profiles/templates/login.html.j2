@@ -37,21 +37,23 @@
         <img src="{{ static("img/HUM_logo.png") }}">
     </div>
     <form class="card" action="" method="post">
-
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
         <div class="card-body p-6">
             <div class="card-title">Login to your account</div>
     
 
             <div class="form-group">
-                <label class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <label class="form-label">{{ form.username.label }}</label>
+                {{ form.username }}
+                {# <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"> #}
             </div>
             <div class="form-group">
                 <label class="form-label">
-                Password
-                <a href="#" class="float-right small">I forgot password</a>
+                {{ form.password.label }}
+                <a href="#" class="float-right small">I forgot my password</a>
                 </label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                {# <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> #}
+                {{ form.password }}
             </div>
             <div class="form-group">
                 <label class="custom-control custom-checkbox">
