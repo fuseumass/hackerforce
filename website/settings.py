@@ -142,7 +142,6 @@ USE_TZ = True
 PHONENUMBER_DEFAULT_REGION = "US"
 PHONENUMBER_DB_FORMAT = "NATIONAL"
 
-
 # Change 'default' database configuration with $DATABASE_URL.
 DATABASES["default"].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
 
