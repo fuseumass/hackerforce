@@ -14,5 +14,6 @@ django = "*"
 django-jinja = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
