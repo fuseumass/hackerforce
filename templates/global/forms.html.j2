@@ -1,0 +1,22 @@
+{% extends 'global/base.html.j2' %}
+
+{% block content %}
+<form method="POST" class="post-form">{% csrf_token %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                {% block title %}
+                {% endblock title %}
+            </h3>
+        </div>
+        <div class="card-body">
+            {{ form.as_p() }}
+        </div>
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="submit" class="btn btn-primary ml-auto">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
