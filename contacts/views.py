@@ -5,7 +5,8 @@ from .forms import ContactForm
 
 
 def contacts(request):
-    return render(request, "contacts.html.j2")
+    contacts = Contact.objects.all()
+    return render(request, "contacts.html.j2", {"contacts": contacts})
 
 
 def contact_new(request):

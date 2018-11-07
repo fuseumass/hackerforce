@@ -4,8 +4,14 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Contacts</h3>
+        <div class="col text-right">
+            <a class="button" href="{{ url('contacts:new') }}">
+                <button type="submit" class="btn btn-primary ml-auto">New Contact</button>
+            </a>
+        </div>
         <div class="col-lg-6 ml-auto">
             <div class="row gutters-xs">
+
                 <div class="col">
                     <input class="form-control" placeholder="Filter by..." type="text">
                 </div>
@@ -21,20 +27,17 @@
                 <tr>
                     <th class="w-1">Checked</th>
                     <th>Name</th>
-                    <th>Contacted</th>
+                    <th>Company</th>
+                    <th>Position</th>
                     <th>Phone #</th>
                     <th>Email</th>
-                    <th>Modified By</th>
+                    <th>Contacted</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                {% for name, fields, phone, email, modified in
-                [('Kevin Fredericks', [0,], '(111)-111-1111', 'kfredericks@umass.edu', 1),
-                ('Ishan Khatri', [1,], '(222)-222-2222', 'ikhatri@umass.edu', 1),
-                ('Cory Lanza', [1,], '(333)-333-3333', 'clanza@umass.edu', 1),
-                ] %}
+                {% for contact in contacts %}
                 <tr>
                     <td>
                         <div>
@@ -45,28 +48,19 @@
                             </label>
                         </div>
                     </td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ name }}</a></td>
+                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.name() }}</a></td>
+                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.company }}</a></td>
+                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.position }}</a></td>
+                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.phone_number }}</a></td>
+                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.email }}</a></td>
                     <td>
-                        {% for field in fields %}
-                        {% if field == 0 %}
-                        <span class>No</span>
+                        {% if contact.is_warm_contact %}
+                        Yes
+                        {% else %}
+                        No
                         {% endif %}
-                        {% if field == 1 %}
-                        <span class>Yes</span>
-                        {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ phone }}</a></td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ email }}</a></td>
-                    <td>
-                        {%if modified == 1%}
-                        <span class="status-icon bg-secondary"></span> kfredericks
-                        {% endif %}
-
-
                     </td>
                     <td class="text-right">
-
                         <div class="item-action dropdown">
                             <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
                             <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
@@ -82,7 +76,7 @@
                         </div>
                     </td>
                     <td>
-                        <a class="icon" href="javascript:void(0)">
+                        <a class="icon" href="{{ url('contacts:edit', pk=contact.pk) }}">
                             <i class="fe fe-edit"></i>
                         </a>
                     </td>

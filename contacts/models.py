@@ -14,5 +14,5 @@ class Contact(models.Model):
     is_warm_contact = models.BooleanField()
     # sponsorships field
 
-    def __str__(self):
+    def name(self):
         return f"{self.first_name} {self.last_name}"
