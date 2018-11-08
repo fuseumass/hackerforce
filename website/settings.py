@@ -120,6 +120,10 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'profiles.User'
+LOGIN_URL = '/login'
+LOGOUT_REDIRECT_URL = '/login'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
