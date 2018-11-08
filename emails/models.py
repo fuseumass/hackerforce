@@ -1,32 +1,32 @@
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
-# Create your models here.
+from profiles.models import User
+
 
 class Email(models.Model):
     """Object representing the Contact."""
 
-    subject = models.CharField(
-        max_length=100, help_text="Enter an email subject"
-    )
+    STATUS_CHOICES = {("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")}
 
-    message_text = models.TextField(
-        help_text="Enter the message body"
-    )
+    subject = models.CharField(max_length=100, help_text="Enter an email subject")
 
-    message_status = models.CharField(
-        max_length=50, help_text="Draft, Outbox, or Sent"
-    )
+    body = models.TextField(help_text="Enter the message body")
 
-    time_scheduled = models.DateTimeField(default=datetime.now(), auto_now_add=False, blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+
+    time_scheduled = models.DateTimeField(
+        default=timezone.now, auto_now_add=False, blank=True
+    )
+    time_sent = models.DateTimeField(
+        default=timezone.now, auto_now_add=False, blank=True
+    )
 
     last_update = models.DateTimeField(auto_now_add=True, blank=True)
 
-    modified_by = models.CharField(
-        max_length=50, help_text="Enter your username"
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="emails"
     )
-
-    check_box = models.BooleanField(default=False)
 
     def __str__(self):
         """String for representing the Email Model"""

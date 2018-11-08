@@ -1,11 +1,14 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+from companies.models import Company
+
+
 class Contact(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
 
-    company = models.CharField(max_length=100)  # replace with assosciation
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     position = models.CharField(max_length=100)
 
     email = models.EmailField()

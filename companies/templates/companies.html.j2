@@ -1,110 +1,99 @@
 {% extends 'global/base.html.j2' %}
 
 {% block content %}
-<div class = "my-3 my-md-5">
-<div class = "container">
-<div class = "card">
-    <div class="card-header">
-        <h3 class="card-title">Companies</h3>
-        <div class ="col-lg-3 ml-auto">
-	    	<div class="row gutters-xs">
-                <div class="col">
-                    <input class="form-control" placeholder="Search for..." type="text">
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Companies</h3>
+                <div class="col-lg-3 ml-auto">
+                    <div class="row gutters-xs">
+                        <div class="col">
+                            <input class="form-control" placeholder="Search for..." type="text">
+                        </div>
+                        <span class="col-auto">
+                            <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                        </span>
+                    </div>
                 </div>
-                <span class="col-auto">
-                    <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
-                </span>
-                </div>
-    	</div>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="w-1">Checked</th>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Industries</th>
+                            <th>Size</th>
+                            <th>Updated</th>
+                            <th>Status</th>
+                            <th>Donated</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in companies %}
+                        <tr>
+                            <td>
+                                <div>
+                                    <label class="custom-control custom-checkbox custom-control-inline">
+                                        <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
+                                            checked="" type="checkbox">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td><a href="" class="text-inherit">{{ c.name }}</a></td>
+                            <td><a href="" class="text-inherit">{{ c.location }}</a></td>
+                            <td>
+                                {% for industry in c.industries.all() %}
+                                <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {%if c.size == 'S'%}
+                                <span class="tag tag-green">Small</span>
+                                {% endif %}
+                                {%if c.size == 'M'%}
+                                <span class="tag tag-yellow">Medium</span>
+                                {% endif %}
+                                {%if c.size == 'L'%}
+                                <span class="tag tag-red">Large</span>
+                                {% endif %}
+                            </td>
+                            <td> {{ c.updated }} </td>
+                            <td>
+                                {%if c.status == 'U'%}
+                                <span class="status-icon bg-secondary"></span> Uncontacted
+                                {% endif %}
+                                {%if c.status == 'C'%}
+                                <span class="status-icon bg-warning"></span> Contacted
+                                {% endif %}
+                                {%if c.status == 'D'%}
+                                <span class="status-icon bg-success"></span> Donated
+                                {% endif %}
+
+                            </td>
+                            <td>${{ c.donated }}</td>
+                            <td class="text-right">
+                            </td>
+                            <td>
+                                <a class="icon" href="javascript:void(0)">
+                                    <i class="fe fe-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="table-responsive">
-    	<table class="table card-table table-vcenter text-nowrap">
-        <thead>
-            <tr>
-            	<th class="w-1">Checked</th>
-				<th>Name</th>
-                <th>Contact</th>
-				<th>Industries</th>
-				<th>Size</th>
-				<th>Updated</th>
-				<th>Status</th>
-				<th>Donated</th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-        <tbody>
-                 {% for c in companies %}
-        	<tr>
-            <td>
-            	<div>
-                	<label class="custom-control custom-checkbox custom-control-inline">
-                	<input class="custom-control-input" name="example-inline-checkbox1" value="option1" checked="" type="checkbox">
-                	<span class="custom-control-label"></span>
-                	</label>
-            	</div>            
-            </td>
-            <td><a href= "" class="text-inherit">{{ c.name }}</a></td>
-            <td><a href= "" class="text-inherit">{{ c.contact }}</a></td>
-            <td>
-                {% if c.industry == 0 %}
-                    <span class="tag tag-blue">Web Dev</span>
-                {% endif %}
-                {% if c.industry == 1 %}
-                    <span class="tag tag-green">ML</span>
-                {% endif %}
-                {% if c.industry == 2 %}
-                    <span class="tag tag-purple">Software</span>
-                {% endif %}
-                {% if c.industry == 3 %}
-                    <span class="tag tag-orange">Systems</span>
-                {% endif %}
-                {% if c.industry == 4 %}
-                    <span class="tag tag-yellow">Data</span>
-                {% endif %}
-            </td>
-            <td>
-            {%if c.size == 'S'%}
-           		<span class="tag tag-green">Small</span> 
-           	{% endif %}
-            {%if c.size == 'M'%}
-           		<span class="tag tag-yellow">Medium</span>
-           	{% endif %}
-            {%if c.size == 'L'%}
-           		<span class="tag tag-red">Large</span> 
-           	{% endif %}
-               </td>
-            <td> {{ c.updated }} </td>
-            <td>
-            	{%if c.status == 'U'%}
-           			<span class="status-icon bg-secondary"></span> Uncontacted
-           		{% endif %}
-           		{%if c.status == 'C'%}
-           			<span class="status-icon bg-warning"></span> Contacted
-           		{% endif %}
-           		{%if c.status == 'D'%}
-           			<span class="status-icon bg-success"></span> Donated
-           		{% endif %}
-            	
-            </td>
-            <td>${{ c.donated }}</td>
-            <td class="text-right">
-            </td>
-            <td>
-            	<a class="icon" href="javascript:void(0)">
-                <i class="fe fe-edit"></i>
-                </a>
-            </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    	</table>
-    </div>
-    </div>  
-</div>
 </div>
 {% endblock %}
 
 {% block js %}
-    {# import javascript here if you want it otherwise delete this block #}
+{# import javascript here if you want it otherwise delete this block #}
 {% endblock %}
