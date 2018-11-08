@@ -18,11 +18,12 @@ Many aspects of the application are similar to the CRM tool known as SalesForce 
 ![](imgs/data_model.jpg)
 
 ##Implemented Views
+    We created views to create contacts, companies, emails, and users. We added full table views for contacts, companies, and emails. There is now a login, logout page that works as intended. All models are fully functional in the Django administration page, and have browser views for their creation.
+    
+    Relevant Urls:
     \contacts
     \companies
     \emails
-
-    We created views to create contacts, companies, emails, and users. We added full table views for contacts, companies, and emails. There is now a login, logout page that works as intended. All models are fully functional in the Django administration page, and have browser views for their creation.
 
 ##Problems/Successes
     One problem we encountered was an integration error with jinja, because when we converted our templates to jinja it interfered with our javascript that we had in the html templates themselves. This has caused some of our javascript to be non-functional, however it currently does not interfere with any of the functionality of our application. Our successes have put us ahead of the submission, since we now have a working user interface, with sign-up and login being fully functional. We also have browser views for creating, and editing our different models.
