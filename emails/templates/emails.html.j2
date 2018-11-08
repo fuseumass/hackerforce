@@ -37,20 +37,21 @@
                     <h3 class="card-title">Compose New Message Template</h3>
                 </div>
                 <div class="card-body">
-                    <form action="">
+                    <form action="" method="post" class="email-form"> {% csrf_token %}
                         <div class="form-group">
                             <div class="row align-items-center">
                                 <label class="col-sm-2">Subject:</label>
+                                {{form.as_p}}
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control">
+                                    <input type="text" form.id = 'subject' class="form-control">
                                 </div>
                             </div>
                         </div>
-                        <textarea rows="10" class="form-control"></textarea>
+                        <textarea rows="10" form.id = 'messageBody' class="form-control"></textarea>
                         <div class="btn-list mt-4 text-right">
-                            <button type="button" class="btn btn-primary btn-space">Save As Draft</button>
+                            <button type="button" class="btn btn-primary btn-space">Send Message</button>
                             <button type="button" class="btn btn-primary btn-space" onclick="displayScheduler();">Schedule Message</button>
-                            <button type="submit" class="btn btn-primary btn-space">Send Message</button>
+                            <button type="submit" class="btn btn-primary btn-space">Save</button>
                         </div>
 
                         <div id = "scheduler" style = "display: none">

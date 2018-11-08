@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from emails.forms import EmailForm
 
 
 def emails(request):
-    return render(request, 'emails.html.j2')
+    form = EmailForm()
+    return render(request, 'emails.html.j2', {'form':form})
 
 
 def drafts(request):
