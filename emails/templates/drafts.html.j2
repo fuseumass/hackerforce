@@ -21,20 +21,16 @@
                 <tr>
                     <th class="w-1">Checked</th>
                     <th>Subject</th>
-                    <th>Tags</th>
-                    <th>Length</th>
                     <th>Last Update</th>
                     <th>Modified By</th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                {% for name, fields, length, modified in
-                [('HackUmass Sponsorship', [0,], 1, 1),
-                ('Sponsorship Guidelines', [2,], 3, 1),
-                ('First Follow-up', [1,], 2, 1),
-                ] %}
+                {% for draft in drafts %}
                 <tr>
                     <td>
                         <div>
@@ -45,30 +41,11 @@
                             </label>
                         </div>
                     </td>
-                    <td><a href="invoice.html" class="text-inherit">{{ name }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ draft.subject }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ draft.last_update.strftime('%Y-%m-%d-%H:%M') }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ draft.modified_by }}</a></td>
                     <td>
-                        {% for field in fields %}
-                        {% if field == 0 %}
-                        <span class="tag tag-blue">Init Contact</span>
-                        {% endif %}
-                        {% if field == 1 %}
-                        <span class="tag tag-green">Init Follow-up</span>
-                        {% endif %}
-                        {% if field == 2 %}
-                        <span class="tag tag-purple">General Info</span>
-                        {% endif %}
-                        {% endfor %}
                     </td>
-                    {%if length == 1%}
-                    <td> <span class="tag tag-green">Small</span> </td>
-                    {% endif %}
-                    {%if length == 2%}
-                    <td> <span class="tag tag-yellow">Medium</span> </td>
-                    {% endif %}
-                    {%if length == 3%}
-                    <td> <span class="tag tag-red">Large</span> </td>
-                    {% endif %}
-                    <td> 27 Sep 2018 </td>
                     <td>
                         {%if modified == 1%}
                         <span class="status-icon bg-secondary"></span> kfredericks
