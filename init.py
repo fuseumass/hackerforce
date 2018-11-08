@@ -4,8 +4,23 @@ from faker import Faker
 from profiles.models import User
 from contacts.models import Contact
 from companies.models import Company, Industry
+from emails.models import Email
 
 fake = Faker()
+
+print("Generating users...")
+users = []
+for i in range(10):
+    username = fake.user_name()
+    user = User(
+        first_name=fake.first_name(),
+        last_name=fake.last_name(),
+        email=fake.email(),
+        username=username,
+        password=username,
+    )
+    user.save()
+    users.append(user)
 
 print("Generating industries...")
 industries = []
@@ -32,7 +47,9 @@ for i in range(10):
         status=random.choice(statuses),
         size=random.choice(sizes),
         donated=random.randint(0, 10000),
-        updated=fake.date_this_year(before_today=True, after_today=False),
+        updated=fake.date_time_this_month(
+            before_now=True, after_now=False, tzinfo=None
+        ),
     )
     company.save()
     for s in random.sample(industries, random.randint(1, 3)):
@@ -56,23 +73,45 @@ for i in range(20):
     contact.save()
     contacts.append(contact)
 
+print("Generating emails...")
+emails = []
+for i in range(100):
+    status = random.choice(["sent", "scheduled", "draft"])
+    email = Email(
+        subject=fake.sentences(nb=1, ext_word_list=None)[0],
+        body=fake.text(max_nb_chars=200, ext_word_list=None),
+        status=status,
+        created_by=random.choice(users),
+    )
+    if status == "scheduled":
+        email.time_scheduled = fake.date_time_this_month(
+            before_now=False, after_now=True, tzinfo=None
+        )
+    elif status == "sent":
+        email.time_sent = fake.date_time_this_month(
+            before_now=True, after_now=False, tzinfo=None
+        )
+    email.save()
+    emails.append(email)
+
+print("\nUsers:")
+for a in users:
+    print(a)
+
 print("\nContacts:")
-for a in Industry.objects.all():
+for a in industries:
     print(a)
 
 print("\nCompanies:")
-for a in Company.objects.all():
+for a in companies:
     print(a)
 
 print("\nContacts:")
-for a in Contact.objects.all():
+for a in contacts:
     print(a)
 
-username = "admin"
-password = "admin"
-email = "admin@326.edu"
-
-adminuser = User.objects.create_user(username, email, password)
+# ADMIN USER
+adminuser = User.objects.create_user("admin", "admin@326.edu", "admin")
 adminuser.save()
 adminuser.is_superuser = True
 adminuser.is_staff = True
