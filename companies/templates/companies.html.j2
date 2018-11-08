@@ -1,126 +1,122 @@
 {% extends 'global/base.html.j2' %}
 
 {% block content %}
-<div class = "my-3 my-md-5">
-<div class = "container">
-
-<div class = "card">
+<div class="card">
     <div class="card-header">
         <h3 class="card-title">Companies</h3>
-        <div class ="col-lg-3 ml-auto">
-	    	<div class="row gutters-xs">
+        <div class="col-lg-3 ml-auto">
+            <div class="row gutters-xs">
                 <div class="col">
                     <input class="form-control" placeholder="Search for..." type="text">
                 </div>
                 <span class="col-auto">
                     <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
                 </span>
-                </div>
-    	</div>
+            </div>
+        </div>
     </div>
     <div class="table-responsive">
-    	<table class="table card-table table-vcenter text-nowrap">
-        <thead>
-            <tr>
-            	<th class="w-1">Checked</th>
-				<th>Name</th>
-				<th>Industries</th>
-				<th>Size</th>
-				<th>Last Update</th>
-				<th>Status</th>
-				<th>Amount Donated</th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-        <tbody>
-        	{% for name, fields, size, status in 
-				[('Google', [0, 2, 3], 3, 1),
-				 ('Amazon', [2, 4], 1, 3),
-				 ('Salesforce', [1], 2, 2),
-				 ('Microsoft', [4, 1], 3, 2),
-				 ('MS Paint', [2, 3], 1, 3),
-				 ('Tesla', [1, 4], 2, 2),
-				 ('Facebook', [0, 3], 3, 2),
-				 ('Boston Dynamics', [1, 2], 3, 3),
-				 ('YouTube', [4, 3], 1, 1),
-				 ('Apple', [2, 1], 2, 1),
-				 ('Samsung', [1, 0], 1, 3),
-				 ('Dell', [0, 2], 3, 1),
-				 ('HP', [4, 3], 3, 2),] %}
-        	<tr>
-            <td>
-            	<div>
-                	<label class="custom-control custom-checkbox custom-control-inline">
-                	<input class="custom-control-input" name="example-inline-checkbox1" value="option1" checked="" type="checkbox">
-                	<span class="custom-control-label"></span>
-                	</label>
-            	</div>            
-            </td>
-            <td><a href="invoice.html.j2" class="text-inherit">{{ name }}</a></td>
-            <td>
-            	{% for field in fields %}
-            		{% if field == 0 %}
-            			<span class="tag tag-blue">Web Dev</span>
-            		{% endif %}
-            		{% if field == 1 %}
-            			<span class="tag tag-green">ML</span>
-            		{% endif %}
-            		{% if field == 2 %}
-            			<span class="tag tag-purple">Software</span>
-            		{% endif %}
-            		{% if field == 3 %}
-            			<span class="tag tag-orange">Sytems</span>
-            		{% endif %}
-            		{% if field == 4 %}
-            			<span class="tag tag-yellow">Data</span>
-            		{% endif %}
-            	{% endfor %}
-            </td>
-            {%if size == 1%}
-           		<td> <span class="tag tag-green">Small</span> </td>
-           	{% endif %}
-            {%if size == 2%}
-           		<td> <span class="tag tag-yellow">Medium</span> </td>
-           	{% endif %}
-            {%if size == 3%}
-           		<td> <span class="tag tag-red">Large</span> </td>
-           	{% endif %}
-            <td> 27 Sep 2018 </td>
-            <td>
-            	{%if status == 1%}
-           			<span class="status-icon bg-secondary"></span> Uncontacted
-           		{% endif %}
-           		{%if status == 2%}
-           			<span class="status-icon bg-warning"></span> Contacted
-           		{% endif %}
-           		{%if status == 3%}
-           			<span class="status-icon bg-success"></span> Donated
-           		{% endif %}
-            	
-            </td>
-            <td>$887</td>
-            <td class="text-right">
-            <a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>
-                <div class="dropdown">
-                	<button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                </div>
-            </td>
-            <td>
-            	<a class="icon" href="javascript:void(0)">
-                <i class="fe fe-edit"></i>
-                </a>
-            </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    	</table>
+        <table class="table card-table table-vcenter text-nowrap">
+            <thead>
+                <tr>
+                    <th class="w-1">Checked</th>
+                    <th>Name</th>
+                    <th>Industries</th>
+                    <th>Size</th>
+                    <th>Last Update</th>
+                    <th>Status</th>
+                    <th>Amount Donated</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for name, fields, size, status in
+                [('Google', [0, 2, 3], 3, 1),
+                ('Amazon', [2, 4], 1, 3),
+                ('Salesforce', [1], 2, 2),
+                ('Microsoft', [4, 1], 3, 2),
+                ('MS Paint', [2, 3], 1, 3),
+                ('Tesla', [1, 4], 2, 2),
+                ('Facebook', [0, 3], 3, 2),
+                ('Boston Dynamics', [1, 2], 3, 3),
+                ('YouTube', [4, 3], 1, 1),
+                ('Apple', [2, 1], 2, 1),
+                ('Samsung', [1, 0], 1, 3),
+                ('Dell', [0, 2], 3, 1),
+                ('HP', [4, 3], 3, 2),] %}
+                <tr>
+                    <td>
+                        <div>
+                            <label class="custom-control custom-checkbox custom-control-inline">
+                                <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
+                                    checked="" type="checkbox">
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td><a href="invoice.html.j2" class="text-inherit">{{ name }}</a></td>
+                    <td>
+                        {% for field in fields %}
+                        {% if field == 0 %}
+                        <span class="tag tag-blue">Web Dev</span>
+                        {% endif %}
+                        {% if field == 1 %}
+                        <span class="tag tag-green">ML</span>
+                        {% endif %}
+                        {% if field == 2 %}
+                        <span class="tag tag-purple">Software</span>
+                        {% endif %}
+                        {% if field == 3 %}
+                        <span class="tag tag-orange">Sytems</span>
+                        {% endif %}
+                        {% if field == 4 %}
+                        <span class="tag tag-yellow">Data</span>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    {%if size == 1%}
+                    <td> <span class="tag tag-green">Small</span> </td>
+                    {% endif %}
+                    {%if size == 2%}
+                    <td> <span class="tag tag-yellow">Medium</span> </td>
+                    {% endif %}
+                    {%if size == 3%}
+                    <td> <span class="tag tag-red">Large</span> </td>
+                    {% endif %}
+                    <td> 27 Sep 2018 </td>
+                    <td>
+                        {%if status == 1%}
+                        <span class="status-icon bg-secondary"></span> Uncontacted
+                        {% endif %}
+                        {%if status == 2%}
+                        <span class="status-icon bg-warning"></span> Contacted
+                        {% endif %}
+                        {%if status == 3%}
+                        <span class="status-icon bg-success"></span> Donated
+                        {% endif %}
+
+                    </td>
+                    <td>$887</td>
+                    <td class="text-right">
+                        <a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="icon" href="javascript:void(0)">
+                            <i class="fe fe-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    </div>  
-</div>
 </div>
 {% endblock %}
 
 {% block js %}
-    {# import javascript here if you want it otherwise delete this block #}
+{# import javascript here if you want it otherwise delete this block #}
 {% endblock %}
