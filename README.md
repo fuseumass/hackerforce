@@ -46,7 +46,7 @@ pip install --user pipenv
 
 ### Installing dependencies
 ``` sh
-pip install django-heroku django-bootstrap4 phonenumbers django-phonenumber-field
+pip install django-heroku django-bootstrap4 phonenumbers django-phonenumber-field faker
 ```
 
 ### Installing the project
