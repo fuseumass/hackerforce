@@ -6,4 +6,4 @@ from emails.models import Email
 
 @admin.register(Email)
 class emailAdmin(admin.ModelAdmin):
-    list_display = ('subject','messageText', 'messageStatus','lastUpdate', 'modifiedBy')
+    list_display = ('subject','message_text', 'message_status', 'time_scheduled', 'last_update', 'modified_by')
