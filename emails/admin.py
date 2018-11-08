@@ -9,9 +9,9 @@ from emails.models import Email
 class emailAdmin(admin.ModelAdmin):
     list_display = (
         "subject",
-        "message_text",
-        "message_status",
-        "time_scheduled",
+        "body",
+        "status",
+        "time_sent",
         "last_update",
         "created_by",
     )
