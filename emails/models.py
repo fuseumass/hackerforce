@@ -7,7 +7,7 @@ from profiles.models import User
 class Email(models.Model):
     """Object representing the Contact."""
 
-    STATUS_CHOICES = {("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")}
+    STATUS_CHOICES = [("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")]
 
     subject = models.CharField(max_length=100, help_text="Enter an email subject")
 
