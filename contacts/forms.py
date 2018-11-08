@@ -3,6 +3,7 @@ from phonenumber_field.formfields import PhoneNumberField
 
 
 from .models import Contact
+from companies.models import Company
 
 
 class ContactForm(forms.ModelForm):
@@ -26,11 +27,11 @@ class ContactForm(forms.ModelForm):
             }
         ),
     )
-    company = forms.CharField(
-        max_length=100,
+    company = forms.ModelChoiceField(
         required=True,
-        widget=forms.TextInput(
-            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Company"}
+        queryset=Company.objects.all(),
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Company"}
         ),
     )
     position = forms.CharField(
