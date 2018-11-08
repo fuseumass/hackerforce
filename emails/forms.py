@@ -15,7 +15,7 @@ class EmailForm(forms.ModelForm):
         ), 
     ) 
 
-    message_text = forms.CharField(
+    body = forms.CharField(
         required=True,
         widget=forms.Textarea(
             attrs={
@@ -40,4 +40,4 @@ class EmailForm(forms.ModelForm):
 
     class Meta:
         model = Email
-        fields = ('subject', 'message_text', 'time_scheduled')
+        fields = ('subject', 'body', 'time_scheduled')

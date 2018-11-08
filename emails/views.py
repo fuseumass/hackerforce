@@ -1,14 +1,17 @@
 from django.shortcuts import render
 from emails.forms import EmailForm
 from emails.models import Email
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def emails(request):
     if request.method == "POST":
         form = EmailForm(request.POST)
         if form.is_valid():
             print("Form is valid")
-            form.save()
+            email=form.save(commit=False)
+            email.created_by=request.user
+            email.save()
         else:
             print("Form is invalid")
     else:
