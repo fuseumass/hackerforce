@@ -1,107 +1,106 @@
 {% extends 'global/base.html.j2' %}
 
 {% block content %}
-<div class = "my-3 my-md-5">
-<div class = "container">
-
-<div class = "card">
+<div class="card">
     <div class="card-header">
         <h3 class="card-title">Outbox</h3>
-        <div class ="col-lg-6 ml-auto">
-	    	<div class="row gutters-xs">
+        <div class="col-lg-6 ml-auto">
+            <div class="row gutters-xs">
                 <div class="col">
                     <input class="form-control" placeholder="Filter by..." type="text">
                 </div>
                 <span class="col-auto">
                     <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
                 </span>
-                </div>
-    	</div>
+            </div>
+        </div>
     </div>
     <div class="table-responsive">
-    	<table class="table card-table table-vcenter text-nowrap">
-        <thead>
-            <tr>
-            	<th class="w-1">Checked</th>
-				<th>Subject</th>
-				<th>Tags</th>
-				<th>Length</th>
-				<th>Last Update</th>
-				<th>Modified By</th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-        <tbody>
-        	{% for name, fields, length, modified in
-				[('HackUmass Sponsorship', [0,], 1, 1),
-				('Sponsorship Guidelines', [2,], 3, 1),
-				('First Follow-up', [1,], 2, 1),
-				] %}
-        	<tr>
-            <td>
-            	<div>
-                	<label class="custom-control custom-checkbox custom-control-inline">
-                	<input class="custom-control-input" name="example-inline-checkbox1" value="option1" checked="" type="checkbox">
-                	<span class="custom-control-label"></span>
-                	</label>
-            	</div>
-            </td>
-            <td><a href="invoice.html" class="text-inherit">{{ name }}</a></td>
-            <td>
-            	{% for field in fields %}
-            		{% if field == 0 %}
-            			<span class="tag tag-blue">Init Contact</span>
-            		{% endif %}
-            		{% if field == 1 %}
-            			<span class="tag tag-green">Init Follow-up</span>
-            		{% endif %}
-            		{% if field == 2 %}
-            			<span class="tag tag-purple">General Info</span>
-            		{% endif %}
-            	{% endfor %}
-            </td>
-            {%if length == 1%}
-           		<td> <span class="tag tag-green">Small</span> </td>
-           	{% endif %}
-            {%if length == 2%}
-           		<td> <span class="tag tag-yellow">Medium</span> </td>
-           	{% endif %}
-            {%if length == 3%}
-           		<td> <span class="tag tag-red">Large</span> </td>
-           	{% endif %}
-            <td> 27 Sep 2018 </td>
-            <td>
-            	{%if modified == 1%}
-           			<span class="status-icon bg-secondary"></span> kfredericks
-           		{% endif %}
+        <table class="table card-table table-vcenter text-nowrap">
+            <thead>
+                <tr>
+                    <th class="w-1">Checked</th>
+                    <th>Subject</th>
+                    <th>Tags</th>
+                    <th>Length</th>
+                    <th>Last Update</th>
+                    <th>Modified By</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for name, fields, length, modified in
+                [('HackUmass Sponsorship', [0,], 1, 1),
+                ('Sponsorship Guidelines', [2,], 3, 1),
+                ('First Follow-up', [1,], 2, 1),
+                ] %}
+                <tr>
+                    <td>
+                        <div>
+                            <label class="custom-control custom-checkbox custom-control-inline">
+                                <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
+                                    checked="" type="checkbox">
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td><a href="invoice.html" class="text-inherit">{{ name }}</a></td>
+                    <td>
+                        {% for field in fields %}
+                        {% if field == 0 %}
+                        <span class="tag tag-blue">Init Contact</span>
+                        {% endif %}
+                        {% if field == 1 %}
+                        <span class="tag tag-green">Init Follow-up</span>
+                        {% endif %}
+                        {% if field == 2 %}
+                        <span class="tag tag-purple">General Info</span>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    {%if length == 1%}
+                    <td> <span class="tag tag-green">Small</span> </td>
+                    {% endif %}
+                    {%if length == 2%}
+                    <td> <span class="tag tag-yellow">Medium</span> </td>
+                    {% endif %}
+                    {%if length == 3%}
+                    <td> <span class="tag tag-red">Large</span> </td>
+                    {% endif %}
+                    <td> 27 Sep 2018 </td>
+                    <td>
+                        {%if modified == 1%}
+                        <span class="status-icon bg-secondary"></span> kfredericks
+                        {% endif %}
 
 
-            </td>
-            <td class="text-right">
+                    </td>
+                    <td class="text-right">
 
-				<div class="item-action dropdown">
-					<button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-					<a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
-					<div class="dropdown-menu dropdown-menu-right">
-						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-calendar"></i> Schedule </a>
-						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-paperclip"></i> Attach File </a>
-						<div class="dropdown-divider"></div>
-						<a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete </a>
-					</div>
-				</div>
-            </td>
-            <td>
-            	<a class="icon" href="javascript:void(0)">
-                <i class="fe fe-edit"></i>
-                </a>
-            </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    	</table>
+                        <div class="item-action dropdown">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
+                            <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-calendar"></i>
+                                    Schedule </a>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-paperclip"></i>
+                                    Attach File </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i>
+                                    Delete </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="icon" href="javascript:void(0)">
+                            <i class="fe fe-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    </div>
-</div>
 </div>
 {% endblock %}

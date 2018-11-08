@@ -1,58 +1,65 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta http-equiv="Content-Language" content="en" />
-        <meta name="msapplication-TileColor" content="#2d89ef">
-        <meta name="theme-color" content="#4188c9">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="HandheldFriendly" content="True">
-        <meta name="MobileOptimized" content="320">
-        <link rel="icon" href="{{ static("/favicon.ico") }}" type="image/x-icon"/>
-        <link rel="shortcut icon" type="image/x-icon" href="{{ static("favicon.ico") }}" />
-        <title>TODO: Add a title</title>
-        <link href="{{ static("tabler/css/dashboard.css") }}" rel="stylesheet" />
-        <link href="{{ static("tabler/plugins/charts-c3/plugin.css") }}" rel="stylesheet" />
-        <link href="{{ static("tabler/plugins/maps-google/plugin.css") }}" rel="stylesheet" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-        {% block css %}
-            {# additional css #}
-        {% endblock css %}
-    </head>
-    <body>
-        {% block header %}
-            {% include 'global/header.html.j2' %}
-        {% endblock %}
 
-        {% block menu %}
-            {% include 'global/menu.html.j2' %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <link rel="icon" href="{{ static("/favicon.ico") }}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ static("favicon.ico") }}" />
+    <title>TODO: Add a title</title>
+    <link href="{{ static("tabler/css/dashboard.css") }}" rel="stylesheet" />
+    <link href="{{ static("tabler/plugins/charts-c3/plugin.css") }}" rel="stylesheet" />
+    <link href="{{ static("tabler/plugins/maps-google/plugin.css") }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    {% block css %}
+    {# additional css #}
+    {% endblock css %}
+</head>
 
+<body>
+    {% block header %}
+    {% include 'global/header.html.j2' %}
+    {% endblock %}
+
+    {% block menu %}
+    {% include 'global/menu.html.j2' %}
+    {% endblock %}
+
+    <div class="my-3 my-md-5 container">
         {% block content %}
-            {# page contents #}
+        {# page contents #}
         {% endblock content %}
+    </div>
 
-        {% block footer %}
-            {% include 'global/footer.html.j2' %}
-        {% endblock %}
-        <script src="{{ static("tabler/js/require.min.js") }}"></script>
-        <script>
-            requirejs.config({
-                baseUrl: '.'
-            });
-            // find the static_url
-            var static_url = "{{ get_static_prefix }}";
-        </script>
-        <script src="{{ static("tabler/js/dashboard.js") }}"></script>
-        <script src="{{ static("tabler/plugins/charts-c3/plugin.js") }}"></script>
-        <script src="{{ static("tabler/plugins/maps-google/plugin.js") }}"></script>
-        <script src="{{ static("tabler/plugins/input-mask/plugin.js") }}"></script>
-        {% block js %}
-            {# additional javascript #}
-        {% endblock js %}
-    </body>
+    {% block footer %}
+    {% include 'global/footer.html.j2' %}
+    {% endblock %}
+
+    <script src="{{ static("tabler/js/require.min.js") }}"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '.'
+        });
+        // find the static_url
+        var static_url = "{{ get_static_prefix }}";
+    </script>
+    <script src="{{ static("tabler/js/dashboard.js") }}"></script>
+    <script src="{{ static("tabler/plugins/charts-c3/plugin.js") }}"></script>
+    <script src="{{ static("tabler/plugins/maps-google/plugin.js") }}"></script>
+    <script src="{{ static("tabler/plugins/input-mask/plugin.js") }}"></script>
+    {% block js %}
+    {# additional javascript #}
+    {% endblock js %}
+</body>
+
 </html>

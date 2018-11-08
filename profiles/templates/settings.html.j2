@@ -1,18 +1,16 @@
 {% extends 'global/base.html.j2' %}
 
 {% block css %}
-    {# import css here if you want it otherwise delete this block #}
+{# import css here if you want it otherwise delete this block #}
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                {% include 'cards/form-profile.html.j2' %}
-            </div>
-            <div class="col-lg-4">
-                {% include 'cards/form-email-preferences.html.j2' %}
-            </div>
-        </div>
+<div class="row">
+    <div class="col-lg-8">
+        {% include 'cards/form-profile.html.j2' %}
     </div>
+    <div class="col-lg-4">
+        {% include 'cards/form-email-preferences.html.j2' %}
+    </div>
+</div>
 {% endblock %}
