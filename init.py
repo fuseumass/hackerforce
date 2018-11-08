@@ -1,4 +1,5 @@
 import random
+import pytz
 from faker import Faker
 
 from profiles.models import User
@@ -85,11 +86,11 @@ for i in range(100):
     )
     if status == "scheduled":
         email.time_scheduled = fake.date_time_this_month(
-            before_now=False, after_now=True, tzinfo=None
+            before_now=False, after_now=True, tzinfo=pytz.UTC
         )
     elif status == "sent":
         email.time_sent = fake.date_time_this_month(
-            before_now=True, after_now=False, tzinfo=None
+            before_now=True, after_now=False, tzinfo=pytz.UTC
         )
     email.save()
     emails.append(email)
