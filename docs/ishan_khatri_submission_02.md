@@ -7,3 +7,5 @@ Currently the custom user model only supports the additional field of `phone_num
 
 ## User Authentication
 In addition I created all of the linkages between the custom User model and the default Django authentication system in order to allow for users to register, log-in, and logout. The appropiate views & buttons were also created for this with sexy styling provided by the tabler library.
+
+## Database Diagram

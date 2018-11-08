@@ -28,10 +28,8 @@ def login(request):
     user = authenticate(username=username, password=raw_password)
     if user is not None:
       login_auth(request, user)
-      print("logged in!")
       return redirect('/')
   else:
-    print("some shit happened...")
     form = AuthenticationFormWithInactives()
   return render(request, 'login.html.j2', {'form': form})
 
