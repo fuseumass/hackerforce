@@ -44,6 +44,11 @@ pyenv install 3.6.6
 pip install --user pipenv
 ```
 
+### Installing dependencies
+``` sh
+pip install django-heroku django-jinja django-bootstrap4 django-tabler django-widget-tweaks phonenumbers django-phonenumber-field faker
+```
+
 ### Installing the project
 
 ``` sh
@@ -55,7 +60,24 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Creating new models (or changing existing models)
+Make sure you run the following commands if you do any of the following:
+* Edit a model (ie. change the database schema)
+    * This includes **any** changes you make including: adding a field, removing a field, and renaming a field
+* Delete a model
+* Add a model
 
+``` sh
+rm -f db.sqlite3 # optional, if you need to run this you've
+                 # made breaking changes to the database schema
+python manage.py makemigrations # optional add the name of your 
+                                # app as an additional arg 
+                                # for example: python manage.py makemigrations profiles
+python manage.py migrate
+python manage.py runserver
+```
+
+**It should be obvious but one of the above commands deletes the developement database! Only run it in a dev environment and remember that any objects you've created for development purposes will be deleted!**
 
 ## Deployment to Heroku
 Install heroku-cli if you don't have it

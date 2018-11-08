@@ -18,7 +18,16 @@ from django.urls import path, include
 from django.contrib import admin
 admin.autodiscover()
 
+from profiles.views import register, login, logout
+
 urlpatterns = [
-    path('', include('core.urls')),
+    path('', include('dashboard.urls')),
     path('admin/', admin.site.urls),
+    path('companies/', include('companies.urls')),
+    path('contacts/', include('contacts.urls')),
+    path('email/', include('emails.urls')),
+    path('settings/', include('profiles.urls')),
+    path('register/', register, name='register'),
+    path('login/', login, name='login'),
+    path('logout/', logout, name='logout')
 ]
