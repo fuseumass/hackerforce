@@ -44,6 +44,11 @@ pyenv install 3.6.6
 pip install --user pipenv
 ```
 
+### Installing dependencies
+``` sh
+pip install django-heroku, django-bootstrap4, phonenumbers, django-phonenumber-field
+```
+
 ### Installing the project
 
 ``` sh
