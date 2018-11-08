@@ -6,187 +6,183 @@
 
 {% block content %}
 {# main Context goes here #}
-<div class="container">
-  <div class="page-header">
+<div class="page-header">
     <h1 class="page-title">
-      <i class="fe fe-home page-title-icon"></i> Dashboard
+        <i class="fe fe-home page-title-icon"></i> Dashboard
     </h1>
-  </div>
+</div>
 
-  <div class="row row-cards">
-
+<div class="row row-cards">
     <div class="col-lg-6">
-
-      <div class="card">
-        <div class="card-status bg-purple"></div>
-        <div class="card-body">
-          <h4 class="card-title">Start a new hackathon</h4>
-          <p class="card-text">Every year you should create a new hackathon object. Here you will set the
-            fundraising goals (how much money and by when you need it). Each year's hackathon will also
-            allow
-            you to keep track of which the status of companies for every year.</p>
-          <button type="button" class="btn btn-primary">Create Hackathon</button>
-          <button type="button" class="btn btn-primary">Manage Hackathon</button>
-        </div>
-      </div>
-
-      <div class="row">
-
-        <div class="col-sm-6">
-          <div class="card">
-            <div class="card-status bg-green"></div>
-            <div class="card-body text-center">
-              <div class="h5">Funds raised to date</div>
-              <div class="display-4 font-weight-bold mb-4">$37,900</div>
-              <p>/ $80,000</p>
-              <div class="progress progress-sm">
-                <div class="progress-bar bg-green" style="width:47%"></div>
-              </div>
+        <div class="card">
+            <div class="card-status bg-purple"></div>
+            <div class="card-body">
+                <h4 class="card-title">Start a new hackathon</h4>
+                <p class="card-text">Every year you should create a new hackathon object. Here you will set the
+                    fundraising goals (how much money and by when you need it). Each year's hackathon will also
+                    allow
+                    you to keep track of which the status of companies for every year.</p>
+                <button type="button" class="btn btn-primary">Create Hackathon</button>
+                <button type="button" class="btn btn-primary">Manage Hackathon</button>
             </div>
-          </div>
         </div>
 
-        <div class="col-sm-6">
-          <div class="card p-3">
-            <div class="d-flex align-items-center">
-              <span class="stamp stamp-md bg-blue mr-3">
-                <i class="fe fe-breifcase"></i>
-              </span>
-              <div>
-                <h4 class="m-0"><a href="#">16 <small>Sponsors</small></a></h4>
-                <small class="text-muted">Confirmed</small>
-              </div>
-            </div>
-          </div>
+        <div class="row">
 
-          <div class="card p-3">
-              <div class="d-flex align-items-center">
-                <span class="stamp stamp-md bg-red mr-3">
-                  <i class="fe fe-breifcase"></i>
-                </span>
-                <div>
-                  <h4 class="m-0"><a href="#">5 <small>Sponsors</small></a></h4>
-                  <small class="text-muted">Awaiting payment</small>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-status bg-green"></div>
+                    <div class="card-body text-center">
+                        <div class="h5">Funds raised to date</div>
+                        <div class="display-4 font-weight-bold mb-4">$37,900</div>
+                        <p>/ $80,000</p>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-green" style="width:47%"></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="card p-3">
+                    <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-blue mr-3">
+                            <i class="fe fe-breifcase"></i>
+                        </span>
+                        <div>
+                            <h4 class="m-0"><a href="#">16 <small>Sponsors</small></a></h4>
+                            <small class="text-muted">Confirmed</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-3">
+                    <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-red mr-3">
+                            <i class="fe fe-breifcase"></i>
+                        </span>
+                        <div>
+                            <h4 class="m-0"><a href="#">5 <small>Sponsors</small></a></h4>
+                            <small class="text-muted">Awaiting payment</small>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
 
-      </div>
-
     </div>
 
     <div class="col-lg-6">
 
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title text-center">October 2018</h3>
-        </div>
-        <div class="card-body p-3">
-          <table class="table table-calendar">
-            <tbody>
-              <tr>
-                <th>Mo</th>
-                <th>Tu</th>
-                <th>We</th>
-                <th>Th</th>
-                <th>Fr</th>
-                <th>Sa</th>
-                <th>Su</th>
-              </tr>
-              <tr>
-                <td class="text-muted">27</td>
-                <td class="text-muted">28</td>
-                <td class="text-muted">29</td>
-                <td class="text-muted">30</td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-              </tr>
-              <tr>
-                <td><a href="javascript:void(0)" class="table-calendar-link">4</a></td>
-                <td>5</td>
-                <td><a href="javascript:void(0)" class="table-calendar-link">6</a></td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-              </tr>
-              <tr>
-                <td>11</td>
-                <td><a href="javascript:void(0)" class="table-calendar-link">12</a></td>
-                <td>13</td>
-                <td>14</td>
-                <td><a href="javascript:void(0)">15</a></td>
-                <td>16</td>
-                <td>17</td>
-              </tr>
-              <tr>
-                <td>18</td>
-                <td><a href="javascript:void(0)" class="table-calendar-link">19</a></td>
-                <td><a href="javascript:void(0)" class="table-calendar-link">20</a></td>
-                <td>21</td>
-                <td>22</td>
-                <td>23</td>
-                <td>24</td>
-              </tr>
-              <tr>
-                <td>25</td>
-                <td>26</td>
-                <td>27</td>
-                <td>28</td>
-                <td>29</td>
-                <td>30</td>
-                <td class="text-muted">1</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title text-center">October 2018</h3>
+            </div>
+            <div class="card-body p-3">
+                <table class="table table-calendar">
+                    <tbody>
+                        <tr>
+                            <th>Mo</th>
+                            <th>Tu</th>
+                            <th>We</th>
+                            <th>Th</th>
+                            <th>Fr</th>
+                            <th>Sa</th>
+                            <th>Su</th>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">27</td>
+                            <td class="text-muted">28</td>
+                            <td class="text-muted">29</td>
+                            <td class="text-muted">30</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td><a href="javascript:void(0)" class="table-calendar-link">4</a></td>
+                            <td>5</td>
+                            <td><a href="javascript:void(0)" class="table-calendar-link">6</a></td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td><a href="javascript:void(0)" class="table-calendar-link">12</a></td>
+                            <td>13</td>
+                            <td>14</td>
+                            <td><a href="javascript:void(0)">15</a></td>
+                            <td>16</td>
+                            <td>17</td>
+                        </tr>
+                        <tr>
+                            <td>18</td>
+                            <td><a href="javascript:void(0)" class="table-calendar-link">19</a></td>
+                            <td><a href="javascript:void(0)" class="table-calendar-link">20</a></td>
+                            <td>21</td>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>24</td>
+                        </tr>
+                        <tr>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                            <td>29</td>
+                            <td>30</td>
+                            <td class="text-muted">1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <ul class="list-group card-list-group">
+                <li class="list-group-item list-group-item-red">
+                    <a href="javascript:void(0)" class="text-inherit">Fundraising Deadline</a>
+                    <span class="float-right text-muted">1 Oct</span>
+                </li>
+                <li class="list-group-item list-group-item-blue">
+                    <a href="javascript:void(0)" class="text-inherit">Payment Deadline</a>
+                    <span class="float-right text-muted">6 oct</span>
+                </li>
+                <li class="list-group-item list-group-item-red">
+                    <a href="javascript:void(0)" class="text-inherit">Your Hackathon!</a>
+                    <span class="float-right text-muted">12 Oct</span>
+                </li>
+            </ul>
         </div>
 
-        <ul class="list-group card-list-group">
-          <li class="list-group-item list-group-item-red">
-            <a href="javascript:void(0)" class="text-inherit">Fundraising Deadline</a>
-            <span class="float-right text-muted">1 Oct</span>
-          </li>
-          <li class="list-group-item list-group-item-blue">
-            <a href="javascript:void(0)" class="text-inherit">Payment Deadline</a>
-            <span class="float-right text-muted">6 oct</span>
-          </li>
-          <li class="list-group-item list-group-item-red">
-            <a href="javascript:void(0)" class="text-inherit">Your Hackathon!</a>
-            <span class="float-right text-muted">12 Oct</span>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-status bg-blue"></div>
-        <div class="card-body text-center">
-            <h4 class="card-title">Sponsorships</h4>
-            <p class="card-text">Create a new sponsorship relation between your current hackathon and a given company.</p>
-            <button type="button" class="btn btn-primary">Add new sponsorship</button>
-            <button type="button" class="btn btn-primary">Manage existing sponsorship</button>
-        </div>
-      </div>
     </div>
 
     <div class="col-lg-6">
         <div class="card">
-          <div class="card-status bg-orange"></div>
-          <div class="card-body text-center">
-              <h4 class="card-title">User Permissions</h4>
-              <p class="card-text">User groups allow you to control access for different users by placing them in user groups.</p>
-              <button type="button" class="btn btn-secondary">Manage Permissions</button>
-          </div>
+            <div class="card-status bg-blue"></div>
+            <div class="card-body text-center">
+                <h4 class="card-title">Sponsorships</h4>
+                <p class="card-text">Create a new sponsorship relation between your current hackathon and a given
+                    company.</p>
+                <button type="button" class="btn btn-primary">Add new sponsorship</button>
+                <button type="button" class="btn btn-primary">Manage existing sponsorship</button>
+            </div>
         </div>
-      </div>
+    </div>
 
-  </div>
-
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-status bg-orange"></div>
+            <div class="card-body text-center">
+                <h4 class="card-title">User Permissions</h4>
+                <p class="card-text">User groups allow you to control access for different users by placing them in
+                    user groups.</p>
+                <button type="button" class="btn btn-secondary">Manage Permissions</button>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

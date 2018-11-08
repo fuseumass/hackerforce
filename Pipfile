@@ -12,5 +12,9 @@ django-heroku = "*"
 gunicorn = "*"
 django = "*"
 django-jinja = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
+django-widget-tweaks = "*"
+faker = "*"
 
 [dev-packages]

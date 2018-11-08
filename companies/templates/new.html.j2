@@ -1,0 +1,35 @@
+{% extends 'global/base.html.j2' %}
+
+{% block content %}
+<div class = "my-3 my-md-5">
+    <div class = "container">
+        <div class = "card">
+            <div class="card-header">
+                <h3 class="card-title">Create a new Company</h3>
+            </div>
+            <fieldset class="form-fieldset">
+                <div class="form-group">
+                    <label class="form-label">Full name<span class="form-required">*</span></label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Company<span class="form-required">*</span></label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email<span class="form-required">*</span></label>
+                    <input type="email" class="form-control">
+                </div>
+                <div class="form-group mb-0">
+                    <label class="form-label">Phone number</label>
+                    <input type="tel" class="form-control">
+                </div>
+            </fieldset>
+        </div>  
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {# import javascript here if you want it otherwise delete this block #}
+{% endblock %}
