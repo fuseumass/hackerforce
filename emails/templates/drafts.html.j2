@@ -17,61 +17,66 @@
     </div>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap">
-        <thead>
-            <tr>
-                <th class="w-1">Checked</th>
-                <th>Subject</th>
-                <th>Last Update</th>
-                <th>Modified By</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for draft in drafts %}
-            <tr>
-                   <td>
-                    <div>
-                        <label class="custom-control custom-checkbox custom-control-inline">
-                            <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
-                                checked="" type="checkbox">
-                            <span class="custom-control-label"></span>
-                        </label>
-                    </div>
-                </td>
-            <td><a href="#" class="text-inherit">{{ draft.subject }}</a></td>
-            <td><a href="#" class="text-inherit">{{ draft.lastUpdate.strftime('%Y-%m-%d-%H:%M') }}</a></td>
-            <td><a href="#" class="text-inherit">{{ draft.modifiedBy }}</a></td>
-            <td>
-            </td>
-            <td>
-                {%if modified == 1%}
-                       <span class="status-icon bg-secondary"></span> kfredericks
-                   {% endif %}
+            <thead>
+                <tr>
+                    <th class="w-1">Checked</th>
+                    <th>Subject</th>
+                    <th>Last Update</th>
+                    <th>Modified By</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for draft in drafts %}
+                <tr>
+                    <td>
+                        <div>
+                            <label class="custom-control custom-checkbox custom-control-inline">
+                                <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
+                                    checked="" type="checkbox">
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td><a href="#" class="text-inherit">{{ draft.subject }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ draft.last_update.strftime('%Y-%m-%d-%H:%M') }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ draft.modified_by }}</a></td>
+                    <td>
+                    </td>
+                    <td>
+                        {%if modified == 1%}
+                        <span class="status-icon bg-secondary"></span> kfredericks
+                        {% endif %}
 
 
                     </td>
                     <td class="text-right">
 
-                <div class="item-action dropdown">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                    <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-calendar"></i> Schedule </a>
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-paperclip"></i> Attach File </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i> Delete </a>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <a class="icon" href="javascript:void(0)">
-                <i class="fe fe-edit"></i>
-                </a>
-            </td>
-            </tr>
-            {% endfor %}
-        </tbody>
+                        <div class="item-action dropdown">
+                            <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
+                            <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-calendar"></i>
+                                    Schedule </a>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-paperclip"></i>
+                                    Attach File </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i>
+                                    Delete </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <a class="icon" href="javascript:void(0)">
+                            <i class="fe fe-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 </div>
