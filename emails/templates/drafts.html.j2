@@ -22,7 +22,7 @@
                     <th class="w-1">Checked</th>
                     <th>Subject</th>
                     <th>Last Update</th>
-                    <th>Modified By</th>
+                    <th>Created By</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for draft in drafts %}
+                {% for email in emails %}
                 <tr>
                     <td>
                         <div>
@@ -41,9 +41,9 @@
                             </label>
                         </div>
                     </td>
-                    <td><a href="#" class="text-inherit">{{ draft.subject }}</a></td>
-                    <td><a href="#" class="text-inherit">{{ draft.last_update.strftime('%Y-%m-%d-%H:%M') }}</a></td>
-                    <td><a href="#" class="text-inherit">{{ draft.modified_by }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ email.subject }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ email.last_update.strftime('%Y-%m-%d-%H:%M') }}</a></td>
+                    <td><a href="#" class="text-inherit">{{ email.created_by }}</a></td>
                     <td>
                     </td>
                     <td>
