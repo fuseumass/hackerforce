@@ -3,21 +3,27 @@ from django.db import models
 from companies.models import Company
 
 
+class Hackathon(models.Model):
+    name = models.CharField(max_length=255)
+    date = models.DateField(blank=True)
+    fundraising_goal = models.IntegerField(blank=True)
+
+
 class Tier(models.Model):
     name = models.CharField(max_length=100)
+
+    hackathon = models.ForeignKey(
+        Hackathon, on_delete=models.CASCADE, related_name="tiers"
+    )
 
 
 class Perk(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
 
-
-class Hackathon(models.Model):
-    name = models.CharField(max_length=255)
-    date = models.DateField(blank=True)
-    fundraising_goal = models.IntegerField(blank=True)
-    tiers = models.ManyToManyField(Tier, blank=True)
-    perks = models.ManyToManyField(Perk, blank=True)
+    hackathon = models.ForeignKey(
+        Hackathon, on_delete=models.CASCADE, related_name="perks"
+    )
 
 
 class Sponsorship(models.Model):
@@ -37,12 +43,6 @@ class Sponsorship(models.Model):
     contribution = models.IntegerField()
     status = models.CharField(max_length=10, choices=STATUSES)
 
-    tier = models.ForeignKey(
-        Tier,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="sponsorships",
-    )
+    tier = models.ManyToManyField(Tier, blank=True)
     perks = models.ManyToManyField(Perk, blank=True)
 
