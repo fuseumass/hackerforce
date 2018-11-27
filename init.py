@@ -121,8 +121,8 @@ adminuser.save()
 print(
     """
 The database has been setup with the following credentials:
-  username: {username}
-  password: {password}
-  email: {email}
+  username: admin
+  password: admin
+  email: admin@326.edu
   """
 )
