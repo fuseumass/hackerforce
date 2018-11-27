@@ -16,8 +16,8 @@ class Hackathon(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateField(blank=True)
     fundraising_goal = models.IntegerField(blank=True)
-    tiers = models.ManyToManyField(Tier, null=True, blank=True)
-    perks = models.ManyToManyField(Perk, null=True, blank=True)
+    tiers = models.ManyToManyField(Tier, blank=True)
+    perks = models.ManyToManyField(Perk, blank=True)
 
 
 class Sponsorship(models.Model):
@@ -44,5 +44,5 @@ class Sponsorship(models.Model):
         blank=True,
         related_name="sponsorships",
     )
-    perks = models.ManyToManyField(Perk, null=True, blank=True)
+    perks = models.ManyToManyField(Perk, blank=True)
 
