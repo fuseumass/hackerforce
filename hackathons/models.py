@@ -8,6 +8,9 @@ class Hackathon(models.Model):
     date = models.DateField(blank=True)
     fundraising_goal = models.IntegerField(blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Tier(models.Model):
     name = models.CharField(max_length=100)
@@ -15,6 +18,9 @@ class Tier(models.Model):
     hackathon = models.ForeignKey(
         Hackathon, on_delete=models.CASCADE, related_name="tiers"
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Perk(models.Model):
@@ -24,6 +30,9 @@ class Perk(models.Model):
     hackathon = models.ForeignKey(
         Hackathon, on_delete=models.CASCADE, related_name="perks"
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Sponsorship(models.Model):
@@ -45,4 +54,7 @@ class Sponsorship(models.Model):
 
     tiers = models.ManyToManyField(Tier, blank=True)
     perks = models.ManyToManyField(Perk, blank=True)
+
+    def __str__(self):
+        return f"Company: {self.company} Status: {status} Contribution: {self.contribution}"
 
