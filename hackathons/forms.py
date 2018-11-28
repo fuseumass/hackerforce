@@ -14,7 +14,9 @@ class HackathonForm(forms.ModelForm):
     )
 
     date = forms.DateField(
-        widget=forms.DateInput(attrs={"class": "form-control cold-md-6 cold-lg-4"})
+        widget=forms.SelectDateWidget(
+            attrs={"class": "form-control cold-md-6 cold-lg-4"}
+        )
     )
 
     fundraising_goal = forms.IntegerField(
@@ -86,6 +88,51 @@ class PerkForm(forms.ModelForm):
 
 
 class SponsorshipForm(forms.ModelForm):
+    hackathon = forms.ModelChoiceField(
+        required=True,
+        queryset=Hackathon.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "class": "custom-select col-md-6 col-lg-4",
+                "placeholder": "Hackathon",
+            }
+        ),
+    )
+
+    company = forms.ModelChoiceField(
+        required=True,
+        queryset=Company.objects.all(),
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Company"}
+        ),
+    )
+
+    contribution = forms.IntegerField(
+        widget=forms.NumberInput(
+            attrs={"class": "form-control cold-md-6 cold-lg-4", "placeholder": 0}
+        )
+    )
+
+    status = forms.ChoiceField(
+        required=True,
+        choices=Sponsorship.STATUSES,
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Status"}
+        ),
+    )
+
+    tiers = forms.ModelMultipleChoiceField(
+        required=True,
+        queryset=Tier.objects.all(),
+        widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
+    )
+
+    perks = forms.ModelChoiceField(
+        required=True,
+        queryset=Perk.objects.all(),
+        widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
+    )
+
     class Meta:
         model = Sponsorship
         fields = ("hackathon", "company", "contribution", "status", "tiers", "perks")
