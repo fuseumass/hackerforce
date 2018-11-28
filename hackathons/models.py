@@ -56,5 +56,5 @@ class Sponsorship(models.Model):
     perks = models.ManyToManyField(Perk, blank=True)
 
     def __str__(self):
-        return f"Company: {self.company} Status: {status} Contribution: {self.contribution}"
+        return f"Company: {self.company}, Status: {self.status}, Contribution: {self.contribution}"
 

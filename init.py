@@ -6,6 +6,7 @@ from profiles.models import User
 from contacts.models import Contact
 from companies.models import Company, Industry
 from emails.models import Email
+from hackathons.models import Hackathon, Tier, Perk, Sponsorship
 
 fake = Faker()
 
@@ -39,14 +40,12 @@ for t in colors.keys():
 
 print("Generating companies...")
 companies = []
-statuses = ["U", "C", "D"]
-sizes = ["L", "M", "S"]
 for i in range(10):
     company = Company(
         name=fake.company(),
         location=fake.address(),
-        status=random.choice(statuses),
-        size=random.choice(sizes),
+        status=random.choice(Company.STATUSES)[0],
+        size=random.choice(Company.SIZES)[0],
         donated=random.randint(0, 10000),
         updated=fake.date_time_this_month(
             before_now=True, after_now=False, tzinfo=None
@@ -95,6 +94,52 @@ for i in range(100):
     email.save()
     emails.append(email)
 
+print("Generating hackathons...")
+hackathons = []
+for i in range(3):
+    hackathon = Hackathon(
+        name=fake.state(),
+        date=fake.future_date(end_date="+30d", tzinfo=None),
+        fundraising_goal=random.randint(1000, 10000),
+    )
+    hackathon.save()
+    hackathons.append(hackathon)
+
+print("Generating tiers...")
+tiers = []
+for i in range(10):
+    tier = Tier(name=fake.state(), hackathon=random.choice(hackathons))
+    tier.save()
+    tiers.append(tier)
+
+print("Generating perks...")
+perks = []
+for i in range(20):
+    perk = Perk(
+        name=fake.state(),
+        description=fake.text(max_nb_chars=200, ext_word_list=None),
+        hackathon=random.choice(hackathons),
+    )
+    perk.save()
+    perks.append(perk)
+
+print("Generating sponsorships...")
+sponsorships = []
+for i in range(15):
+    sponsorship = Sponsorship(
+        hackathon=random.choice(hackathons),
+        company=random.choice(companies),
+        contribution=random.randint(0, 1000),
+        status=random.choice(Sponsorship.STATUSES)[0],
+    )
+    sponsorship.save()
+    for s in random.sample(tiers, random.randint(1, 2)):
+        sponsorship.tiers.add(s)
+    for s in random.sample(perks, random.randint(1, 5)):
+        sponsorship.perks.add(s)
+    sponsorship.save()
+    sponsorships.append(sponsorship)
+
 print("\nUsers:")
 for a in users:
     print(a)
@@ -109,6 +154,22 @@ for a in companies:
 
 print("\nContacts:")
 for a in contacts:
+    print(a)
+
+print("\nHackathons:")
+for a in hackathons:
+    print(a)
+
+print("\nTiers:")
+for a in tiers:
+    print(a)
+
+print("\nPerks:")
+for a in perks:
+    print(a)
+
+print("\nSponsorships:")
+for a in sponsorships:
     print(a)
 
 # ADMIN USER
