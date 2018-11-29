@@ -1,0 +1,88 @@
+{% extends 'global/base.html.j2' %}
+
+{% block content %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Hackathons</h3>
+                <div class="col text-right">
+                    <a class="button" href="{{ url('hackathons:hackathon_new') }}">
+                        <button type="button" class="btn btn-primary ml-auto">New Hackathon</button>
+                    </a>
+                    <a class="button" href="{{ url('hackathons:tier_new') }}">
+                        <button type="button" class="btn btn-primary ml-auto">New Tier</button>
+                    </a>
+                    <a class="button" href="{{ url('hackathons:perk_new') }}">
+                        <button type="button" class="btn btn-primary ml-auto">New Perk</button>
+                    </a>
+                </div>
+                <div class="col-lg-3 ml-auto">
+                    <div class="row gutters-xs">
+                        <div class="col">
+                            <input class="form-control" placeholder="Search for..." type="text">
+                        </div>
+                        <span class="col-auto">
+                            <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="w-1">Checked</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Fundraising Goal</th>
+                            <th>Tier</th>
+                            <th>Perks</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hackathon in hackathons %}
+                        <tr>
+                            <td>
+                                <div>
+                                    <label class="custom-control custom-checkbox custom-control-inline">
+                                        <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
+                                            checked="" type="checkbox">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td><a href="" class="text-inherit">{{ hackathon.name }}</a></td>
+                            <td><a href="" class="text-inherit">{{ hackathon.date }}</a></td>
+                            <td>
+                                ${{ hackathon.fundraising_goal }}
+                            </td>
+                            <td>
+                                {% for tier in hackathon.tiers.all() %}
+                                <a href="{{ url('hackathons:tier_edit', pk=tier.pk) }}">
+                                    <span class="tag tag-red">{{ tier.name }}</span>
+                                </a>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for perk in hackathon.perks.all() %}
+                                <a href="{{ url('hackathons:perk_edit', pk=perk.pk) }}">
+                                    <span class="tag tag-green">{{ perk.name }}</span>
+                                </a>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a class="icon" href="{{ url('hackathons:hackathon_edit', pk=hackathon.pk) }}">
+                                    <i class="fe fe-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
