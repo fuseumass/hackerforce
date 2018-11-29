@@ -5,7 +5,8 @@ from .forms import TierForm, PerkForm, HackathonForm, SponsorshipForm
 
 
 def hackathons(request):
-    return render(request, "hackathons.html.j2")
+    hackathons = Hackathon.objects.all()
+    return render(request, "hackathons.html.j2", {"hackathons": hackathons})
 
 
 def hackathon_show(request, pk):
