@@ -45,7 +45,7 @@
                             <td><a href="" class="text-inherit">{{ sponsorship.company }}</a></td>
                             <td><a href="" class="text-inherit">{{ sponsorship.status }}</a></td>
                             <td>
-                                {{ sponsorship.contribution }}
+                                ${{ sponsorship.contribution }}
                             </td>
                             <td>
                                 {% for tier in sponsorship.tiers.all() %}

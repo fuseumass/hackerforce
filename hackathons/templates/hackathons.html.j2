@@ -56,7 +56,7 @@
                             <td><a href="" class="text-inherit">{{ hackathon.name }}</a></td>
                             <td><a href="" class="text-inherit">{{ hackathon.date }}</a></td>
                             <td>
-                                {{ hackathon.fundraising_goal }}
+                                ${{ hackathon.fundraising_goal }}
                             </td>
                             <td>
                                 {% for tier in hackathon.tiers.all() %}
