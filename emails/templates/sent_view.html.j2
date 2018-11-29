@@ -11,15 +11,15 @@
         <div>
             <div class="list-group list-group-transparent mb-0">
 
-                <a href="sent" class="list-group-item list-group-item-action d-flex align-items-center">
+                <a href="{{url ('emails:sent') }}" class="list-group-item list-group-item-action d-flex align-items-center">
                     <span class="icon mr-3"><i class="fe fe-send"></i></span>Sent Mail
                 </a>
 
-                <a href="outbox" class="list-group-item list-group-item-action d-flex align-items-center">
+                <a href="{{url ('emails:outbox') }}" class="list-group-item list-group-item-action d-flex align-items-center">
                     <span class="icon mr-3"><i class="fe fe-truck"></i></span>Outbox
                 </a>
 
-                <a href="drafts" class="list-group-item list-group-item-action d-flex align-items-center">
+                <a href="{{url ('emails:drafts') }}" class="list-group-item list-group-item-action d-flex align-items-center">
                     <span class="icon mr-3"><i class="fe fe-file"></i></span>Drafts
                 </a>
 
@@ -38,32 +38,31 @@
             <div class="card-body">
                 <form action="" method="post" class="email-form">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    {# <div class="form-group">
-                        <div class="row align-items-center">
-                            {{ form.as_p() }}
-                        </div>
-                    </div> #}
                     <div class="form-group">
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.subject.label }}</label>
                             <div class="col-sm-10">
-                                {{ form.subject }}
+                                <fieldset disabled="disabled">
+                                    {{ form.subject }}
+                                </fieldset>
                                 {# <input type="text" form.id='subject' class="form-control"> #}
                             </div>
                         </div>
                     </div>
-                    {{ form.body }}
+                        <fieldset disabled="disabled">
+                            {{ form.body }}
+                        </fieldset>
                     <div class="form-group">
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.time_scheduled.label }}</label>
-                            {{ form.time_scheduled }}
+                                <fieldset disabled="disabled">
+                                    {{ form.time_scheduled }}
+                                </fieldset>
                         </div>
                     </div>
                     {# <textarea rows="10" form.id='messageBody' class="form-control"></textarea> #}
                     <div class="btn-list mt-4 text-right">
-                        <button type="submit" name="send_message" class="btn btn-primary btn-space">Send Message</button>
-                        <button type="submit" name="schedule_message" class="btn btn-primary btn-space">Schedule Message</button>
-                        <button type="submit" name="save_draft" class="btn btn-primary btn-space">Save As Draft</button>
+                        <button type="submit" name="send_message" class="btn btn-primary btn-space">Return to Sent</button>
                     </div>
 
                     <div id="scheduler" style="display: none">

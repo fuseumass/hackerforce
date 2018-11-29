@@ -24,7 +24,7 @@ class EmailForm(forms.ModelForm):
                 "placeholder": "Message Body",
             } 
         ),
-    ) 
+    )
 
     time_scheduled = forms.DateTimeField(
         required = False,
@@ -38,6 +38,9 @@ class EmailForm(forms.ModelForm):
         )
     ) 
 
+    status = forms.ChoiceField(choices=[("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")], required = False)
+
+
     class Meta:
         model = Email
-        fields = ('subject', 'body', 'time_scheduled')
+        fields = ('subject', 'body', 'time_scheduled', 'status')
