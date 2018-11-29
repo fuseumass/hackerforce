@@ -98,7 +98,7 @@ print("Generating hackathons...")
 hackathons = []
 for i in range(3):
     hackathon = Hackathon(
-        name=fake.state(),
+        name="Hack " + fake.state(),
         date=fake.future_date(end_date="+30d", tzinfo=None),
         fundraising_goal=random.randint(1000, 10000),
     )
@@ -108,7 +108,7 @@ for i in range(3):
 print("Generating tiers...")
 tiers = []
 for i in range(10):
-    tier = Tier(name=fake.state(), hackathon=random.choice(hackathons))
+    tier = Tier(name=fake.color_name(), hackathon=random.choice(hackathons))
     tier.save()
     tiers.append(tier)
 
@@ -116,7 +116,7 @@ print("Generating perks...")
 perks = []
 for i in range(20):
     perk = Perk(
-        name=fake.state(),
+        name=fake.currency_name(),
         description=fake.text(max_nb_chars=200, ext_word_list=None),
         hackathon=random.choice(hackathons),
     )
