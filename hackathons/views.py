@@ -9,7 +9,13 @@ def hackathons(request):
 
 
 def hackathon_show(request, pk):
-    pass
+    hackathon = get_object_or_404(Hackathon, pk=pk)
+    return render(request, "hackathon_show.html.j2", {"hackathon": hackathon})
+
+
+def sponsorships_show(request, pk):
+    hackathon = get_object_or_404(Hackathon, pk=pk)
+    return render(request, "sponsorships_show.html.j2", {"hackathon": hackathon})
 
 
 def hackathon_new(request):

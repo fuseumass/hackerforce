@@ -8,6 +8,7 @@ urlpatterns = [
     path("new", views.hackathon_new, name="hackathon_new"),
     path("<int:pk>", views.hackathon_show, name="hackathon_show"),
     path("<int:pk>/edit", views.hackathon_edit, name="hackathon_edit"),
+    path("<int:pk>/sponsorships/", views.sponsorships_show, name="sponsorships_show"),
     path("tiers/new", views.tier_new, name="tier_new"),
     path("tiers/<int:pk>/edit", views.tier_edit, name="tier_edit"),
     path("perks/new", views.perk_new, name="perk_new"),
