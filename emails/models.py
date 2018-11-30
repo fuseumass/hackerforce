@@ -9,6 +9,8 @@ class Email(models.Model):
 
     STATUS_CHOICES = [("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")]
 
+    #STATUS_CHOICES = models.CharField(max_length=20)
+
     subject = models.CharField(max_length=100, help_text="Enter an email subject")
 
     body = models.TextField(help_text="Enter the message body")
