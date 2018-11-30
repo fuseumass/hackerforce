@@ -38,10 +38,10 @@
                     <div class="card-status bg-green"></div>
                     <div class="card-body text-center">
                         <div class="h5">Funds raised to date</div>
-                        <div class="display-4 font-weight-bold mb-4">$37,900</div>
-                        <p>/ $80,000</p>
+                        <div class="display-4 font-weight-bold mb-4">${{ money_raised }}</div>
+                        <p>/${{ current_hackathon.fundraising_goal }}</p>
                         <div class="progress progress-sm">
-                            <div class="progress-bar bg-green" style="width:47%"></div>
+                            <div class="progress-bar bg-green" style="width:{{money_raised / current_hackathon.fundraising_goal * 100}}%"></div>
                         </div>
                     </div>
                 </div>
