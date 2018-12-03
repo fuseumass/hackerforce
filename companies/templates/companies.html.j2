@@ -6,6 +6,15 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Companies</h3>
+                
+                    {% if user.is_authenticated %}
+                <div class="col text-right">
+                    <a class="button" href="{{ url('companies:new') }}">
+                        <button type="submit" class="btn btn-primary ml-auto">Add Company</button>
+                    </a>
+                </div>
+                
+                    {% endif %}
                 <div class="col-lg-3 ml-auto">
                     <div class="row gutters-xs">
                         <div class="col">
@@ -23,7 +32,6 @@
                         <tr>
                             <th class="w-1">Checked</th>
                             <th>Name</th>
-                            <th>Location</th>
                             <th>Industries</th>
                             <th>Size</th>
                             <th>Updated</th>
@@ -34,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for c in companies %}
+                        {% for company in companies %}
                         <tr>
                             <td>
                                 <div>
@@ -45,44 +53,45 @@
                                     </label>
                                 </div>
                             </td>
-                            <td><a href="" class="text-inherit">{{ c.name }}</a></td>
-                            <td><a href="" class="text-inherit">{{ c.location }}</a></td>
+                            <td><a href="" class="text-inherit">{{ company.name }}</a></td>
                             <td>
-                                {% for industry in c.industries.all() %}
+                                {% for industry in company.industries.all() %}
                                 <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
                                 {% endfor %}
                             </td>
                             <td>
-                                {%if c.size == 'S'%}
+                                {%if company.size == 'S'%}
                                 <span class="tag tag-green">Small</span>
                                 {% endif %}
-                                {%if c.size == 'M'%}
+                                {%if company.size == 'M'%}
                                 <span class="tag tag-yellow">Medium</span>
                                 {% endif %}
-                                {%if c.size == 'L'%}
+                                {%if company.size == 'L'%}
                                 <span class="tag tag-red">Large</span>
                                 {% endif %}
                             </td>
-                            <td> {{ c.updated }} </td>
+                            <td> {{ company.updated }} </td>
                             <td>
-                                {%if c.status == 'U'%}
+                                {%if company.status == 'U'%}
                                 <span class="status-icon bg-secondary"></span> Uncontacted
                                 {% endif %}
-                                {%if c.status == 'C'%}
+                                {%if company.status == 'C'%}
                                 <span class="status-icon bg-warning"></span> Contacted
                                 {% endif %}
-                                {%if c.status == 'D'%}
+                                {%if company.status == 'D'%}
                                 <span class="status-icon bg-success"></span> Donated
                                 {% endif %}
 
                             </td>
-                            <td>${{ c.donated }}</td>
+                            <td>${{ company.donated }}</td>
                             <td class="text-right">
                             </td>
                             <td>
-                                <a class="icon" href="javascript:void(0)">
+                                {% if user.is_authenticated %}
+                                <a class="icon" href="{{ url('companies:edit', pk=company.pk) }}">
                                     <i class="fe fe-edit"></i>
                                 </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
