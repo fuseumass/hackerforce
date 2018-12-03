@@ -1,5 +1,5 @@
 from django.contrib import admin
-from companies.models import Company, Industry
+from .models import Company, Industry
 
 # Register your models here.
 
