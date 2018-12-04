@@ -23,7 +23,7 @@ class CompanyForm(forms.ModelForm):
     #updated = datetime.datetime.now()
     industries = ("industries")
     location = forms.CharField(
-        max_length=50,
+        max_length=140,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -49,11 +49,11 @@ class CompanyForm(forms.ModelForm):
     updated = forms.DateField()
 
     fields = ("industries")
-             
+
     def __init__(self, *args, **kwargs):
-        
+
         super(CompanyForm, self).__init__(*args, **kwargs)
-        
+
         self.fields["industries"].widget = forms.CheckboxSelectMultiple()
         self.fields["industries"].queryset = Industry.objects.all()
     class Meta:

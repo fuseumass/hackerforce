@@ -14,6 +14,8 @@ Many aspects of the application are similar to the CRM tool known as SalesForce 
 
 ## Video Link
 
+Watch the video [here](https://youtu.be/U1ztfngiWJA).
+
 ## Design Overview
 
 We implemented forms for all of our major tables, including contacts, companies, emails, hackathons and sponsorships. These should allow us to both create and edit entries to these tables natively from our website. There are currently some pages that require user accounts. The user login, and signup page are fully functional allowing a first time user to create an account and sign in allowing for access to certain pages on the website.
