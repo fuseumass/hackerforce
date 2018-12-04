@@ -14,7 +14,7 @@ Many aspects of the application are similar to the CRM tool known as SalesForce 
 
 ## Video Link
 
-Watch the video [here](https://youtu.be/U1ztfngiWJA).
+Watch the video [here](https://youtu.be/n2nmzi-BoEc).
 
 ## Design Overview
 
