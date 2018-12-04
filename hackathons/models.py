@@ -50,7 +50,7 @@ class Sponsorship(models.Model):
     )
 
     contribution = models.IntegerField()
-    status = models.CharField(max_length=10, choices=STATUSES)
+    status = models.CharField(max_length=12, choices=STATUSES)
 
     tiers = models.ManyToManyField(Tier, blank=True)
     perks = models.ManyToManyField(Perk, blank=True)
