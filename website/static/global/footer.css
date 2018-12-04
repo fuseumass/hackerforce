@@ -1,3 +1,10 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
 .content {
-  min-height: calc(100vh - 200px);
+  flex: 1 0 auto;
+}
+.footer {
+  flex-shrink: 0;
 }
