@@ -39,7 +39,7 @@ class Perk(models.Model):
 
 
 class Sponsorship(models.Model):
-    STATUSES = (("pending", "Pending"), ("received", "Waiting"))
+    STATUSES = (("pending", "Pending"), ("received", "Recieved"))
 
     hackathon = models.ForeignKey(
         Hackathon, on_delete=models.CASCADE, related_name="sponsorships"

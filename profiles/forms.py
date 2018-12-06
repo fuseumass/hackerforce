@@ -86,7 +86,7 @@ class RegistrationForm(UserCreationForm):
         }
 
 
-class AuthenticationFormWithInactives(AuthenticationForm):
+class AuthenticationFormWithCSS(AuthenticationForm):
     username = UsernameField(
         widget=forms.TextInput(
             attrs={
@@ -110,7 +110,11 @@ class AuthenticationFormWithInactives(AuthenticationForm):
     )
 
     def confirm_login_allowed(self, user):
-        pass
+        if not user.is_active:
+            raise forms.ValidationError(
+                self.error_messages['inactive'],
+                code='inactive',
+            )
 
 
 class ProfileForm(forms.ModelForm):

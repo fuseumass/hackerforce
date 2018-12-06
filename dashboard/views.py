@@ -5,7 +5,7 @@ from hackathons.models import Sponsorship, Hackathon
 from companies.models import Company
 
 
-# @login_required
+@login_required
 def dashboard(request):
     if request.user.is_authenticated and request.user.current_hackathon:
         current_hackathon = request.user.current_hackathon
