@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "dashboard",
     "emails",
     "profiles",
+    "hackathons",
 ]
 
 MIDDLEWARE = [
@@ -120,9 +121,9 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'profiles.User'
-LOGIN_URL = '/login'
-LOGOUT_REDIRECT_URL = '/login'
+AUTH_USER_MODEL = "profiles.User"
+LOGIN_URL = "/login"
+LOGOUT_REDIRECT_URL = "/login"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -161,7 +162,7 @@ ALLOWED_HOSTS = ["*"]
 STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
 STATIC_URL = "/static/"
 
-# Extra places for collectstatic to find static files.
+
 STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "static")]
 
 # Simplified static file serving.
@@ -170,3 +171,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+# Email thing
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

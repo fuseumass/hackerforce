@@ -1,12 +1,14 @@
 {% extends 'global/base.html.j2' %}
-
+{% block basetitle %}
+    <title>Contacts</title>
+{% endblock basetitle%}
 {% block content %}
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Contacts</h3>
         <div class="col text-right">
             <a class="button" href="{{ url('contacts:new') }}">
-                <button type="submit" class="btn btn-primary ml-auto">New Contact</button>
+                <button type="button" class="btn btn-primary ml-auto">New Contact</button>
             </a>
         </div>
         <div class="col-lg-6 ml-auto">

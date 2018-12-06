@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+from companies.models import Company
 from profiles.models import User
 
 
@@ -8,6 +9,10 @@ class Email(models.Model):
     """Object representing the Contact."""
 
     STATUS_CHOICES = [("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")]
+
+    #STATUS_CHOICES = models.CharField(max_length=20)
+
+    to = models.ManyToManyField(Company, blank=True)
 
     subject = models.CharField(max_length=100, help_text="Enter an email subject")
 

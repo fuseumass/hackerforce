@@ -1,4 +1,4 @@
-<div class="header d-lg-flex p-0">
+<div class="d-lg-flex p-0">
     <div class="container">
         <div class="row align-items-center">
 
@@ -14,31 +14,31 @@
             <div class="dropdown">
                 <a class="nav-link pr-0 leading-none" href="#" data-toggle="dropdown">
                     {% if user.is_authenticated %}
-                        <span class="fe fe-user"></span>
-                        <span class="ml-2 d-none d-lg-block">
-                            <span class="text-default">{{ user.first_name + " " + user.last_name }}</span>
-                        </span>
+                    <span class="fe fe-user"></span>
+                    <span class="ml-2 d-none d-lg-block">
+                        <span class="text-default">{{ user.first_name + " " + user.last_name }}</span>
+                    </span>
                     {% else %}
-                        {# <span class="text-default">You aren't logged in and should never see this!</span> #}
-                        <a href="{{ url('login') }}" class="btn btn-sm btn-outline-primary">Log In</a>
+                    {# <span class="text-default">You aren't logged in and should never see this!</span> #}
+                    <a href="{{ url('login') }}" class="btn btn-sm btn-outline-primary">Log In</a>
                     {% endif %}
                 </a>
                 {% if user.is_authenticated %}
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href="{{ url('profiles:settings') }}">
-                                <i class="dropdown-icon fe fe-user"></i> Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="dropdown-icon fe fe-settings"></i> Settings
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="https://github.com/326-queue/project" target="_blank">
-                                <i class="dropdown-icon fe fe-help-circle"></i> Need help?
-                            </a>
-                            <a class="dropdown-item" href="{{ url('logout') }}">
-                                <i class="dropdown-icon fe fe-log-out"></i> Sign out
-                            </a>
-                    </div>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item" href="{{ url('profiles:edit') }}">
+                        <i class="dropdown-icon fe fe-user"></i> Profile
+                    </a>
+                    <a class="dropdown-item" href="{{ url('profiles:settings') }}">
+                        <i class="dropdown-icon fe fe-settings"></i> Settings
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="https://github.com/326-queue/project" target="_blank">
+                        <i class="dropdown-icon fe fe-help-circle"></i> Need help?
+                    </a>
+                    <a class="dropdown-item" href="{{ url('logout') }}">
+                        <i class="dropdown-icon fe fe-log-out"></i> Sign out
+                    </a>
+                </div>
                 {% endif %}
             </div>
             <div class="col-lg order-lg-first">

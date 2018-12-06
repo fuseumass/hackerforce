@@ -1,9 +1,11 @@
 from django.urls import path
 
-from . import views
+from .views import companies, company_new, company_edit
 
 app_name = 'companies'
 urlpatterns = [
-    path('', views.companies, name='index'),
-    path('new', views.new, name='new')
+    path('', companies, name='index'),
+    # path('new', views.new, name='new')
+    path("new", company_new, name="new"),
+    path("<int:pk>/edit", company_edit, name="edit")
 ]

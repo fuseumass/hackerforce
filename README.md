@@ -70,8 +70,8 @@ Make sure you run the following commands if you do any of the following:
 ``` sh
 rm -f db.sqlite3 # optional, if you need to run this you've
                  # made breaking changes to the database schema
-python manage.py makemigrations # optional add the name of your 
-                                # app as an additional arg 
+python manage.py makemigrations # optional add the name of your
+                                # app as an additional arg
                                 # for example: python manage.py makemigrations profiles
 python manage.py migrate
 python manage.py runserver

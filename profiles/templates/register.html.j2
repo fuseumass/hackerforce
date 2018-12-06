@@ -14,7 +14,7 @@
         <meta name="MobileOptimized" content="320">
         <link rel="icon" href="{{ static("/favicon.ico") }}" type="image/x-icon"/>
         <link rel="shortcut icon" type="image/x-icon" href="{{ static("favicon.ico") }}" />
-        <title>TODO: Add a title</title>
+        <title>Register</title>
         <link href="{{ static("tabler/css/dashboard.css") }}" rel="stylesheet" />
         <link href="{{ static("tabler/plugins/charts-c3/plugin.css") }}" rel="stylesheet" />
         <link href="{{ static("tabler/plugins/maps-google/plugin.css") }}" rel="stylesheet" />
@@ -40,6 +40,12 @@
                 {{ error }}
             {% endfor %}
         </div>
+    {% endif %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="{{message.tags}}" role="alert">{{ message }}</div>
+        {% endfor %}
     {% endif %}
 
 <form class="card" action="" method="post">

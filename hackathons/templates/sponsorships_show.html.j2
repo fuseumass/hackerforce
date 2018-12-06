@@ -1,0 +1,73 @@
+{% extends 'global/base.html.j2' %}
+
+{% block content %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Sponsorships</h3>
+                <div class="col-lg-3 ml-auto">
+                    <div class="row gutters-xs">
+                        <div class="col">
+                            <input class="form-control" placeholder="Search for..." type="text">
+                        </div>
+                        <span class="col-auto">
+                            <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="w-1">Checked</th>
+                            <th>Company</th>
+                            <th>Status</th>
+                            <th>Contribution</th>
+                            <th>Tier</th>
+                            <th>Perks</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sponsorship in hackathon.sponsorships.all() %}
+                        <tr>
+                            <td>
+                                <div>
+                                    <label class="custom-control custom-checkbox custom-control-inline">
+                                        <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
+                                            checked="" type="checkbox">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td><a href="" class="text-inherit">{{ sponsorship.company }}</a></td>
+                            <td><a href="" class="text-inherit">{{ sponsorship.status }}</a></td>
+                            <td>
+                                ${{ sponsorship.contribution }}
+                            </td>
+                            <td>
+                                {% for tier in sponsorship.tiers.all() %}
+                                <span class="tag tag-red">{{ tier.name }}</span>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for perk in sponsorship.perks.all() %}
+                                <span class="tag tag-green">{{ perk.name }}</span>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a class="icon" href="{{ url('hackathons:sponsorship_edit', pk=sponsorship.pk) }}">
+                                    <i class="fe fe-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

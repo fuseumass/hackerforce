@@ -27,3 +27,6 @@ Many aspects of the application are similar to the CRM tool known as SalesForce 
 
 ## Problems/Successes
     One problem we encountered was an integration error with jinja, because when we converted our templates to jinja it interfered with our javascript that we had in the html templates themselves. This has caused some of our javascript to be non-functional, however it currently does not interfere with any of the functionality of our application. Our successes have put us ahead of the submission, since we now have a working user interface, with sign-up and login being fully functional. We also have browser views for creating, and editing our different models.
+
+## Video
+Check it out [here](https://youtu.be/p0cZxPLVxxg)!
