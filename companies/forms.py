@@ -1,7 +1,5 @@
 from django import forms
 from .models import Company, Industry
-from contacts.models import Contact
-import datetime
 
 
 class CompanyForm(forms.ModelForm):
@@ -12,20 +10,17 @@ class CompanyForm(forms.ModelForm):
             attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Name"}
         ),
     )
-
     donated = forms.IntegerField(
         required=True,
         widget=forms.TextInput(
             attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Donated"}
         ),
     )
-
     industries = forms.ModelMultipleChoiceField(
         required=True,
         queryset=Industry.objects.all(),
         widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
     )
-
     location = forms.CharField(
         max_length=140,
         required=True,
@@ -33,7 +28,6 @@ class CompanyForm(forms.ModelForm):
             attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Location"}
         ),
     )
-
     status = forms.ChoiceField(
         required=True,
         choices=(Company.STATUSES),
@@ -41,7 +35,6 @@ class CompanyForm(forms.ModelForm):
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Status"}
         ),
     )
-
     size = forms.ChoiceField(
         required=True,
         choices=(Company.SIZES),

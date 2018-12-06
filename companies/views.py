@@ -15,7 +15,6 @@ def companies(request):
 def company_new(request):
     if request.method == "POST":
         form = CompanyForm(request.POST)
-        print(form)
         if form.is_valid():
             company = form.save(commit=False)
             company.industries.set(form.cleaned_data["industries"])
