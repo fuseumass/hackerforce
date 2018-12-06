@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     # HTML
     "django_jinja",
     "widget_tweaks",
-    "chartkick",
     # Models
     "phonenumber_field",
     ####################
@@ -165,6 +164,7 @@ STATIC_URL = "/static/"
 
 # Extra places for collectstatic to find static files.
 import chartkick
+
 STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "static"), chartkick.js()]
 
 # Simplified static file serving.
