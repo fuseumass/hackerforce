@@ -74,7 +74,6 @@ def perk_new(request):
         form = PerkForm(request.POST)
         if form.is_valid():
             perk = form.save(commit=False)
-            perk.save()
             return redirect("hackathons:index")
     else:
         form = PerkForm()
@@ -98,7 +97,9 @@ def sponsorship_new(request):
     if request.method == "POST":
         form = SponsorshipForm(request.POST)
         if form.is_valid():
-            sponsorship = form.save(commit=False)
+            sponsorship = form.save(commit=True)
+            sponsorship.perks.set(form.cleaned_data["perks"])
+            sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
             return redirect("hackathons:index")
     else:
@@ -111,7 +112,9 @@ def sponsorship_edit(request, pk):
     if request.method == "POST":
         form = SponsorshipForm(request.POST, instance=sponsorship)
         if form.is_valid():
-            sponsorship = form.save(commit=False)
+            sponsorship = form.save(commit=True)
+            sponsorship.perks.set(form.cleaned_data["perks"])
+            sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
             return redirect("hackathons:index")
     else:
