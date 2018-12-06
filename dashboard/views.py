@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from hackathons.models import Sponsorship, Hackathon
 from companies.models import Company
 
+def page404(request):
+    return render(request, '404.html.j2')
 
 @login_required
 def dashboard(request):

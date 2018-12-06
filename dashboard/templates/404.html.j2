@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Content-Language" content="en" />
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="theme-color" content="#4188c9">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <link rel="icon" href="{{ static("/favicon.ico") }}" type="image/x-icon"/>
+        <link rel="shortcut icon" type="image/x-icon" href="{{ static("favicon.ico") }}" />
+        <title>404</title>
+        <link href="{{ static("tabler/css/dashboard.css") }}" rel="stylesheet" />
+        <link href="{{ static("tabler/plugins/charts-c3/plugin.css") }}" rel="stylesheet" />
+        <link href="{{ static("tabler/plugins/maps-google/plugin.css") }}" rel="stylesheet" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        {% block css %}
+            {# additional css #}
+        {% endblock css %}
+    </head>
+
+
+
+{% block content %}
+<div class="page">
+<div class="page-single">
+
+<div class="page-content">
+	<div class="container text-center">
+		<div class="display-1 text-muted mb-5"><i class="si si-exclamation"></i>404 Itamar Not Found</div>
+
+        <span class="avatar avatar-xxl" style="background-image: url(https://files.slack.com/files-pri/TCRRTDTB5-FENM63EB0/tcrrtdtb5-uct0h8pmg-e0c19097eed8-175.jpeg)"></span>
+		<h1 class="h2 mb-3">Oops.. You just found an error page..</h1>
+		<p class="h4 text-muted font-weight-normal mb-7">Where could he be?&hellip;</p>
+
+		<a class="btn btn-primary" href="javascript:history.back()">
+			<i class="fe fe-arrow-left mr-2"></i>Go back
+		</a>
+	</div>
+</div>
+
+</div>
+</div>
+{% endblock %}
+</html>
