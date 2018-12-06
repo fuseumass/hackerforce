@@ -24,66 +24,25 @@
         {% endblock css %}
     </head>
 
+
+
 {% block content %}
 <div class="page">
 <div class="page-single">
+
 <div class="container">
-<div class="row">
-    <div class="col col-login mx-auto">
-    <div class="text-center mb-6">
-        <img src="{{ static("img/HUM_logo.png") }}">
-    </div>
-
-    {% if form.errors %}
-        <div class="alert alert-danger" role="alert">
-            {% for error in form.errors %}
-                {{ error }}
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="{{message.tags}}" role="alert">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-
-<form class="card" action="" method="post">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-    <div class="card-body p-6">
-        <div class="card-title">Create new account</div>
-
-        {% for field in form %}
-            <div class="form-group">
-                <label class="form-label">{{field.label}}</label>
-                {% if field.label == "Username" %}
-                    {# <input type="text" class="form-control" placeholder="Username"> #}
-                    {{ field }}
-                {% else %}
-                    {{ field }}
-                {% endif %}
-            </div>
-        {% endfor %}
-
-
-        <div class="form-footer">
-            <button type="submit" class="btn btn-primary btn-block">Create new account</button>
-        </div>
-    </div>
-</form>
-
-</div>
-</div>
-
-<div class="text-center text-muted">
-    Already have account? <a href="{{ url('login') }}">Sign in</a>
-</div>
+    <p>Please confirm your email address to complete the registration</p>
 </div>
 
 </div>
 </div>
-
 {% endblock %}
-
 </html>
+
+<script>
+    function redirect(){
+       window.location.href = "/login/";
+    }
+
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>

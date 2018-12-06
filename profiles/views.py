@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from .models import User
+from django.contrib import messages
 
 def register(request):
     if request.method == "POST":
@@ -37,7 +38,8 @@ def register(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            messages.info(request, "Thank you for sigining up! Please check your email to activate your account.", extra_tags="alert alert-info")
+            return redirect('login')
             # login_auth(request, user)
             # return redirect("/")
         else:
@@ -56,10 +58,11 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login_auth(request, user)
-        # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request, "Thank you for confirming! You may now login.", extra_tags="alert alert-success")
+        return redirect('login')
     else:
-        return HttpResponse('Activation link is invalid!')
+        messages.success(request, "Invalid activation link!", extra_tags="alert alert-danger")
+        return redirect('login')
 
 def login(request):
     if request.method == "POST":
