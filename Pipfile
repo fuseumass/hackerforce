@@ -16,6 +16,5 @@ django-phonenumber-field = "*"
 phonenumbers = "*"
 django-widget-tweaks = "*"
 faker = "*"
-chartkick = "*"
 
 [dev-packages]
