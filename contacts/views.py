@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Contact
 from .forms import ContactForm
 
-
+@login_required
 def contacts(request):
     contacts = Contact.objects.all()
     return render(request, "contacts.html.j2", {"contacts": contacts})
 
-
+@login_required
 def contact_new(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -20,7 +21,7 @@ def contact_new(request):
         form = ContactForm()
     return render(request, "contact_new.html.j2", {"form": form})
 
-
+@login_required
 def contact_edit(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == "POST":
