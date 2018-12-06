@@ -55,6 +55,9 @@ class Sponsorship(models.Model):
     tiers = models.ManyToManyField(Tier, blank=True)
     perks = models.ManyToManyField(Perk, blank=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return f"Company: {self.company}, Status: {self.status}, Contribution: {self.contribution}"
 

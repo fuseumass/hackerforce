@@ -13,6 +13,21 @@
 </div>
 
 <div class="row row-cards">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-status bg-green"></div>
+            <div class="card-body text-center">
+                <div class="h5">Funds raised to date</div>
+                <div class="display-4 mb-4">${{ money_raised }} <small class="display-6" style="font-size: 0.65em">/
+                        ${{ current_hackathon.fundraising_goal }}</small></div>
+                <div class="progress progress-lg">
+                    <div class="progress-bar bg-green" style="width:{{money_raised / current_hackathon.fundraising_goal * 100}}%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-lg-6">
         <div class="card">
             <div class="card-status bg-purple"></div>
@@ -33,45 +48,22 @@
 
         <div class="row">
 
-            <div class="col-sm-6">
+            <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-status bg-green"></div>
+                    <div class="card-status bg-blue"></div>
                     <div class="card-body text-center">
-                        <div class="h5">Funds raised to date</div>
-                        <div class="display-4 font-weight-bold mb-4">${{ money_raised }}</div>
-                        <p>/${{ current_hackathon.fundraising_goal }}</p>
-                        <div class="progress progress-sm">
-                            <div class="progress-bar bg-green" style="width:{{money_raised / current_hackathon.fundraising_goal * 100}}%"></div>
-                        </div>
+                        <h4 class="card-title">Sponsorships</h4>
+                        <p class="card-text">Create a new sponsorship relation between your current hackathon and a
+                            given
+                            company.</p>
+                        <a class="button" href="{{ url('hackathons:sponsorship_new') }}">
+                            <button type="button" class="btn btn-primary">Add new sponsorship</button>
+                        </a>
+                        <a class="button" href="{{ url('hackathons:sponsorships_show', pk=1) }}">
+                            <button type="button" class="btn btn-primary">Manage existing sponsorship</button>
+                        </a>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-sm-6">
-                <div class="card p-3">
-                    <div class="d-flex align-items-center">
-                        <span class="stamp stamp-md bg-blue mr-3">
-                            <i class="fe fe-breifcase"></i>
-                        </span>
-                        <div>
-                            <h4 class="m-0"><a href="#">16 <small>Sponsors</small></a></h4>
-                            <small class="text-muted">Confirmed</small>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card p-3">
-                    <div class="d-flex align-items-center">
-                        <span class="stamp stamp-md bg-red mr-3">
-                            <i class="fe fe-breifcase"></i>
-                        </span>
-                        <div>
-                            <h4 class="m-0"><a href="#">5 <small>Sponsors</small></a></h4>
-                            <small class="text-muted">Awaiting payment</small>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
@@ -81,103 +73,36 @@
     <div class="col-lg-6">
 
         <div class="card">
+            <div class="card-status bg-red"></div>
             <div class="card-header">
-                <h3 class="card-title text-center">October 2018</h3>
+                <h3 class="card-title">Most Recent Sponsorships</h3>
             </div>
-            <div class="card-body p-3">
-                <table class="table table-calendar">
+            <div class="table-responsive">
+                <table class="table card-table table-striped table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Status</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
                     <tbody>
+                        {% for sponsorship in sponsorships[:5] %}
                         <tr>
-                            <th>Mo</th>
-                            <th>Tu</th>
-                            <th>We</th>
-                            <th>Th</th>
-                            <th>Fr</th>
-                            <th>Sa</th>
-                            <th>Su</th>
+                            <td>{{sponsorship.company}}</td>
+                            <td>{{sponsorship.status}}</td>
+                            <td>{{sponsorship.contribution}}</td>
+                            <td class="text-nowrap">{{sponsorship.updated_at.strftime('%Y-%m-%d')}}</td>
+                            <td class="w-1"><a href="{{ url('hackathons:sponsorship_edit', pk=sponsorship.pk) }}" class="icon"><i class="fe fe-edit"></i></a></td>
                         </tr>
-                        <tr>
-                            <td class="text-muted">27</td>
-                            <td class="text-muted">28</td>
-                            <td class="text-muted">29</td>
-                            <td class="text-muted">30</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                        </tr>
-                        <tr>
-                            <td><a href="javascript:void(0)" class="table-calendar-link">4</a></td>
-                            <td>5</td>
-                            <td><a href="javascript:void(0)" class="table-calendar-link">6</a></td>
-                            <td>7</td>
-                            <td>8</td>
-                            <td>9</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td><a href="javascript:void(0)" class="table-calendar-link">12</a></td>
-                            <td>13</td>
-                            <td>14</td>
-                            <td><a href="javascript:void(0)">15</a></td>
-                            <td>16</td>
-                            <td>17</td>
-                        </tr>
-                        <tr>
-                            <td>18</td>
-                            <td><a href="javascript:void(0)" class="table-calendar-link">19</a></td>
-                            <td><a href="javascript:void(0)" class="table-calendar-link">20</a></td>
-                            <td>21</td>
-                            <td>22</td>
-                            <td>23</td>
-                            <td>24</td>
-                        </tr>
-                        <tr>
-                            <td>25</td>
-                            <td>26</td>
-                            <td>27</td>
-                            <td>28</td>
-                            <td>29</td>
-                            <td>30</td>
-                            <td class="text-muted">1</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-
-            <ul class="list-group card-list-group">
-                <li class="list-group-item list-group-item-red">
-                    <a href="javascript:void(0)" class="text-inherit">Fundraising Deadline</a>
-                    <span class="float-right text-muted">1 Oct</span>
-                </li>
-                <li class="list-group-item list-group-item-blue">
-                    <a href="javascript:void(0)" class="text-inherit">Payment Deadline</a>
-                    <span class="float-right text-muted">6 oct</span>
-                </li>
-                <li class="list-group-item list-group-item-red">
-                    <a href="javascript:void(0)" class="text-inherit">Your Hackathon!</a>
-                    <span class="float-right text-muted">12 Oct</span>
-                </li>
-            </ul>
         </div>
 
-    </div>
-
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-status bg-blue"></div>
-            <div class="card-body text-center">
-                <h4 class="card-title">Sponsorships</h4>
-                <p class="card-text">Create a new sponsorship relation between your current hackathon and a given
-                    company.</p>
-                <a class="button" href="{{ url('hackathons:sponsorship_new') }}">
-                    <button type="button" class="btn btn-primary">Add new sponsorship</button>
-                </a>
-                <a class="button" href="{{ url('hackathons:sponsorships_show', pk=1) }}">
-                    <button type="button" class="btn btn-primary">Manage existing sponsorship</button>
-                </a>
-            </div>
-        </div>
     </div>
 
     <div class="col-lg-6">
