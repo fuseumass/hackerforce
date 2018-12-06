@@ -16,7 +16,7 @@ def company_new(request):
     if request.method == "POST":
         form = CompanyForm(request.POST)
         if form.is_valid():
-            company = form.save(commit=False)
+            company = form.save(commit=True)
             company.industries.set(form.cleaned_data["industries"])
             company.save()
             return redirect("companies:index")
@@ -30,7 +30,7 @@ def company_edit(request, pk):
     if request.method == "POST":
         form = CompanyForm(request.POST, instance=company)
         if form.is_valid():
-            company = form.save(commit=False)
+            company = form.save(commit=True)
             company.industries.set(form.cleaned_data["industries"])
             company.save()
             return redirect("companies:index")
