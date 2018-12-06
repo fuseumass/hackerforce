@@ -38,6 +38,16 @@
             <div class="card-body">
                 <form action="" method="post" class="email-form">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                     <div class="form-group">
+                        <div class="row align-items-center">
+                            <label class="col-sm-2">{{ form.to.label }}</label>
+                                {# <fieldset disabled="disabled"> #}
+                                {{ form.to }}
+                                {# </fieldset> #}
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.subject.label }}</label>
