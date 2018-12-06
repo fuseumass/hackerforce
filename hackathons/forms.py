@@ -127,7 +127,7 @@ class SponsorshipForm(forms.ModelForm):
         widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
     )
 
-    perks = forms.ModelChoiceField(
+    perks = forms.ModelMultipleChoiceField(
         required=True,
         queryset=Perk.objects.all(),
         widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
