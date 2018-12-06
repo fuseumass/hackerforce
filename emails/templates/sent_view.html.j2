@@ -1,8 +1,8 @@
 {% extends 'global/base.html.j2' %}
 
-{% block css %}
-{# import css here if you want it otherwise delete this block #}
-{% endblock %}
+{% block basetitle %}
+    <title>Sent mail</title>
+{% endblock basetitle%}
 
 {% block content %}
 <div class="row">
@@ -38,6 +38,14 @@
             <div class="card-body">
                 <form action="" method="post" class="email-form">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+                     <div class="form-group">
+                        <div class="row align-items-center">
+                            <label class="col-sm-2">{{ form.to.label }}</label>
+                                {{ form.to }}
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.subject.label }}</label>

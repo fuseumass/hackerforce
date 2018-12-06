@@ -1,5 +1,7 @@
 {% extends 'global/base.html.j2' %}
-
+{% block basetitle %}
+    <title>Drafts</title>
+{% endblock basetitle%}
 {% block content %}
 <div class="card">
     <div class="card-header">
@@ -20,6 +22,7 @@
             <thead>
                 <tr>
                     <th class="w-1">Checked</th>
+                    {# <th>To</th> #}
                     <th>Subject</th>
                     <th>Last Update</th>
                     <th>Created By</th>
@@ -42,6 +45,7 @@
                                 </label>
                             </div>
                         </td>
+                        {# <td><a href="#" class="text-inherit">{{ email.to.name }}</a></td> #}
                         <td><a href="#" class="text-inherit">{{ email.subject }}</a></td>
                         <td><a href="#" class="text-inherit">{{ email.last_update.strftime('%Y-%m-%d-%H:%M') }}</a></td>
                         <td><a href="#" class="text-inherit">{{ email.created_by }}</a></td>

@@ -98,9 +98,11 @@ def sponsorship_new(request):
     if request.method == "POST":
         form = SponsorshipForm(request.POST)
         if form.is_valid():
-            sponsorship = form.save(commit=False)
+            sponsorship = form.save(commit=True)
+            sponsorship.perks.set(form.cleaned_data["perks"])
+            sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
-            return redirect("hackathons:index")
+            return redirect("hackathons:sponsorships_show", pk=sponsorship.hackathon.pk)
     else:
         form = SponsorshipForm()
     return render(request, "sponsorship_new.html.j2", {"form": form})
@@ -111,9 +113,11 @@ def sponsorship_edit(request, pk):
     if request.method == "POST":
         form = SponsorshipForm(request.POST, instance=sponsorship)
         if form.is_valid():
-            sponsorship = form.save(commit=False)
+            sponsorship = form.save(commit=True)
+            sponsorship.perks.set(form.cleaned_data["perks"])
+            sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
-            return redirect("hackathons:index")
+            return redirect("hackathons:sponsorships_show", pk=sponsorship.hackathon.pk)
     else:
         form = SponsorshipForm(instance=sponsorship)
     return render(request, "sponsorship_edit.html.j2", {"form": form})
