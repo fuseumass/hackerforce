@@ -173,3 +173,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+# Email thing
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
