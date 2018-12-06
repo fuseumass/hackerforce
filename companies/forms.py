@@ -3,15 +3,13 @@ from .models import Company, Industry
 from contacts.models import Contact
 import datetime
 
+
 class CompanyForm(forms.ModelForm):
     name = forms.CharField(
         max_length=50,
         required=True,
         widget=forms.TextInput(
-            attrs={
-                "class": "form-control col-md-6 col-lg-4",
-                "placeholder": "Name",
-            }
+            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Name"}
         ),
     )
     donated = forms.IntegerField(
@@ -20,16 +18,13 @@ class CompanyForm(forms.ModelForm):
             attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Donated"}
         ),
     )
-    #updated = datetime.datetime.now()
-    industries = ("industries")
+    # updated = datetime.datetime.now()
+    industries = "industries"
     location = forms.CharField(
         max_length=140,
         required=True,
         widget=forms.TextInput(
-            attrs={
-                "class": "form-control col-md-6 col-lg-4",
-                "placeholder": "Location",
-            }
+            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Location"}
         ),
     )
     status = forms.ChoiceField(
@@ -40,7 +35,7 @@ class CompanyForm(forms.ModelForm):
         ),
     )
     size = forms.ChoiceField(
-        #required=True,
+        # required=True,
         choices=(("L", "Large"), ("M", "Medium"), ("S", "Small")),
         widget=forms.Select(
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Size"}
@@ -48,7 +43,7 @@ class CompanyForm(forms.ModelForm):
     )
     updated = forms.DateField()
 
-    fields = ("industries")
+    fields = "industries"
 
     def __init__(self, *args, **kwargs):
 
@@ -56,6 +51,7 @@ class CompanyForm(forms.ModelForm):
 
         self.fields["industries"].widget = forms.CheckboxSelectMultiple()
         self.fields["industries"].queryset = Industry.objects.all()
+
     class Meta:
         model = Company
         fields = (
@@ -65,5 +61,5 @@ class CompanyForm(forms.ModelForm):
             "location",
             "status",
             "size",
-            "updated"
+            "updated",
         )
