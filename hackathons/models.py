@@ -11,6 +11,9 @@ class Hackathon(models.Model):
     def __str__(self):
         return self.name
 
+    def latest():
+        return Hackathon.objects.latest("date")
+
 
 class Tier(models.Model):
     name = models.CharField(max_length=100)

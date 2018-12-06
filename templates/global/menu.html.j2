@@ -25,10 +25,10 @@
                 </a>
                 {% if user.is_authenticated %}
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                    <a class="dropdown-item" href="{{ url('profiles:settings') }}">
+                    <a class="dropdown-item" href="{{ url('profiles:edit') }}">
                         <i class="dropdown-icon fe fe-user"></i> Profile
                     </a>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{{ url('profiles:settings') }}">
                         <i class="dropdown-icon fe fe-settings"></i> Settings
                     </a>
                     <div class="dropdown-divider"></div>

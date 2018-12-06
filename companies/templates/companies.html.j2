@@ -6,15 +6,15 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Companies</h3>
-                
-                    {% if user.is_authenticated %}
+
+                {% if user.is_authenticated %}
                 <div class="col text-right">
                     <a class="button" href="{{ url('companies:new') }}">
                         <button type="submit" class="btn btn-primary ml-auto">Add Company</button>
                     </a>
                 </div>
-                
-                    {% endif %}
+
+                {% endif %}
                 <div class="col-lg-3 ml-auto">
                     <div class="row gutters-xs">
                         <div class="col">
