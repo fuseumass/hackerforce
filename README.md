@@ -46,7 +46,7 @@ pip install --user pipenv
 
 ### Installing dependencies
 ``` sh
-pip install django-heroku django-jinja django-bootstrap4 django-tabler django-widget-tweaks phonenumbers django-phonenumber-field faker
+pip install django-heroku django-jinja django-bootstrap4 django-tabler django-widget-tweaks phonenumbers django-phonenumber-field faker chartkick
 ```
 
 ### Installing the project

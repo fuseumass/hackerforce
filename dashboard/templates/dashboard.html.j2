@@ -95,13 +95,27 @@
                             <td>{{sponsorship.status}}</td>
                             <td>{{sponsorship.contribution}}</td>
                             <td class="text-nowrap">{{sponsorship.updated_at.strftime('%Y-%m-%d')}}</td>
-                            <td class="w-1"><a href="{{ url('hackathons:sponsorship_edit', pk=sponsorship.pk) }}" class="icon"><i class="fe fe-edit"></i></a></td>
+                            <td class="w-1"><a href="{{ url('hackathons:sponsorship_edit', pk=sponsorship.pk) }}" class="icon"><i
+                                        class="fe fe-edit"></i></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
+
+        <div class="row row-cards">
+        {% for data in chart_data %}
+        <div class="col-sm-4">
+        <div class="card">
+            <div class="card-body p-3 text-center">
+                <div class="h1 m-0">{{ data[1] }}</div>
+                <div class="text-muted mb-4">{{ data[0] }}</div>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
 
     </div>
 
@@ -120,5 +134,4 @@
 {% endblock %}
 
 {% block js %}
-{# import javascript here if you want it otherwise delete this block #}
 {% endblock %}

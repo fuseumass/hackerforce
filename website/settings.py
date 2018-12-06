@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # HTML
     "django_jinja",
     "widget_tweaks",
+    "chartkick",
     # Models
     "phonenumber_field",
     ####################
@@ -163,7 +164,8 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
 STATIC_URL = "/static/"
 
 # Extra places for collectstatic to find static files.
-STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "static")]
+import chartkick
+STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "static"), chartkick.js()]
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
