@@ -6,7 +6,6 @@ from jinja2 import Environment
 # from widget_tweaks import render_field, add_class, set_attr
 import widget_tweaks
 
-
 def environment(**options):
     env = Environment(**options)
     env.globals.update(
