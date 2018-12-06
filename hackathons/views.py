@@ -101,7 +101,7 @@ def sponsorship_new(request):
             sponsorship.perks.set(form.cleaned_data["perks"])
             sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
-            return redirect("hackathons:index")
+            return redirect("hackathons:sponsorships_show")
     else:
         form = SponsorshipForm()
     return render(request, "sponsorship_new.html.j2", {"form": form})
@@ -116,7 +116,7 @@ def sponsorship_edit(request, pk):
             sponsorship.perks.set(form.cleaned_data["perks"])
             sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
-            return redirect("hackathons:index")
+            return redirect("hackathons:sponsorships_show")
     else:
         form = SponsorshipForm(instance=sponsorship)
     return render(request, "sponsorship_edit.html.j2", {"form": form})
