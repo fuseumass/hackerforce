@@ -13,6 +13,8 @@ def emails(request):
 
             print("Form is valid")
             email=form.save(commit=False)
+            email.created_by=request.user
+            email.save() 
 
             if "send_message" in request.POST:
                 email.status = "sent"
@@ -20,11 +22,13 @@ def emails(request):
                 email.status = "scheduled"
             elif "save_draft" in request.POST:
                 email.status = "draft"
-
-            email.created_by=request.user
+            
+            email.to.set(form.cleaned_data["to"])
             email.save()
         else:
             print("Form is invalid")
+            for error in form.errors:
+                print(error)
     else:
         form = EmailForm()
     return render(request, "emails.html.j2", {"form": form})
@@ -50,7 +54,7 @@ def email_edit(request, pk):
         form = EmailForm(request.POST, instance=email)
         if form.is_valid():
             email = form.save(commit=False)
-
+            email.to.set(form.cleaned_data["to"])
             if "send_message" in request.POST:
                 email.status = "sent"
                 email.save()
@@ -63,7 +67,6 @@ def email_edit(request, pk):
                 email.status = "draft"
                 email.save()
                 return redirect("emails:drafts")
-
     else:
         form = EmailForm(instance=email)
     return render(request, "emails_edit.html.j2", {"form": form})
