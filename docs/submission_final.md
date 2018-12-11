@@ -1,12 +1,12 @@
-#HackerForce
+# HackerForce
 
-##Team Queue - Fall 2018
+## Team Queue - Fall 2018
 
 **Cory Lanza, Ishan Khatri, Kevin Fredericks, Nicholas Williams**
 
-##Overview
+## Overview
 
-##User Interface
+## User Interface
 
 ### Base Templates
 
@@ -68,7 +68,7 @@ After clicking the link in the email you're redirected to the login page with th
 
 ![activated](imgs/final/login_activated.png)
 
-###Profiles
+### Profiles
 
 **profile_edit.html.j2**
 
@@ -222,12 +222,12 @@ Show page for emails that have already been sent.
 
 ![sent_view](imgs/final/email_sent_view.png)
 
-##Data Model
+## Data Model
 
-##URL Routes
+## URL Routes
 
-##Authentication
+## Authentication
 
-##Team Choice
+## Team Choice
 
-##Conclusion
+## Conclusion
