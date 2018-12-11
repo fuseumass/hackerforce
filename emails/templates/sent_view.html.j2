@@ -1,7 +1,7 @@
 {% extends 'global/base.html.j2' %}
 
 {% block basetitle %}
-    <title>Sent mail</title>
+<title>Sent mail</title>
 {% endblock basetitle%}
 
 {% block content %}
@@ -33,16 +33,16 @@
     <div class="col-md-9">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Compose New Message Template</h3>
+                <h3 class="card-title">Sent Message</h3>
             </div>
             <div class="card-body">
                 <form action="" method="post" class="email-form">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
-                     <div class="form-group">
+                    <div class="form-group">
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.to.label }}</label>
-                                {{ form.to }}
+                            {{ form.to }}
                         </div>
                     </div>
 
@@ -57,15 +57,15 @@
                             </div>
                         </div>
                     </div>
-                        <fieldset disabled="disabled">
-                            {{ form.body }}
-                        </fieldset>
+                    <fieldset disabled="disabled">
+                        {{ form.body }}
+                    </fieldset>
                     <div class="form-group">
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.time_scheduled.label }}</label>
-                                <fieldset disabled="disabled">
-                                    {{ form.time_scheduled }}
-                                </fieldset>
+                            <fieldset disabled="disabled">
+                                {{ form.time_scheduled }}
+                            </fieldset>
                         </div>
                     </div>
                     {# <textarea rows="10" form.id='messageBody' class="form-control"></textarea> #}
