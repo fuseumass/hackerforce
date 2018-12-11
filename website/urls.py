@@ -17,7 +17,9 @@ from django.urls import path, re_path, include
 
 from django.contrib import admin
 from django.conf.urls import url
-from profiles import views
+from profiles import views as profile_views
+from dashboard import views as dashboard_views
+
 
 admin.autodiscover()
 
@@ -34,6 +36,10 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        views.activate, name='activate'),
+    url(
+        r"^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
+        profile_views.activate,
+        name="activate",
+    ),
+    url(r"^.*/$", dashboard_views.page404, name="404"),
 ]
