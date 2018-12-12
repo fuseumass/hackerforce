@@ -6,6 +6,8 @@
 
 ## Overview
 
+HackerForce is a web application meant to make it easier to keep track of donations and sponsorships when planning a hackathon. The web app allows planners to store different companies and contacts, track their donations, and group them together to send mass emails.
+
 ## User Interface
 
 ### Base Templates
@@ -224,6 +226,8 @@ Show page for emails that have already been sent.
 
 ## Data Model
 
+![data_model](imgs/data_model.jpg)
+
 ## URL Routes
 
 ### Dashboard
@@ -360,5 +364,7 @@ Route to already sent email show page.
 ## Authentication
 
 ## Team Choice
+
+For a team choice element, we implemented email verification as an additional step to authenticate new users. When a new user completes the sign up form, an email will be sent to the email address given prompting the user to click on a link. Their account will not be fully verified until they do so.
 
 ## Conclusion
