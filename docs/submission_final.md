@@ -228,7 +228,8 @@ Show page for emails that have already been sent.
 
 ## Data Model
 
-![data_model](imgs/data_model.png)
+![data_model](imgs/data_model.jpg)
+
 
 ### Profiles
 
@@ -416,7 +417,7 @@ Users are authenticated using the django auth api. A user has to be logged in to
 
 ## Team Choice
 
-For our team choice we added functionality to fully deploy to the application to heroku. You can find it hosted [here](https://hacker-force.herokuapp.com/)We also completed email functionality allowing us to send emails through the application itself. Specifically we added registration email verification, which involved configuring the django app to use a service called sendgrid for emailing using a heroku extension, and then adding the email as a template and sending it via the view.
+For our team choice we added functionality to fully deploy to the application to heroku. You can find it hosted [here](https://hacker-force.herokuapp.com/)We also completed email functionality allowing us to send emails through the application itself. Specifically we added registration email verification, which involved configuring the django app to use a service called sendgrid for emailing using a heroku extension, and then adding the email as a template and sending it via the view. When a new user completes the sign up form, an email will be sent to the email address given prompting the user to click on a link. Their account will not be fully verified until they do so.
 
 ## Conclusion
 
