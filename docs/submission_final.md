@@ -6,7 +6,9 @@
 
 ## Overview
 
-HackerForce is a web application meant to make it easier to keep track of donations and sponsorships when planning a hackathon. The web app allows planners to store different companies and contacts, track their donations, and group them together to send mass emails.
+`HackerForce` is a tool created to help hackathon organizers manage their sponsorship leads and keep track of contacts, emails and more. Every year hackathon organizers need to contact hundreds of contacts who work at hundreds of companies to request sponsorship. The process for this usually involves various rounds of customized emails to various groupings of companies. This tool aims to create a user friendly interface to see the status of various companies, store the details of certain contacts and overall manage the information required for hackathon sponsorship.
+
+Many aspects of the application are similar to the CRM tool known as SalesForce and the project idea can be simply summed up as a subset of SalesForce features that is open-source and extensible for use by hackathon organizers or anyone else who desires an open-source, free CRM tool.
 
 ## User Interface
 
@@ -226,7 +228,58 @@ Show page for emails that have already been sent.
 
 ## Data Model
 
+<<<<<<< HEAD
 ![data_model](imgs/data_model.jpg)
+=======
+![data_model](imgs/data_model.png)
+
+### Profiles
+
+**User**
+
+Extended from base django user model. Has many-one relationship with hackathons, so that the user can choose which hackathon is displayed on their dashboard. Has a many-one relationship with emails.
+
+### Hackathons
+
+**Hackathon**
+
+Hackathons have a date and a fundraising goal. They have a one-many relationship with perks, sponsorships and tiers.
+
+**Tier**
+
+Sponsorship tiers belong to hackathons and have a many-many relationship with sponsorships.
+
+**Perks**
+
+Sponsorship perks belong to hackathons and have a many-many relationship with sponsorships.
+
+**Sponsorship**
+
+Company sponsorships which hold the amount of money a company has donated to a hackathon. Has a many-one relationship with companies and hackathons. Has a many-many relationship with perks and tiers.
+
+### Companies
+
+**Company**
+
+Holds information on companies that have or might donate to a hackathon. Has a many-many relationship with industries. Has a one-many relationship with sponsorships and contacts. Has a many-many relationship with emails.
+
+**Industry**
+
+Holds types of industries so we can catagorize companies. Also has a colors field so that we can create css spans specific to the css library we're using.
+
+### Contacts
+
+**Contact**
+
+Holds information on contacts for a given company. Has a many-one relationship with companies.
+
+### Emails
+
+**Email**
+
+Stores all relevant information needed to send an email like subject, body, which companies it should be sent to and when it's scheduled to be sent. Has a many-one relationship with companies and users.
+
+>>>>>>> docs(final): finish final submission writeup
 
 ## URL Routes
 
@@ -363,8 +416,16 @@ Route to already sent email show page.
 
 ## Authentication
 
+Users are authenticated using the django auth api. A user has to be logged in to access any pages other than the login/registration page. We also load a profile settings pages based on the current user. The admin pages are only available to superusers.
+
 ## Team Choice
 
+<<<<<<< HEAD
 For a team choice element, we implemented email verification as an additional step to authenticate new users. When a new user completes the sign up form, an email will be sent to the email address given prompting the user to click on a link. Their account will not be fully verified until they do so.
+=======
+For our team choice we added functionality to fully deploy to the application to heroku. You can find it hosted [here](https://hacker-force.herokuapp.com/)We also completed email functionality allowing us to send emails through the application itself. Specifically we added registration email verification, which involved configuring the django app to use a service called sendgrid for emailing using a heroku extension, and then adding the email as a template and sending it via the view.
+>>>>>>> docs(final): finish final submission writeup
 
 ## Conclusion
+
+We had an overall successful experience during the run of this course building our webapp, despite some setbacks. We were down a team member from the beginning, but because we all had experience with either web development or software engineering we managed to stay ahead of the curve for most of the required steps. We initially layed the groundwork to host the website on heroku during the first submission, so we already had a fully routed working django app by the time we started to make the actual mockup html pages. We also relied heavily on the css library tabler to make our website look good with minimal effort on our end (aside from a few problems related to importing the library in the first place). We built out the forms pages at the same times as we were making the models, and linked those together using the handy django forms api, along with using base form templates to save on time bulding individual html pages. During the final stretch we were able to implement an email service and we fixed up all the bugs we had been having. Early on we decided to switch templating engines from the base django one to jinja2, which turned out to be a mistake as we barely used the extra tools that it afforded us and it overcomplicated importing python functions into the templates. Making a custom user model also turned out to be somewhat tricky as we misunderstood how the auth api worked initially. We also had problems with importing our css library, as we first tried using a django library that included it that turned out to be an incomplete implementation and was msotly not working. We added the css library to our assets, but then had to fix some of the files, for example we didn't have jquery working until the last two weeks of the project because we had to go in and fix some of the js files in the library to properly work with django routes. We learned a lot this semester because we made sure that everyone on the team got to be involved making all the different parts of the django app, so while we may not be experts, we have a solid grasp on how to build our own websites in the future.W e weren't able to make it through every feature we wanted, but we're hoping to continue working on the project after this semester and make it a fully featured site.
