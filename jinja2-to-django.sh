@@ -19,14 +19,16 @@ for file in "$@"; do
 
     multi_replace $file \
         '{{ ?static\("(.*)"\) ?}}' "{% static '\1' %}" \
-        "{{ ?url\\('(.*)'\\) ?}}" "{% url '\1' %}" \
-        "{{ ?url\\('(.*)', ?pk=(.*)\\) ?}}" "{% url '\1' \2 %}" \
+        "{{ ?url ?\\('(.*)'\\) ?}}" "{% url '\1' %}" \
+        "{{ ?url ?\\('(.*)', ?pk=(.*)\\) ?}}" "{% url '\1' \2 %}" \
         "{% ?endblock (.*) ?%}" "{% endblock %}" \
         "{{ ?get_static_prefix ?}}" "{{ STATIC_PREFIX }}" \
         "{% ?extends '(.*).j2' ?%}" "{% extends '\1' %}" \
         "{% ?include '(.*).j2' ?%}" "{% include '\1' %}" \
         '{{ (.*) \+ " " \+ (.*) }}' '{{ \1 }} {{ \2 }}' \
         "{% ?for(.*).all\(\) ?%}" "{% for\1.all %}" \
+        ".strftime\('(.*)'\)" " | date:'\1'" \
+        "%Y-%m-%d-%H:%M" "Y-m-d-H:i" \
     > $NEW
     echo Exported $NEW
 done
