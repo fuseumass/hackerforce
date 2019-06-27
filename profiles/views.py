@@ -46,7 +46,7 @@ def register(request):
             print(form.errors)
     else:
         form = RegistrationForm()
-    return render(request, "register.html.j2", {"form": form})
+    return render(request, "register.html", {"form": form})
 
 def activate(request, uidb64, token):
     try:
