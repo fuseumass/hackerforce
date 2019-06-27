@@ -31,22 +31,22 @@ def emails(request):
                 print(error)
     else:
         form = EmailForm()
-    return render(request, "emails.html.j2", {"form": form})
+    return render(request, "emails.html", {"form": form})
 
 @login_required
 def drafts(request):
     emails = Email.objects.filter(status="draft")
-    return render(request, "drafts.html.j2", {"emails": emails})
+    return render(request, "drafts.html", {"emails": emails})
 
 @login_required
 def sent(request):
     emails = Email.objects.filter(status="sent")
-    return render(request, "sent.html.j2", {"emails": emails})
+    return render(request, "sent.html", {"emails": emails})
 
 @login_required
 def outbox(request):
     emails = Email.objects.filter(status="scheduled")
-    return render(request, "outbox.html.j2", {"emails": emails})
+    return render(request, "outbox.html", {"emails": emails})
 
 @login_required
 def email_edit(request, pk):
@@ -70,7 +70,7 @@ def email_edit(request, pk):
                 return redirect("emails:drafts")
     else:
         form = EmailForm(instance=email)
-    return render(request, "emails_edit.html.j2", {"form": form})
+    return render(request, "emails_edit.html", {"form": form})
 
 @login_required
 def sent_view(request, pk):
@@ -80,4 +80,4 @@ def sent_view(request, pk):
 
     else:
         form = EmailForm(instance=email)
-    return render(request, "sent_view.html.j2", {"form": form})
+    return render(request, "sent_view.html", {"form": form})

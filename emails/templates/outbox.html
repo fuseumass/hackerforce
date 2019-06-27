@@ -1,13 +1,11 @@
-{% extends 'global/base.html.j2' %}
-
+{% extends 'global/base.html' %}
 {% block basetitle %}
-    <title>Sent</title>
-{% endblock basetitle%}
-
+    <title>Outbox</title>
+{% endblock %}
 {% block content %}
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Sent</h3>
+        <h3 class="card-title">Outbox</h3>
         <div class="col-lg-6 ml-auto">
             <div class="row gutters-xs">
                 <div class="col">
@@ -36,7 +34,7 @@
             </thead>
             <tbody>
                 {% for email in emails %}
-                    {%if email.status=="sent" or email.status=="Sent"%}
+                    {%if email.status=="scheduled" or email.status=="Scheduled"%}
                     <tr>
                         <td>
                             <div>
@@ -49,7 +47,7 @@
                         </td>
                         {# <td><a href="#" class="text-inherit">{{ email.to.name }}</a></td> #}
                         <td><a href="#" class="text-inherit">{{ email.subject }}</a></td>
-                        <td><a href="#" class="text-inherit">{{ email.last_update.strftime('%Y-%m-%d-%H:%M') }}</a></td>
+                        <td><a href="#" class="text-inherit">{{ email.last_update | date:'Y-m-d-H:M' }}</a></td>
                         <td><a href="#" class="text-inherit">{{ email.created_by }}</a></td>
                         <td>
                         </td>
@@ -77,7 +75,7 @@
                             </div>
                         </td>
                         <td>
-                            <a class="icon" href="{{ url('emails:sent_view', pk=email.pk) }}">
+                            <a class="icon" href="{% url 'emails:edit' email.pk %}">
                                 <i class="fe fe-edit"></i>
                             </a>
                         </td>

@@ -1,8 +1,8 @@
-{% extends 'global/base.html.j2' %}
+{% extends 'global/base.html' %}
 
 {% block basetitle %}
-<title>Edit Email</title>
-{% endblock basetitle%}
+    <title>Emails</title>
+{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -11,15 +11,15 @@
         <div>
             <div class="list-group list-group-transparent mb-0">
 
-                <a href="{{url ('emails:sent') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                <a href="{% url 'emails:sent' %}" class="list-group-item list-group-item-action d-flex align-items-center">
                     <span class="icon mr-3"><i class="fe fe-send"></i></span>Sent Mail
                 </a>
 
-                <a href="{{url ('emails:outbox') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                <a href="{% url 'emails:outbox' %}" class="list-group-item list-group-item-action d-flex align-items-center">
                     <span class="icon mr-3"><i class="fe fe-truck"></i></span>Outbox
                 </a>
 
-                <a href="{{url ('emails:drafts') }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                <a href="{% url 'emails:drafts' %}" class="list-group-item list-group-item-action d-flex align-items-center">
                     <span class="icon mr-3"><i class="fe fe-file"></i></span>Drafts
                 </a>
 
@@ -33,7 +33,7 @@
     <div class="col-md-9">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Edit Message Template</h3>
+                <h3 class="card-title">Compose New Message Template</h3>
             </div>
             <div class="card-body">
                 <form action="" method="post" class="email-form">
@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.to.label }}</label>
-                            {{ form.to }}
+                                {{ form.to }}
                         </div>
                     </div>
 
@@ -49,7 +49,7 @@
                         <div class="row align-items-center">
                             <label class="col-sm-2">{{ form.subject.label }}</label>
                             <div class="col-sm-10">
-                                {{ form.subject }}
+                                    {{ form.subject }}
                                 {# <input type="text" form.id='subject' class="form-control"> #}
                             </div>
                         </div>
@@ -64,8 +64,7 @@
                     {# <textarea rows="10" form.id='messageBody' class="form-control"></textarea> #}
                     <div class="btn-list mt-4 text-right">
                         <button type="submit" name="send_message" class="btn btn-primary btn-space">Send Message</button>
-                        <button type="submit" name="schedule_message" class="btn btn-primary btn-space">Schedule
-                            Message</button>
+                        <button type="submit" name="schedule_message" class="btn btn-primary btn-space">Schedule Message</button>
                         <button type="submit" name="save_draft" class="btn btn-primary btn-space">Save As Draft</button>
                     </div>
 
@@ -81,5 +80,5 @@
 </div>
 {% endblock %}
 {% block js %}
-<script src="{{ static("js/email.js") }}"></script>
+<script src="{% static 'js/email.js' %}"></script>
 {% endblock %}
