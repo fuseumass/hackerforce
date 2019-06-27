@@ -6,17 +6,17 @@ from .forms import TierForm, PerkForm, HackathonForm, SponsorshipForm
 
 def hackathons(request):
     hackathons = Hackathon.objects.all()
-    return render(request, "hackathons.html.j2", {"hackathons": hackathons})
+    return render(request, "hackathons.html", {"hackathons": hackathons})
 
 
 def hackathon_show(request, pk):
     hackathon = get_object_or_404(Hackathon, pk=pk)
-    return render(request, "hackathon_show.html.j2", {"hackathon": hackathon})
+    return render(request, "hackathon_show.html", {"hackathon": hackathon})
 
 
 def sponsorships_show(request, pk):
     hackathon = get_object_or_404(Hackathon, pk=pk)
-    return render(request, "sponsorships_show.html.j2", {"hackathon": hackathon})
+    return render(request, "sponsorships_show.html", {"hackathon": hackathon})
 
 
 def hackathon_new(request):
@@ -28,7 +28,7 @@ def hackathon_new(request):
             return redirect("hackathons:index")
     else:
         form = HackathonForm()
-    return render(request, "hackathon_new.html.j2", {"form": form})
+    return render(request, "hackathon_new.html", {"form": form})
 
 
 def hackathon_edit(request, pk):
@@ -41,7 +41,7 @@ def hackathon_edit(request, pk):
             return redirect("hackathons:index")
     else:
         form = HackathonForm(instance=hackathon)
-    return render(request, "hackathon_edit.html.j2", {"form": form})
+    return render(request, "hackathon_edit.html", {"form": form})
 
 
 def tier_new(request):
@@ -53,7 +53,7 @@ def tier_new(request):
             return redirect("hackathons:index")
     else:
         form = TierForm()
-    return render(request, "tier_new.html.j2", {"form": form})
+    return render(request, "tier_new.html", {"form": form})
 
 
 def tier_edit(request, pk):
@@ -66,7 +66,7 @@ def tier_edit(request, pk):
             return redirect("hackathons:index")
     else:
         form = TierForm(instance=tier)
-    return render(request, "tier_edit.html.j2", {"form": form})
+    return render(request, "tier_edit.html", {"form": form})
 
 
 def perk_new(request):
@@ -78,7 +78,7 @@ def perk_new(request):
             return redirect("hackathons:index")
     else:
         form = PerkForm()
-    return render(request, "perk_new.html.j2", {"form": form})
+    return render(request, "perk_new.html", {"form": form})
 
 
 def perk_edit(request, pk):
@@ -91,7 +91,7 @@ def perk_edit(request, pk):
             return redirect("hackathons:index")
     else:
         form = PerkForm(instance=perk)
-    return render(request, "perk_edit.html.j2", {"form": form})
+    return render(request, "perk_edit.html", {"form": form})
 
 
 def sponsorship_new(request):
@@ -105,7 +105,7 @@ def sponsorship_new(request):
             return redirect("hackathons:sponsorships_show", pk=sponsorship.hackathon.pk)
     else:
         form = SponsorshipForm()
-    return render(request, "sponsorship_new.html.j2", {"form": form})
+    return render(request, "sponsorship_new.html", {"form": form})
 
 
 def sponsorship_edit(request, pk):
@@ -120,4 +120,4 @@ def sponsorship_edit(request, pk):
             return redirect("hackathons:sponsorships_show", pk=sponsorship.hackathon.pk)
     else:
         form = SponsorshipForm(instance=sponsorship)
-    return render(request, "sponsorship_edit.html.j2", {"form": form})
+    return render(request, "sponsorship_edit.html", {"form": form})

@@ -1,4 +1,4 @@
-{% extends 'global/base.html.j2' %}
+{% extends 'global/base.html' %}
 
 {% block content %}
 <div class="my-3 my-md-5">
@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for sponsorship in hackathon.sponsorships.all() %}
+                        {% for sponsorship in hackathon.sponsorships.all %}
                         <tr>
                             <td>
                                 <div>
@@ -48,17 +48,17 @@
                                 ${{ sponsorship.contribution }}
                             </td>
                             <td>
-                                {% for tier in sponsorship.tiers.all() %}
+                                {% for tier in sponsorship.tiers.all %}
                                 <span class="tag tag-red">{{ tier.name }}</span>
                                 {% endfor %}
                             </td>
                             <td>
-                                {% for perk in sponsorship.perks.all() %}
+                                {% for perk in sponsorship.perks.all %}
                                 <span class="tag tag-green">{{ perk.name }}</span>
                                 {% endfor %}
                             </td>
                             <td>
-                                <a class="icon" href="{{ url('hackathons:sponsorship_edit', pk=sponsorship.pk) }}">
+                                <a class="icon" href="{% url 'hackathons:sponsorship_edit' sponsorship.pk %}">
                                     <i class="fe fe-edit"></i>
                                 </a>
                             </td>
