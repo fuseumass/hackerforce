@@ -1,13 +1,13 @@
-{% extends 'global/base.html.j2' %}
+{% extends 'global/base.html' %}
 {% block basetitle %}
     <title>Contacts</title>
-{% endblock basetitle%}
+{% endblock %}
 {% block content %}
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Contacts</h3>
         <div class="col text-right">
-            <a class="button" href="{{ url('contacts:new') }}">
+            <a class="button" href="{% url 'contacts:new' %}">
                 <button type="button" class="btn btn-primary ml-auto">New Contact</button>
             </a>
         </div>
@@ -50,7 +50,7 @@
                             </label>
                         </div>
                     </td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.name() }}</a></td>
+                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.name }}</a></td>
                     <td><a href="invoice.html.j2" class="text-inherit">{{ contact.company }}</a></td>
                     <td><a href="invoice.html.j2" class="text-inherit">{{ contact.position }}</a></td>
                     <td><a href="invoice.html.j2" class="text-inherit">{{ contact.phone_number }}</a></td>
@@ -78,7 +78,7 @@
                         </div>
                     </td>
                     <td>
-                        <a class="icon" href="{{ url('contacts:edit', pk=contact.pk) }}">
+                        <a class="icon" href="{% url 'contacts:edit' contact.pk %}">
                             <i class="fe fe-edit"></i>
                         </a>
                     </td>

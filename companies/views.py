@@ -6,12 +6,12 @@ from .forms import CompanyForm
 
 @login_required
 def new(request):
-    return render(request, "new.html.j2")
+    return render(request, "new.html")
 
 @login_required
 def companies(request):
     companies = Company.objects.all()
-    return render(request, "companies.html.j2", context={"companies": companies})
+    return render(request, "companies.html", context={"companies": companies})
 
 @login_required
 def company_new(request):
@@ -24,7 +24,7 @@ def company_new(request):
             return redirect("companies:index")
     else:
         form = CompanyForm()
-    return render(request, "company_new.html.j2", {"form": form})
+    return render(request, "company_new.html", {"form": form})
 
 @login_required
 def company_edit(request, pk):
@@ -38,4 +38,4 @@ def company_edit(request, pk):
             return redirect("companies:index")
     else:
         form = CompanyForm(instance=company)
-    return render(request, "company_edit.html.j2", {"form": form})
+    return render(request, "company_edit.html", {"form": form})

@@ -6,7 +6,7 @@ from companies.models import Company
 
 
 def page404(request):
-    return render(request, "404.html.j2", status=404)
+    return render(request, "404.html", status=404)
 
 
 @login_required
@@ -43,11 +43,12 @@ def dashboard(request):
     ]
     return render(
         request,
-        "dashboard.html.j2",
+        "dashboard.html",
         {
             "current_hackathon": current_hackathon,
             "money_raised": money_raised,
-            "sponsorships": sponsorships,
+            "sponsorships": sponsorships[:5],
             "chart_data": chart,
+            "progress_bar_width": (money_raised / current_hackathon.fundraising_goal * 100),
         },
     )
