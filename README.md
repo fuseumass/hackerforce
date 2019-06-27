@@ -17,7 +17,7 @@ Please read the [markdown cheatsheet](https://github.com/adam-p/markdown-here/wi
 2. Install Docker on your machine. For non-Linux hosts, open the Docker application as well.
 3. Build: `$ docker build -t hacker-force .`
 4. Runserver: `$ docker run -p 8080:8080 -it hacker-force`
-5. Shell: `$ docker exec -it `docker ps --format '{{.ID}}' -f 'ancestor=hacker-force'` /bin/bash`
+5. Shell: ```$ docker exec -it `docker ps --format '{{.ID}}' -f 'ancestor=hacker-force'` /bin/bash```
 6. Log in as `admin` `admin`
 
 ## Environment Setup
