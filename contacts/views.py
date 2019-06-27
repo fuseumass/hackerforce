@@ -7,7 +7,7 @@ from .forms import ContactForm
 @login_required
 def contacts(request):
     contacts = Contact.objects.all()
-    return render(request, "contacts.html.j2", {"contacts": contacts})
+    return render(request, "contacts.html", {"contacts": contacts})
 
 @login_required
 def contact_new(request):
@@ -19,7 +19,7 @@ def contact_new(request):
             return redirect("contacts:index")
     else:
         form = ContactForm()
-    return render(request, "contact_new.html.j2", {"form": form})
+    return render(request, "contact_new.html", {"form": form})
 
 @login_required
 def contact_edit(request, pk):
@@ -32,4 +32,4 @@ def contact_edit(request, pk):
             return redirect("contacts:index")
     else:
         form = ContactForm(instance=contact)
-    return render(request, "contact_edit.html.j2", {"form": form})
+    return render(request, "contact_edit.html", {"form": form})
