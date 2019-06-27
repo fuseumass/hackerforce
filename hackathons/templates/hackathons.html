@@ -1,4 +1,4 @@
-{% extends 'global/base.html.j2' %}
+{% extends 'global/base.html' %}
 
 {% block content %}
 <div class="my-3 my-md-5">
@@ -7,13 +7,13 @@
             <div class="card-header">
                 <h3 class="card-title">Hackathons</h3>
                 <div class="col text-right">
-                    <a class="button" href="{{ url('hackathons:hackathon_new') }}">
+                    <a class="button" href="{% url 'hackathons:hackathon_new' %}">
                         <button type="button" class="btn btn-primary ml-auto">New Hackathon</button>
                     </a>
-                    <a class="button" href="{{ url('hackathons:tier_new') }}">
+                    <a class="button" href="{% url 'hackathons:tier_new' %}">
                         <button type="button" class="btn btn-primary ml-auto">New Tier</button>
                     </a>
-                    <a class="button" href="{{ url('hackathons:perk_new') }}">
+                    <a class="button" href="{% url 'hackathons:perk_new' %}">
                         <button type="button" class="btn btn-primary ml-auto">New Perk</button>
                     </a>
                 </div>
@@ -59,21 +59,21 @@
                                 ${{ hackathon.fundraising_goal }}
                             </td>
                             <td>
-                                {% for tier in hackathon.tiers.all() %}
-                                <a href="{{ url('hackathons:tier_edit', pk=tier.pk) }}">
+                                {% for tier in hackathon.tiers.all %}
+                                <a href="{% url 'hackathons:tier_edit' tier.pk %}">
                                     <span class="tag tag-red">{{ tier.name }}</span>
                                 </a>
                                 {% endfor %}
                             </td>
                             <td>
-                                {% for perk in hackathon.perks.all() %}
-                                <a href="{{ url('hackathons:perk_edit', pk=perk.pk) }}">
+                                {% for perk in hackathon.perks.all %}
+                                <a href="{% url 'hackathons:perk_edit' perk.pk %}">
                                     <span class="tag tag-green">{{ perk.name }}</span>
                                 </a>
                                 {% endfor %}
                             </td>
                             <td>
-                                <a class="icon" href="{{ url('hackathons:hackathon_edit', pk=hackathon.pk) }}">
+                                <a class="icon" href="{% url 'hackathons:hackathon_edit' hackathon.pk %}">
                                     <i class="fe fe-edit"></i>
                                 </a>
                             </td>
