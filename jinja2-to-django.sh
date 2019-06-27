@@ -9,19 +9,24 @@ for i in range(2, len(sys.argv)-1, 2):
 print(t, end='')" "$@"
 }
 
+for file in "$@"; do
+    echo Processing $file
+    NEW=`python3 -c "import sys; print(sys.argv[1].split('.j2')[0], end='')" $file`
 
-NEW=`python3 -c "import sys; print(sys.argv[1].split('.j2')[0], end='')" $1`
+    if [[ "$NEW" == "$file" ]]; then
+        NEW=$file.new
+    fi;
 
-if [[ "$NEW" == "$1" ]]; then
-    NEW=$1.new
-fi;
-
-multi_replace $1 \
-    '{{ ?static\("(.*)"\) ?}}' "{% static '\1' %}" \
-    "{{ ?url\\('(.*)'\\) ?}}" "{% url '\1' %}" \
-    "{% ?endblock (.*) ?%}" "{% endblock %}" \
-    "{{ ?get_static_prefix ?}}" "{{ STATIC_PREFIX }}" \
-    "{% ?extends '(.*).j2' ?%}" "{% extends '\1' %}" \
-    "{% ?include '(.*).j2' ?%}" "{% include '\1' %}" \
-    '{{ (.*) \+ " " \+ (.*) }}' '{{ \1 }} {{ \2 }}' \
-> $NEW
+    multi_replace $file \
+        '{{ ?static\("(.*)"\) ?}}' "{% static '\1' %}" \
+        "{{ ?url\\('(.*)'\\) ?}}" "{% url '\1' %}" \
+        "{{ ?url\\('(.*)', ?pk=(.*)\\) ?}}" "{% url '\1' \2 %}" \
+        "{% ?endblock (.*) ?%}" "{% endblock %}" \
+        "{{ ?get_static_prefix ?}}" "{{ STATIC_PREFIX }}" \
+        "{% ?extends '(.*).j2' ?%}" "{% extends '\1' %}" \
+        "{% ?include '(.*).j2' ?%}" "{% include '\1' %}" \
+        '{{ (.*) \+ " " \+ (.*) }}' '{{ \1 }} {{ \2 }}' \
+        "{% ?for(.*).all\(\) ?%}" "{% for\1.all %}" \
+    > $NEW
+    echo Exported $NEW
+done

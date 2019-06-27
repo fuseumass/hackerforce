@@ -1,16 +1,16 @@
-{% extends 'global/base.html.j2' %}
+{% extends 'global/base.html' %}
 
 {% block basetitle %}
     <title>Settings</title>
-{% endblock basetitle%}
+{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-lg-8">
-        {% include 'cards/form-profile.html.j2' %}
+        {% include 'cards/form-profile.html' %}
     </div>
     <div class="col-lg-4">
-        {% include 'cards/form-email-preferences.html.j2' %}
+        {% include 'cards/form-email-preferences.html' %}
     </div>
 </div>
 {% endblock %}

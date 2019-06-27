@@ -86,7 +86,7 @@ def logout(request):
 
 @login_required
 def settings(request):
-    return render(request, "settings.html.j2")
+    return render(request, "settings.html")
 
 
 @login_required
@@ -96,7 +96,8 @@ def profile_edit(request):
         if form.is_valid():
             profile = form.save(commit=False)
             profile.save()
+            messages.success(request, "Edited profile successfully")
             return redirect("profiles:edit")
     else:
         form = ProfileForm(instance=request.user)
-    return render(request, "profile_edit.html.j2", {"form": form})
+    return render(request, "profile_edit.html", {"form": form})
