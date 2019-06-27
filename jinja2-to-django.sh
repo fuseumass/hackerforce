@@ -17,6 +17,11 @@ if [[ "$NEW" == "$1" ]]; then
 fi;
 
 multi_replace $1 \
-    '{{ static\("(.*)"\) }}' "{% static '\1' %}" \
-    "{{ url\\('(.*)'\\) }}" "{% url '\1' %}" \
-    "{% endblock (.*) %}" "{% endblock %}" > $NEW
+    '{{ ?static\("(.*)"\) ?}}' "{% static '\1' %}" \
+    "{{ ?url\\('(.*)'\\) ?}}" "{% url '\1' %}" \
+    "{% ?endblock (.*) ?%}" "{% endblock %}" \
+    "{{ ?get_static_prefix ?}}" "{{ STATIC_PREFIX }}" \
+    "{% ?extends '(.*).j2' ?%}" "{% extends '\1' %}" \
+    "{% ?include '(.*).j2' ?%}" "{% include '\1' %}" \
+    '{{ (.*) \+ " " \+ (.*) }}' '{{ \1 }} {{ \2 }}' \
+> $NEW

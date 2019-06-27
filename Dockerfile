@@ -4,9 +4,7 @@ WORKDIR /app
 ENV PATH="/root/.local/bin:${PATH}"
 RUN \
   pip install --user pipenv && \
-  pipenv install --system --deploy && \
-  chmod +x ./init.sh && \
-  ./init.sh
+  pipenv install --system --deploy 
 EXPOSE 8080
-CMD python manage.py migrate && \
+CMD chmod +x ./safe_init.sh && ./safe_init.sh && \
   python manage.py runserver 0.0.0.0:8080
