@@ -26,7 +26,7 @@ def register(request):
             # user = authenticate(username=username, password=raw_password)
 
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your hacker-force account'
             message = render_to_string('activation.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -38,7 +38,7 @@ def register(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            messages.info(request, "Thank you for sigining up! Please check your email to activate your account.", extra_tags="alert alert-info")
+            messages.info(request, "Thank you for signing up! Please check your email to activate your account.", extra_tags="alert-info")
             return redirect('login')
             # login_auth(request, user)
             # return redirect("/")
@@ -58,10 +58,10 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login_auth(request, user)
-        messages.success(request, "Thank you for confirming! You may now login.", extra_tags="alert alert-success")
+        messages.success(request, "Thank you for confirming! You may now login.", extra_tags="alert-success")
         return redirect('login')
     else:
-        messages.success(request, "Invalid activation link!", extra_tags="alert alert-danger")
+        messages.info(request, "Invalid activation link!", extra_tags="alert-danger")
         return redirect('login')
 
 def login(request):
@@ -73,9 +73,11 @@ def login(request):
         if user is not None:
             login_auth(request, user)
             return redirect("/")
+        else:
+            messages.info(request, "Invalid username or password", extra_tags="alert-danger")
     else:
         form = AuthenticationFormWithCSS()
-    return render(request, "login.html.j2", {"form": form})
+    return render(request, "login.html", {"form": form})
 
 
 def logout(request):
