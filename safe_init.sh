@@ -1,3 +1,4 @@
+#!/bin/bash
 python manage.py shell -c'from profiles.models import User; User.objects.get(username="admin")';
 if [[ "$?" == "1" ]]; then
   echo Running init script
