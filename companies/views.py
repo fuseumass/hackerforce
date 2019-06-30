@@ -45,7 +45,7 @@ def company_edit(request, pk):
     return render(request, "company_edit.html", {"form": form})
 
 @login_required
-def company_view(request, pk):
+def company_detail(request, pk):
     company = get_object_or_404(Company, pk=pk)
     contacts = Contact.objects.all()
     sponsorships = Sponsorship.objects.all()
