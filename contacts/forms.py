@@ -1,6 +1,6 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
-
+from ckeditor.widgets import CKEditorWidget
 
 from .models import Contact
 from companies.models import Company
@@ -61,6 +61,13 @@ class ContactForm(forms.ModelForm):
             }
         ),
     )
+    notes = forms.CharField(
+        required=False,
+        widget=CKEditorWidget(
+            config_name = 'default',
+            attrs={"placeholder": "Notes"}
+        ),
+    )
 
     class Meta:
         model = Contact
@@ -72,4 +79,5 @@ class ContactForm(forms.ModelForm):
             "email",
             "phone_number",
             "is_warm_contact",
+            "notes",
         )

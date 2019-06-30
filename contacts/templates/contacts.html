@@ -27,12 +27,9 @@
         <table class="table card-table table-vcenter text-nowrap">
             <thead>
                 <tr>
-                    <th class="w-1">Checked</th>
                     <th>Name</th>
                     <th>Company</th>
                     <th>Position</th>
-                    <th>Phone #</th>
-                    <th>Email</th>
                     <th>Contacted</th>
                     <th></th>
                     <th></th>
@@ -41,25 +38,16 @@
             <tbody>
                 {% for contact in contacts %}
                 <tr>
-                    <td>
-                        <div>
-                            <label class="custom-control custom-checkbox custom-control-inline">
-                                <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
-                                    checked="" type="checkbox">
-                                <span class="custom-control-label"></span>
-                            </label>
-                        </div>
-                    </td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.name }}</a></td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.company }}</a></td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.position }}</a></td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.phone_number }}</a></td>
-                    <td><a href="invoice.html.j2" class="text-inherit">{{ contact.email }}</a></td>
+                    <td><a href="{% url 'contacts:view' contact.pk %}" class="text-inherit">
+                        <b>{{ contact.name }}</b>
+                    </a></td>
+                    <td><a href="{% url 'companies:view' contact.company.pk %}" class="text-inherit">{{ contact.company }}</a></td>
+                    <td>{{ contact.position }}</td>
                     <td>
                         {% if contact.is_warm_contact %}
-                        Yes
+                            <span class="status-icon bg-success"></span> Contacted
                         {% else %}
-                        No
+                            <span class="status-icon bg-danger"></span> Uncontacted
                         {% endif %}
                     </td>
                     <td class="text-right">

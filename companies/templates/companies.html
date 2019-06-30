@@ -32,7 +32,6 @@
                 <table class="table card-table table-vcenter text-nowrap">
                     <thead>
                         <tr>
-                            <th class="w-1">Checked</th>
                             <th>Name</th>
                             <th>Industries</th>
                             <th>Size</th>
@@ -46,16 +45,9 @@
                     <tbody>
                         {% for company in companies %}
                         <tr>
-                            <td>
-                                <div>
-                                    <label class="custom-control custom-checkbox custom-control-inline">
-                                        <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
-                                            checked="" type="checkbox">
-                                        <span class="custom-control-label"></span>
-                                    </label>
-                                </div>
-                            </td>
-                            <td><a href="{% url 'companies:view' company.pk %}" class="text-inherit">{{ company.name }}</a></td>
+                            <td><a href="{% url 'companies:view' company.pk %}" class="text-inherit">
+                                <b>{{ company.name }}</b>
+                            </a></td>
                             <td>
                                 {% for industry in company.industries.all %}
                                 <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
@@ -75,7 +67,7 @@
                             <td> {{ company.updated }} </td>
                             <td>
                                 {%if company.status == 'U'%}
-                                <span class="status-icon bg-secondary"></span> Uncontacted
+                                <span class="status-icon bg-danger"></span> Uncontacted
                                 {% endif %}
                                 {%if company.status == 'C'%}
                                 <span class="status-icon bg-warning"></span> Contacted

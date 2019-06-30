@@ -7,4 +7,5 @@ urlpatterns = [
     path("", views.contacts, name="index"),
     path("new", views.contact_new, name="new"),
     path("<int:pk>/edit", views.contact_edit, name="edit"),
+    path("<int:pk>/view", views.contact_detail, name="view"),
 ]

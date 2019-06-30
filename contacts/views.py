@@ -36,3 +36,8 @@ def contact_edit(request, pk):
     else:
         form = ContactForm(instance=contact)
     return render(request, "contact_edit.html", {"form": form})
+
+@login_required
+def contact_detail(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    return render(request, "contact_view.html", {"contact": contact})

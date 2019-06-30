@@ -16,6 +16,7 @@ class Contact(models.Model):
     is_warm_contact = models.BooleanField()
 
     notes = models.TextField(blank=True)
+    updated = models.DateField(auto_now=True)
     # sponsorships field
 
     def __str__(self):
