@@ -55,7 +55,7 @@
                                     </label>
                                 </div>
                             </td>
-                            <td><a href="" class="text-inherit">{{ company.name }}</a></td>
+                            <td><a href="{% url 'companies:view' company.pk %}" class="text-inherit">{{ company.name }}</a></td>
                             <td>
                                 {% for industry in company.industries.all %}
                                 <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
