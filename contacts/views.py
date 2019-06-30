@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .models import Contact
+from .models import Contact, Company
 from .forms import ContactForm
 
 @login_required
@@ -17,6 +17,9 @@ def contact_new(request):
             contact = form.save(commit=False)
             contact.save()
             return redirect("contacts:index")
+    elif request.GET.get("company_id") is not None:
+        company = get_object_or_404(Company, pk=request.GET.get("company_id"))
+        form = ContactForm(initial={"company": company})
     else:
         form = ContactForm()
     return render(request, "contact_new.html", {"form": form})
