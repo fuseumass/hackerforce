@@ -1,37 +1,19 @@
-# COMPSCI 326 Web Programming
+# HackerForce
+`HackerForce` is a tool created to help hackathon organizers manage their sponsorship leads and keep track of contacts, emails and more. Every year hackathon organizers need to contact hundreds of contacts who work at hundreds of companies to request sponsorship. The process for this usually involves various rounds of customized emails to various groupings of companies. This tool aims to create a user friendly interface to see the status of various companies, store the details of certain contacts and overall manage the information required for hackathon sponsorship.
 
-This is the project repository template that your COMPSCI 326 team
-will `fork` and use to begin your semester project work. Please follow
-the instructions carefully in each of the project submission
-requirements for your team to be successful. This is the structure of
-this repository:
+Many aspects of the application are similar to the CRM tool known as SalesForce and the project idea can be simply summed up as a subset of SalesForce features that is open-source and extensible for use by hackathon organizers or anyone else who desires an open-source, free CRM tool.
 
-* `docs` - this folder is used to store all documents that are
-  requested as part of the submission.
-* `src` - this folder is used for your project code.
-
-Please read the [markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) to help you author documents using markdown.
+For set up see below. For more documentation, see the wiki.
 
 ## Docker Setup
 1. Ignore all of the environment setup below.
 2. Install Docker on your machine. For non-Linux hosts, open the Docker application as well.
 3. Build: `$ docker build -t hacker-force .`
-4. Runserver: ```$ docker run -v `pwd`:/app -p 8080:8080 -it hacker-force``` 
+4. Runserver: ```$ docker run -v `pwd`:/app -p 8080:8080 -it hacker-force```
 5. Shell: ```$ docker exec -it `docker ps --format '{{.ID}}' -f 'ancestor=hacker-force'` /bin/bash```
 6. Log in as `admin` `admin`
 
 ## Environment Setup
-
-### Setup the VM after installing Virtualbox and Vagrant
-
-```sh
-# install vm via vagrantfile
-git clone https://github.com/umass-cs-326/326_progenv.git && cd 326_progenv
-vagrant up
-vagrant ssh
-# start in local /vagrant folder by default
-echo "cd /vagrant" >> ~/.bashrc
-```
 
 ### Installing Python 3.6 with Pyenv and installing Pyenv
 ```sh
@@ -54,18 +36,19 @@ pip install --user pipenv
 
 ### Installing dependencies
 ``` sh
-pip install django-heroku django-jinja django-bootstrap4 django-tabler django-widget-tweaks phonenumbers django-phonenumber-field faker
+pip install django-heroku django-bootstrap4 django-tabler django-widget-tweaks phonenumbers django-phonenumber-field faker
 ```
 
 ### Installing the project
 
 ``` sh
-cd /vagrant
-git clone https://github.com/326-queue/project.git && cd project
+git clone https://github.com/hackumass/hackerforce.git && cd hackerforce
 pipenv install
 pipenv shell
-python manage.py migrate
-python manage.py runserver
+init.sh
+
+# Or on windows
+init.bat
 ```
 
 ## Creating new models (or changing existing models)
@@ -76,16 +59,15 @@ Make sure you run the following commands if you do any of the following:
 * Add a model
 
 ``` sh
-rm -f db.sqlite3 # optional, if you need to run this you've
-                 # made breaking changes to the database schema
-python manage.py makemigrations # optional add the name of your
-                                # app as an additional arg
-                                # for example: python manage.py makemigrations profiles
-python manage.py migrate
+init.sh # deletes db.sqlite3
+# Or on windows
+init.bat # deletes db.sqlite3
+
+# For all platforms
 python manage.py runserver
 ```
 
-**It should be obvious but one of the above commands deletes the developement database! Only run it in a dev environment and remember that any objects you've created for development purposes will be deleted!**
+**It should be noted that the above commands will delete your developement database! Only run it in a dev environment and remember that any objects you've created for development purposes will be deleted!**
 
 ## Deployment to Heroku
 Install heroku-cli if you don't have it
@@ -109,9 +91,3 @@ See also, a [ready-made application](https://github.com/heroku/python-getting-st
 
 
 ## License: MIT
-
-## Further Reading
-
-- [Gunicorn](https://warehouse.python.org/project/gunicorn/)
-- [WhiteNoise](https://warehouse.python.org/project/whitenoise/)
-- [dj-database-url](https://warehouse.python.org/project/dj-database-url/)
