@@ -1,0 +1,141 @@
+{% extends 'global/base.html' %}
+{% block basetitle %}
+<title>{{ company.name }}</title>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2> {{ company.name }} </h2>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">General Information</h2>
+            <h2 class="col text-right card-title">Status: &nbsp;
+                {%if company.status == 'U'%}
+                <span class="status-icon bg-secondary"></span> Uncontacted
+                {% endif %}
+                {%if company.status == 'C'%}
+                <span class="status-icon bg-warning"></span> Contacted
+                {% endif %}
+                {%if company.status == 'D'%}
+                <span class="status-icon bg-success"></span> Donated
+                {% endif %}
+            </h2>
+            <div class="col text-right">
+                <a class="button" href="{% url 'companies:edit' company.pk %}">
+                    <button class="btn btn-primary ml-auto">Edit</button>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="required-field">
+                <label><b>Amount Donated: </b></label>
+                ${{ company.donated }}
+            </p>
+            <p class="required-field">
+                <label><b>Company Size: </b></label>
+                {%if company.size == 'S'%}
+                <span class="tag tag-green">Small</span>
+                {% endif %}
+                {%if company.size == 'M'%}
+                <span class="tag tag-yellow">Medium</span>
+                {% endif %}
+                {%if company.size == 'L'%}
+                <span class="tag tag-red">Large</span>
+                {% endif %}
+            </p>
+            <p class="required-field">
+                <label><b>Industries: </b></label>
+                {% for industry in company.industries.all %}
+                <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
+                {% endfor %}
+            </p>
+            <p class="text-right">
+                Last Updated: {{ company.updated }}
+            </p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Associated Contacts</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Phone #</th>
+                            <th>Email</th>
+                            <th>Contacted</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contact in contacts %}
+                        {% if contact.company.pk == company.pk %}
+                        <tr>
+                            <td><a href="" class="text-inherit">{{ contact.name }}</a></td>
+                            <td><a href="" class="text-inherit">{{ contact.position }}</a></td>
+                            <td><a href="" class="text-inherit">{{ contact.phone_number }}</a></td>
+                            <td><a href="" class="text-inherit">{{ contact.email }}</a></td>
+                            <td>
+                                {% if contact.is_warm_contact %}
+                                Yes
+                                {% else %}
+                                No
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="icon" href="{% url 'contacts:edit' contact.pk %}">
+                                    <i class="fe fe-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Associated Sponsorships</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table card-table table-striped table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>Hackathon</th>
+                            <th>Status</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sponsorship in sponsorships %}
+                        {% if sponsorship.company.pk == company.pk %}
+                        <tr>
+                            <td>{{sponsorship.hackathon.name}}</td>
+                            <td>{% if sponsorship.status == "pending" %}
+                                <span class="tag tag-red">Pending</span>
+                                {% else %}
+                                <span class="tag tag-green">Received</span>
+                                {% endif %}
+
+                            </td>
+                            <td>${{sponsorship.contribution}}</td>
+                            <td class="text-nowrap">{{sponsorship.updated_at}}</td>
+                            <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' sponsorship.pk %}"
+                                    class="icon"><i class="fe fe-edit"></i></a></td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
