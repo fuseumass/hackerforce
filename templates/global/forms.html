@@ -1,5 +1,10 @@
 {% extends 'global/base.html' %}
 
+{% block css %}
+  {{ block.super }}
+  {{ form.media }}
+{% endblock %}
+
 {% block content %}
 <form method="POST" class="post-form">{% csrf_token %}
     <div class="card">

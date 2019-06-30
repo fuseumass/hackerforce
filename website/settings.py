@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # HTML
     "django_jinja",
     "widget_tweaks",
+    "ckeditor",
     # Models
     "phonenumber_field",
     ####################
@@ -182,3 +183,14 @@ EMAIL_HOST_USER = "TODO: email host user"
 EMAIL_HOST_PASSWORD = "TODO: email host password"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# CKEditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+    },
+    'basic_fill': {
+        'toolbar': 'Basic',
+        'width': '100%',
+    },
+}

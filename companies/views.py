@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Company
 from contacts.models import Contact
@@ -37,16 +38,19 @@ def company_edit(request, pk):
             company = form.save(commit=True)
             company.industries.set(form.cleaned_data["industries"])
             company.save()
-            return redirect("companies:index")
+            messages.success(request, f"Updated {company.name}")
+            return redirect("companies:view", pk=company.pk)
     else:
         form = CompanyForm(instance=company)
     return render(request, "company_edit.html", {"form": form})
 
 @login_required
-def company_detail(request, pk):
+def company_view(request, pk):
     company = get_object_or_404(Company, pk=pk)
     contacts = Contact.objects.all()
     sponsorships = Sponsorship.objects.all()
-    if request.method == "GET":
-        return render(request, "company_detail.html", context={"company": company, "contacts": contacts, "sponsorships": sponsorships})
-    return redirect("404.html")
+    return render(request, "company_detail.html", context={
+        "company": company,
+        "contacts": contacts,
+        "sponsorships": sponsorships,
+    })

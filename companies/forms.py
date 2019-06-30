@@ -1,4 +1,6 @@
 from django import forms
+
+from ckeditor.widgets import CKEditorWidget
 from .models import Company, Industry
 
 
@@ -13,7 +15,7 @@ class CompanyForm(forms.ModelForm):
     donated = forms.IntegerField(
         required=True,
         widget=forms.TextInput(
-            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Donated"}
+            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Donated", "type": "currency", "step": 0.01}
         ),
     )
     industries = forms.ModelMultipleChoiceField(
@@ -24,8 +26,8 @@ class CompanyForm(forms.ModelForm):
     location = forms.CharField(
         max_length=140,
         required=True,
-        widget=forms.TextInput(
-            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Location"}
+        widget=forms.Textarea(
+            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Location", "rows": 3}
         ),
     )
     status = forms.ChoiceField(
@@ -42,7 +44,14 @@ class CompanyForm(forms.ModelForm):
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Size"}
         ),
     )
+    notes = forms.CharField(
+        required=False,
+        widget=CKEditorWidget(
+            config_name = 'default',
+            attrs={"placeholder": "Notes"}
+        ),
+    )
 
     class Meta:
         model = Company
-        fields = ("name", "donated", "industries", "location", "status", "size")
+        fields = ("name", "donated", "industries", "location", "status", "size", "notes")

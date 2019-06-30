@@ -7,8 +7,7 @@
     <h2> {{ company.name }} </h2>
     <div class="card">
         <div class="card-header">
-            <h2 class="card-title">General Information</h2>
-            <h2 class="col text-right card-title">Status: &nbsp;
+            <h2 class="col card-title">Status: &nbsp;
                 {%if company.status == 'U'%}
                 <span class="status-icon bg-secondary"></span> Uncontacted
                 {% endif %}
@@ -25,32 +24,51 @@
                 </a>
             </div>
         </div>
-        <div class="card-body">
-            <p class="required-field">
-                <label><b>Amount Donated: </b></label>
-                ${{ company.donated }}
-            </p>
-            <p class="required-field">
-                <label><b>Company Size: </b></label>
-                {%if company.size == 'S'%}
-                <span class="tag tag-green">Small</span>
-                {% endif %}
-                {%if company.size == 'M'%}
-                <span class="tag tag-yellow">Medium</span>
-                {% endif %}
-                {%if company.size == 'L'%}
-                <span class="tag tag-red">Large</span>
-                {% endif %}
-            </p>
-            <p class="required-field">
-                <label><b>Industries: </b></label>
-                {% for industry in company.industries.all %}
-                <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
-                {% endfor %}
-            </p>
-            <p class="text-right">
-                Last Updated: {{ company.updated }}
-            </p>
+    </div>
+    <div class="row row-cards">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">General Information</h2>
+                </div>
+                <div class="card-body">
+                    <p class="required-field">
+                        <label><b>Amount Donated: </b></label>
+                        ${{ company.donated }}
+                    </p>
+                    <p class="required-field">
+                        <label><b>Company Size: </b></label>
+                        {%if company.size == 'S'%}
+                        <span class="tag tag-green">Small</span>
+                        {% endif %}
+                        {%if company.size == 'M'%}
+                        <span class="tag tag-yellow">Medium</span>
+                        {% endif %}
+                        {%if company.size == 'L'%}
+                        <span class="tag tag-red">Large</span>
+                        {% endif %}
+                    </p>
+                    <p class="required-field">
+                        <label><b>Industries: </b></label>
+                        {% for industry in company.industries.all %}
+                        <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
+                        {% endfor %}
+                    </p>
+                    <p class="text-right">
+                        Last Updated: {{ company.updated }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="card flex-grow-1">
+                <div class="card-header">
+                    <h2 class="card-title">Notes</h2>
+                </div>
+                <div class="card-body">
+                    {{ company.notes | safe }}
+                </div>
+            </div>
         </div>
     </div>
     <div class="card">
