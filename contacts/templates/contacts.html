@@ -44,9 +44,9 @@
                     <td><a href="{% url 'companies:view' contact.company.pk %}" class="text-inherit">{{ contact.company }}</a></td>
                     <td>{{ contact.position }}</td>
                     <td>
-                        {% if contact.is_warm_contact %}
+                        {% if contact.status == 'C' %}
                             <span class="status-icon bg-success"></span> Contacted
-                        {% else %}
+                        {% elif contact.status == 'U' %}
                             <span class="status-icon bg-danger"></span> Uncontacted
                         {% endif %}
                     </td>

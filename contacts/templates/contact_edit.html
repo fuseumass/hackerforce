@@ -5,3 +5,11 @@
 {% block title %}
 Edit Contact
 {% endblock %}
+{% block formheader %}
+{{ block.super }}
+<div class="col text-right">
+    <a class="button" href="{% url 'contacts:view' contact.pk %}">
+        <button class="btn btn-primary ml-auto" type="button">Back</button>
+    </a>
+</div>
+{% endblock %}

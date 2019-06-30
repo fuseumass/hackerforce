@@ -68,7 +68,7 @@ for i in range(20):
         position=fake.job(),
         email=fake.email(),
         phone_number=fake.phone_number(),
-        is_warm_contact=fake.boolean(),
+        status=random.choice(Contact.STATUSES)[0],
     )
     contact.save()
     contacts.append(contact)

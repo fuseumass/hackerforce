@@ -42,13 +42,13 @@ def company_edit(request, pk):
             return redirect("companies:view", pk=company.pk)
     else:
         form = CompanyForm(instance=company)
-    return render(request, "company_edit.html", {"form": form})
+    return render(request, "company_edit.html", {"form": form, "company": company})
 
 @login_required
 def company_detail(request, pk):
     company = get_object_or_404(Company, pk=pk)
-    contacts = Contact.objects.all()
-    sponsorships = Sponsorship.objects.all()
+    contacts = Contact.objects.filter(company=company)
+    sponsorships = Sponsorship.objects.filter(company=company)
     return render(request, "company_detail.html", context={
         "company": company,
         "contacts": contacts,

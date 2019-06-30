@@ -95,18 +95,19 @@
                     </thead>
                     <tbody>
                         {% for contact in contacts %}
-                        {% if contact.company.pk == company.pk %}
                         <tr>
-                            <td><a href="" class="text-inherit">{{ contact.name }}</a></td>
+                            <td><a href="{% url 'contacts:view' contact.pk %}" class="text-inherit">
+                                <b>{{ contact.name }}</b>
+                            </a></td>
                             <td><a href="" class="text-inherit">{{ contact.position }}</a></td>
                             <td><a href="" class="text-inherit">{{ contact.phone_number }}</a></td>
                             <td><a href="" class="text-inherit">{{ contact.email }}</a></td>
                             <td>
-                                {% if contact.is_warm_contact %}
-                                Yes
-                                {% else %}
-                                No
-                                {% endif %}
+                            {% if contact.status == 'C' %}
+                                <span class="status-icon bg-success"></span> Contacted
+                            {% elif contact.status == 'U' %}
+                                <span class="status-icon bg-danger"></span> Uncontacted
+                            {% endif %}
                             </td>
                             <td>
                                 <a class="icon" href="{% url 'contacts:edit' contact.pk %}">
@@ -114,7 +115,6 @@
                                 </a>
                             </td>
                         </tr>
-                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -139,9 +139,8 @@
                     </thead>
                     <tbody>
                         {% for sponsorship in sponsorships %}
-                        {% if sponsorship.company.pk == company.pk %}
                         <tr>
-                            <td>{{sponsorship.hackathon.name}}</td>
+                            <td><b>{{sponsorship.hackathon.name}}</b></td>
                             <td>{% if sponsorship.status == "pending" %}
                                 <span class="tag tag-red">Pending</span>
                                 {% else %}
@@ -154,7 +153,6 @@
                             <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' sponsorship.pk %}"
                                     class="icon"><i class="fe fe-edit"></i></a></td>
                         </tr>
-                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>

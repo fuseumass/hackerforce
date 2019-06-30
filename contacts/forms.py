@@ -61,6 +61,13 @@ class ContactForm(forms.ModelForm):
             }
         ),
     )
+    status = forms.ChoiceField(
+        required=True,
+        choices=(Contact.STATUSES),
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Status"}
+        ),
+    )
     notes = forms.CharField(
         required=False,
         widget=CKEditorWidget(
@@ -78,6 +85,6 @@ class ContactForm(forms.ModelForm):
             "position",
             "email",
             "phone_number",
-            "is_warm_contact",
+            "status",
             "notes",
         )

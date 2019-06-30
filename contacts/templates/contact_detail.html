@@ -8,9 +8,9 @@
     <div class="card">
         <div class="card-header">
             <h2 class="col card-title">Status: &nbsp;
-                {% if contact.is_warm_contact %}
+                {% if contact.status == 'C' %}
                     <span class="status-icon bg-success"></span> Contacted
-                {% else %}
+                {% elif contact.status == 'U' %}
                     <span class="status-icon bg-danger"></span> Uncontacted
                 {% endif %}
             </h2>
@@ -49,6 +49,14 @@
                         <label><b>Position: </b></label>
                         {{ contact.position }}
                     </p>
+                    <p class="required-field">
+                        <label><b>Email: </b></label>
+                        <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                    </p>
+                    <p class="required-field">
+                            <label><b>Phone Number: </b></label>
+                            <a href="mailto:{{ contact.phone_number }}">{{ contact.phone_number }}</a>
+                        </p>
                     <p class="text-right">
                         Last Updated: {{ contact.updated }}
                     </p>

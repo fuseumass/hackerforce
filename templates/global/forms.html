@@ -9,10 +9,12 @@
 <form method="POST" class="post-form">{% csrf_token %}
     <div class="card">
         <div class="card-header">
+        {% block formheader %}
             <h3 class="card-title">
                 {% block title %}
                 {% endblock %}
             </h3>
+        {% endblock %}
         </div>
         <div class="card-body">
             <div class="table-responsive">

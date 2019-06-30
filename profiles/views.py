@@ -38,7 +38,7 @@ def register(request):
                         mail_subject, message, to=[to_email]
             )
             email.send()
-            messages.info(request, "Thank you for signing up! Please check your email to activate your account.", extra_tags="alert-info")
+            messages.info(request, "Thank you for signing up! Please check your email to activate your account.", extra_tags="info")
             return redirect('login')
             # login_auth(request, user)
             # return redirect("/")
@@ -58,10 +58,10 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login_auth(request, user)
-        messages.success(request, "Thank you for confirming! You may now login.", extra_tags="alert-success")
+        messages.success(request, "Thank you for confirming! You may now login.", extra_tags="success")
         return redirect('login')
     else:
-        messages.info(request, "Invalid activation link!", extra_tags="alert-danger")
+        messages.error(request, "Invalid activation link!", extra_tags="danger")
         return redirect('login')
 
 def login(request):
@@ -74,7 +74,7 @@ def login(request):
             login_auth(request, user)
             return redirect("/")
         else:
-            messages.info(request, "Invalid username or password", extra_tags="alert-danger")
+            messages.error(request, "Invalid username or password", extra_tags="danger")
     else:
         form = AuthenticationFormWithCSS()
     return render(request, "login.html", {"form": form})
