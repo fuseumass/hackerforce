@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from hackathons.models import Sponsorship, Hackathon
 from companies.models import Company
@@ -14,6 +15,7 @@ def dashboard(request):
     if request.user.is_authenticated and request.user.current_hackathon:
         current_hackathon = request.user.current_hackathon
     else:
+        messages.info(request, "You need to select a default hackathon. This is configurable on your profile page. Until this is set, the most recent hackathon will be displayed.")
         current_hackathon = Hackathon.latest()
 
     sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon).order_by(
