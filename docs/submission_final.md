@@ -228,10 +228,7 @@ Show page for emails that have already been sent.
 
 ## Data Model
 
-<<<<<<< HEAD
 ![data_model](imgs/data_model.jpg)
-=======
-![data_model](imgs/data_model.png)
 
 ### Profiles
 
@@ -278,8 +275,6 @@ Holds information on contacts for a given company. Has a many-one relationship w
 **Email**
 
 Stores all relevant information needed to send an email like subject, body, which companies it should be sent to and when it's scheduled to be sent. Has a many-one relationship with companies and users.
-
->>>>>>> docs(final): finish final submission writeup
 
 ## URL Routes
 
@@ -420,12 +415,8 @@ Users are authenticated using the django auth api. A user has to be logged in to
 
 ## Team Choice
 
-<<<<<<< HEAD
-For a team choice element, we implemented email verification as an additional step to authenticate new users. When a new user completes the sign up form, an email will be sent to the email address given prompting the user to click on a link. Their account will not be fully verified until they do so.
-=======
-For our team choice we added functionality to fully deploy to the application to heroku. You can find it hosted [here](https://hacker-force.herokuapp.com/)We also completed email functionality allowing us to send emails through the application itself. Specifically we added registration email verification, which involved configuring the django app to use a service called sendgrid for emailing using a heroku extension, and then adding the email as a template and sending it via the view.
->>>>>>> docs(final): finish final submission writeup
+For our team choice we added functionality to fully deploy to the application to heroku. You can find it hosted [here](https://hacker-force.herokuapp.com/). We also completed email functionality allowing us to send emails through the application itself. Specifically we added registration email verification, which involved configuring the django app to use a service called sendgrid for emailing using a heroku extension, and then adding the email as a template and sending it via the view. When a new user completes the sign up form, an email will be sent to the email address given prompting the user to click on a link. Their account will not be fully verified until they do so.
 
 ## Conclusion
 
-We had an overall successful experience during the run of this course building our webapp, despite some setbacks. We were down a team member from the beginning, but because we all had experience with either web development or software engineering we managed to stay ahead of the curve for most of the required steps. We initially layed the groundwork to host the website on heroku during the first submission, so we already had a fully routed working django app by the time we started to make the actual mockup html pages. We also relied heavily on the css library tabler to make our website look good with minimal effort on our end (aside from a few problems related to importing the library in the first place). We built out the forms pages at the same times as we were making the models, and linked those together using the handy django forms api, along with using base form templates to save on time bulding individual html pages. During the final stretch we were able to implement an email service and we fixed up all the bugs we had been having. Early on we decided to switch templating engines from the base django one to jinja2, which turned out to be a mistake as we barely used the extra tools that it afforded us and it overcomplicated importing python functions into the templates. Making a custom user model also turned out to be somewhat tricky as we misunderstood how the auth api worked initially. We also had problems with importing our css library, as we first tried using a django library that included it that turned out to be an incomplete implementation and was msotly not working. We added the css library to our assets, but then had to fix some of the files, for example we didn't have jquery working until the last two weeks of the project because we had to go in and fix some of the js files in the library to properly work with django routes. We learned a lot this semester because we made sure that everyone on the team got to be involved making all the different parts of the django app, so while we may not be experts, we have a solid grasp on how to build our own websites in the future.W e weren't able to make it through every feature we wanted, but we're hoping to continue working on the project after this semester and make it a fully featured site.
+We had an overall successful experience during the run of this course building our webapp, despite some setbacks. We were down a team member from the beginning, but because we all had experience with either web development or software engineering we managed to stay ahead of the curve for most of the required steps. We initially layed the groundwork to host the website on heroku during the first submission, so we already had a fully routed working django app by the time we started to make the actual mockup html pages. We also relied heavily on the css library tabler to make our website look good with minimal effort on our end (aside from a few problems related to importing the library in the first place). We built out the forms pages at the same times as we were making the models, and linked those together using the handy django forms api, along with using base form templates to save on time bulding individual html pages. During the final stretch we were able to implement an email service and we fixed up all the bugs we had been having. Early on we decided to switch templating engines from the base django one to jinja2, which turned out to be a mistake as we barely used the extra tools that it afforded us and it overcomplicated importing python functions into the templates. Making a custom user model also turned out to be somewhat tricky as we misunderstood how the auth api worked initially. We also had problems with importing our css library, as we first tried using a django library that included it that turned out to be an incomplete implementation and was msotly not working. We added the css library to our assets, but then had to fix some of the files, for example we didn't have jquery working until the last two weeks of the project because we had to go in and fix some of the js files in the library to properly work with django routes. We learned a lot this semester because we made sure that everyone on the team got to be involved making all the different parts of the django app, so while we may not be experts, we have a solid grasp on how to build our own websites in the future. We weren't able to make it through every feature we wanted, but we're hoping to continue working on the project after this semester and make it a fully featured site.
