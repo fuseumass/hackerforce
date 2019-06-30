@@ -14,6 +14,8 @@ class Contact(models.Model):
     email = models.EmailField()
     phone_number = PhoneNumberField(blank=True)
     is_warm_contact = models.BooleanField()
+
+    notes = models.TextField(blank=True)
     # sponsorships field
 
     def __str__(self):

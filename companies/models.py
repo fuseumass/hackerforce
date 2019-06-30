@@ -31,6 +31,7 @@ class Company(models.Model):
     location = models.CharField(max_length=140, blank=True)
     status = models.CharField(max_length=1, choices=STATUSES)
     size = models.CharField(max_length=1, choices=SIZES)
+    notes = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
     def __str__(self):
