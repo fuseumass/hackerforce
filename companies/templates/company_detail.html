@@ -56,6 +56,11 @@
     <div class="card">
         <div class="card-header">
             <h2 class="card-title">Associated Contacts</h2>
+            <div class="col text-right">
+                <a class="button" href="{% url 'contacts:new' %}?company_id={{ company.id }}">
+                    <button type="button" class="btn btn-primary ml-auto">New Contact</button>
+                </a>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
