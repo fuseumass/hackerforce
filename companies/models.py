@@ -26,10 +26,10 @@ class Company(models.Model):
     name = models.CharField(
         max_length=140, help_text='enter a company name (e.g. "Amazon")'
     )
-    donated = models.IntegerField()
+    donated = models.IntegerField() # TODO: delete!
     industries = models.ManyToManyField(Industry)
     location = models.CharField(max_length=140, blank=True)
-    status = models.CharField(max_length=1, choices=STATUSES)
+    status = models.CharField(max_length=1, choices=STATUSES) # TODO: delete!
     size = models.CharField(max_length=1, choices=SIZES)
     notes = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)

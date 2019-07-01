@@ -115,6 +115,10 @@
                                 </a>
                             </td>
                         </tr>
+                        {% empty %}
+                        <tr><td colspan=6>
+                        No contacts.
+                        </td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -150,9 +154,13 @@
                             </td>
                             <td>${{sponsorship.contribution}}</td>
                             <td class="text-nowrap">{{sponsorship.updated_at}}</td>
-                            <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' h.pk sponsorship.pk %}"
+                            <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' sponsorship.pk %}"
                                     class="icon"><i class="fe fe-edit"></i></a></td>
                         </tr>
+                        {% empty %}
+                        <tr><td colspan=4>
+                        No sponsorships.
+                        </td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
