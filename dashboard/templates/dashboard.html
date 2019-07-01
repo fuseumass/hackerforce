@@ -103,7 +103,7 @@
                             </td>
                             <td>${{sponsorship.contribution}}</td>
                             <td class="text-nowrap">{{sponsorship.updated_at}}</td>
-                            <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' sponsorship.pk %}" class="icon"><i
+                            <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' sponsorship.hackathon.pk sponsorship.pk %}" class="icon"><i
                                         class="fe fe-edit"></i></a></td>
                         </tr>
                         {% endfor %}

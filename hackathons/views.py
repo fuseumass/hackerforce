@@ -9,19 +9,14 @@ def hackathons(request):
     return render(request, "hackathons.html", {"hackathons": hackathons})
 
 
-def hackathon_detail(request, pk):
-    hackathon = get_object_or_404(Hackathon, pk=pk)
+def hackathon_detail(request, h_pk):
+    hackathon = get_object_or_404(Hackathon, pk=h_pk)
     return render(request, "hackathon_detail.html", {"hackathon": hackathon})
 
 
-def sponsorships_show(request, pk):
-    # hackathon = get_object_or_404(Hackathon, pk=pk)
-    if request.user.is_authenticated and request.user.current_hackathon:
-        current_hackathon = request.user.current_hackathon
-    else:
-        messages.info(request, "You need to select a default hackathon. This is configurable on your profile page. Until this is set, the most recent hackathon's sponsorships will be displayed.")
-        current_hackathon = Hackathon.latest()
-    return render(request, "sponsorships_show.html", {"hackathon": current_hackathon})
+def sponsorships_show(request, h_pk):
+    hackathon = get_object_or_404(Hackathon, pk=h_pk)
+    return render(request, "sponsorships_show.html", {"hackathon": hackathon})
 
 
 def hackathon_new(request):
@@ -36,8 +31,8 @@ def hackathon_new(request):
     return render(request, "hackathon_new.html", {"form": form})
 
 
-def hackathon_edit(request, pk):
-    hackathon = get_object_or_404(Hackathon, pk=pk)
+def hackathon_edit(request, h_pk):
+    hackathon = get_object_or_404(Hackathon, pk=h_pk)
     if request.method == "POST":
         form = HackathonForm(request.POST, instance=hackathon)
         if form.is_valid():
@@ -113,8 +108,8 @@ def sponsorship_new(request):
     return render(request, "sponsorship_new.html", {"form": form})
 
 
-def sponsorship_edit(request, pk):
-    sponsorship = get_object_or_404(Sponsorship, pk=pk)
+def sponsorship_edit(request, h_pk, pk):
+    sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, pk=pk)
     if request.method == "POST":
         form = SponsorshipForm(request.POST, instance=sponsorship)
         if form.is_valid():
@@ -127,6 +122,6 @@ def sponsorship_edit(request, pk):
         form = SponsorshipForm(instance=sponsorship)
     return render(request, "sponsorship_edit.html", {"form": form})
 
-def sponsorship_detail(request, pk):
-    sponsorship = get_object_or_404(Sponsorship, pk=pk)
+def sponsorship_detail(request, h_pk, pk):
+    sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, pk=pk)
     return render(request, "sponsorship_detail.html", {"sponsorship": sponsorship})

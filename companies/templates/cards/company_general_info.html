@@ -1,0 +1,21 @@
+<p class="required-field">
+    <label><b>Company Size: </b></label>
+    {%if company.size == 'S'%}
+    <span class="tag tag-green">Small</span>
+    {% endif %}
+    {%if company.size == 'M'%}
+    <span class="tag tag-yellow">Medium</span>
+    {% endif %}
+    {%if company.size == 'L'%}
+    <span class="tag tag-red">Large</span>
+    {% endif %}
+</p>
+<p class="required-field">
+    <label><b>Industries: </b></label>
+    {% for industry in company.industries.all %}
+    <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
+    {% endfor %}
+</p>
+<p class="text-right">
+    Last Updated: {{ company.updated }}
+</p>
