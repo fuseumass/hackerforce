@@ -8,12 +8,12 @@
     <div class="card-header">
         <h3 class="card-title">Contacts</h3>
         <div class="col text-right">
-            <a class="button" href="{% url 'contacts:new' h.pk %}">
+            <a class="button" href="{% url 'contacts:new' %}">
                 <button type="button" class="btn btn-primary ml-auto">New Contact</button>
             </a>
         </div>
         <div class="col-lg-3 ml-auto">
-            <form action="{% url 'contacts:index' h.pk %}" method="GET">
+            <form action="{% url 'contacts:index' %}" method="GET">
                 <div class="row gutters-xs">
                     <div class="col">
                         <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
@@ -40,10 +40,10 @@
             <tbody>
                 {% for contact in contacts %}
                 <tr>
-                    <td><a href="{% url 'contacts:view' h.pk contact.pk %}" class="text-inherit">
+                    <td><a href="{% url 'contacts:view' contact.pk %}" class="text-inherit">
                         <b>{{ contact.name }}</b>
                     </a></td>
-                    <td><a href="{% url 'companies:view' h.pk contact.company.pk %}" class="text-inherit">{{ contact.company }}</a></td>
+                    <td><a href="{% url 'companies:view' contact.company.pk %}" class="text-inherit">{{ contact.company }}</a></td>
                     <td>{{ contact.position }}</td>
                     <td>
                         {% if contact.status == 'C' %}
@@ -68,7 +68,7 @@
                         </div>
                     </td>
                     <td>
-                        <a class="icon" href="{% url 'contacts:edit' h.pk contact.pk %}">
+                        <a class="icon" href="{% url 'contacts:edit' contact.pk %}">
                             <i class="fe fe-edit"></i>
                         </a>
                     </td>

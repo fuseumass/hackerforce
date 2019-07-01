@@ -9,8 +9,7 @@ from .models import Contact, Company
 from .forms import ContactForm
 
 @login_required
-def contacts(request, h_pk):
-    h = get_object_or_404(Hackathon, pk=h_pk)
+def contacts(request):
     q = request.GET.get("q")
     if q:
         contacts = Contact.objects.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(company__name__icontains=q))
@@ -27,15 +26,14 @@ def contacts(request, h_pk):
     return render(request, "contacts.html", {"contacts": contacts})
 
 @login_required
-def contact_new(request, h_pk):
-    h = get_object_or_404(Hackathon, pk=h_pk)
+def contact_new(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
             contact = form.save(commit=False)
             contact.save()
             messages.success(request, "Added contact")
-            return redirect("contacts:index", h_pk=h_pk)
+            return redirect("contacts:index")
     elif request.GET.get("company_id") is not None:
         company = get_object_or_404(Company, pk=request.GET.get("company_id"))
         form = ContactForm(initial={"company": company})
@@ -44,8 +42,7 @@ def contact_new(request, h_pk):
     return render(request, "contact_new.html", {"form": form})
 
 @login_required
-def contact_edit(request, h_pk, pk):
-    h = get_object_or_404(Hackathon, pk=h_pk)
+def contact_edit(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     if request.method == "POST":
         form = ContactForm(request.POST, instance=contact)
@@ -53,13 +50,12 @@ def contact_edit(request, h_pk, pk):
             contact = form.save(commit=False)
             contact.save()
             messages.success(request, "Updated contact")
-            return redirect("contacts:view", h_pk=h_pk, pk=contact.pk)
+            return redirect("contacts:view", pk=contact.pk)
     else:
         form = ContactForm(instance=contact)
     return render(request, "contact_edit.html", {"form": form, "contact": contact})
 
 @login_required
-def contact_detail(request, h_pk, pk):
-    h = get_object_or_404(Hackathon, pk=h_pk)
+def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
     return render(request, "contact_detail.html", {"contact": contact})

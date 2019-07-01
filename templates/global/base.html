@@ -18,6 +18,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
     {% block basetitle %}
     {% endblock %}
+    <style type="text/css">
+    .dashboard-nav-text {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    </style>
     <link href="{% static 'tabler/css/dashboard.css' %}" rel="stylesheet" />
     <link href="{% static 'tabler/plugins/charts-c3/plugin.css' %}" rel="stylesheet" />
     <link href="{% static 'tabler/plugins/maps-google/plugin.css' %}" rel="stylesheet" />

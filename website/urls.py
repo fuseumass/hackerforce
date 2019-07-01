@@ -28,9 +28,9 @@ from profiles.views import register, login, logout
 urlpatterns = [
     path("", include("dashboard.urls")),
     path("admin/", admin.site.urls),
-    path("hackathons/", include("hackathons.urls")),
-    path("h/<int:h_pk>/companies/", include("companies.urls")),
-    path("h/<int:h_pk>/contacts/", include("contacts.urls")),
+    path("h/", include("hackathons.urls")),
+    path("global/companies/", include("companies.urls")),
+    path("global/contacts/", include("contacts.urls")),
     path("email/", include("emails.urls")),
     path("settings/", include("profiles.urls")),
     path("register/", register, name="register"),

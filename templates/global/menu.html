@@ -44,10 +44,17 @@
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     {% if h %}
-                    <li class="nav-item">
+                    <li class="nav-item" style="width: 175px">
                         <a href="{% url 'dashboard:view' h.pk %}" class="nav-link text-default">
                             <i class="fe fe-home"></i>
-                            <b>{{ h }}</b>
+                            <b class="dashboard-nav-text">{{ h }}</b>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item" style="width: 175px">
+                        <a href="{% url 'dashboard:index' %}" class="nav-link text-default">
+                            <i class="fe fe-home"></i>
+                            <b class="dashboard-nav-text">Global</b>
                         </a>
                     </li>
                     {% endif %}
@@ -57,20 +64,18 @@
                             Hackathons
                         </a>
                     </li>
-                    {% if h %}
                     <li class="nav-item">
-                        <a href="{% url 'contacts:index' h.pk %}" class="nav-link">
+                        <a href="{% url 'contacts:index' %}" class="nav-link">
                             <i class="fe fe-users"></i>
                             Contacts
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'companies:index' h.pk %}" class="nav-link">
+                        <a href="{% url 'companies:index' %}" class="nav-link">
                             <i class="fe fe-share-2"></i>
                             Companies
                         </a>
                     </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a href="{% url 'emails:index' %}" class="nav-link">
                             <i class="fe fe-mail"></i>

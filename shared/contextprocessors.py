@@ -6,8 +6,5 @@ def fill_current_hackathon_as_h(request):
     try:
         h = request.hackathon
     except AttributeError:
-        try:
-            h = request.user.current_hackathon
-        except AttributeError:
-            pass
+        pass
     return {"h": h}
