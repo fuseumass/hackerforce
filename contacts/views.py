@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from .models import Contact, Company
 from .forms import ContactForm
 
 @login_required
 def contacts(request):
-    contacts = Contact.objects.all()
+    paginator = Paginator(Contact.objects.all(), 25)
+    page = request.GET.get("page")
+    contacts = paginator.get_page(page)
     return render(request, "contacts.html", {"contacts": contacts})
 
 @login_required

@@ -40,7 +40,7 @@ for t in colors.keys():
 
 print("Generating companies...")
 companies = []
-for i in range(10):
+for i in range(50):
     company = Company(
         name=fake.company(),
         location=fake.address(),
@@ -60,7 +60,7 @@ for i in range(10):
 
 print("Generating contacts...")
 contacts = []
-for i in range(20):
+for i in range(50):
     contact = Contact(
         first_name=fake.first_name(),
         last_name=fake.last_name(),
