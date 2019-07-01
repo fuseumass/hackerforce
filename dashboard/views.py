@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -9,14 +9,19 @@ from companies.models import Company
 def page404(request):
     return render(request, "404.html", status=404)
 
-
 @login_required
-def dashboard(request):
+def dashboard_index(request):
     if request.user.is_authenticated and request.user.current_hackathon:
         current_hackathon = request.user.current_hackathon
     else:
         messages.info(request, "You need to select a default hackathon. This is configurable on your profile page. Until this is set, the most recent hackathon will be displayed.")
         current_hackathon = Hackathon.latest()
+
+    return redirect("dashboard:view", pk=current_hackathon.pk)
+
+@login_required
+def dashboard(request, pk):
+    current_hackathon = get_object_or_404(Hackathon, pk=pk)
 
     sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon).order_by(
         "updated_at"

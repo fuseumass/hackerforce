@@ -19,8 +19,9 @@ for i in range(10):
         last_name=fake.last_name(),
         email=fake.email(),
         username=username,
-        password=username,
     )
+    user.save()
+    user.set_password(username)
     user.save()
     users.append(user)
 
