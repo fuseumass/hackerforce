@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en" dir="ltr">
 
@@ -66,7 +67,7 @@
         baseUrl: '.'
     });
     // find the static_url
-    var static_url = "{{ STATIC_PREFIX }}";
+    var static_url = "{% get_static_prefix %}";
 </script>
 <script src="{% static 'tabler/js/dashboard.js' %}"></script>
 <script src="{% static 'tabler/plugins/charts-c3/plugin.js' %}"></script>

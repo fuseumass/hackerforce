@@ -80,5 +80,12 @@
 </div>
 {% endblock %}
 {% block js %}
+{{ block.super }}
 <script src="{% static 'js/email.js' %}"></script>
+
+<script type="text/javascript">
+require(["selectize"], function() {
+    $("#id_to").selectize();
+});
+</script>
 {% endblock %}
