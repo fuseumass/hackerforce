@@ -126,3 +126,7 @@ def sponsorship_edit(request, pk):
     else:
         form = SponsorshipForm(instance=sponsorship)
     return render(request, "sponsorship_edit.html", {"form": form})
+
+def sponsorship_detail(request, pk):
+    sponsorship = get_object_or_404(Sponsorship, pk=pk)
+    return render(request, "sponsorship_detail.html", {"sponsorship": sponsorship})

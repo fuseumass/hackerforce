@@ -47,13 +47,11 @@ class Sponsorship(models.Model):
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name="sponsorships"
     )
-
     contribution = models.IntegerField()
     status = models.CharField(max_length=12, choices=STATUSES)
-
     tier = models.ForeignKey(Tier, related_name="sponsorships", on_delete=models.SET_NULL, null=True)
-
     perks = models.ManyToManyField(Perk, blank=True)
+    notes = models.TextField(blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

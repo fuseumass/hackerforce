@@ -38,7 +38,7 @@
                     <tbody>
                         {% for sponsorship in hackathon.sponsorships.all %}
                         <tr>
-                            <td><a href="" class="text-inherit">{{ sponsorship.company }}</a></td>
+                            <td><a href="{% url 'hackathons:sponsorship_detail' sponsorship.pk %}" class="text-inherit">{{ sponsorship.company }}</a></td>
                             <td>{{ sponsorship.status }}</td>
                             <td>
                                 ${{ sponsorship.contribution }}

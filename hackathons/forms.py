@@ -2,7 +2,7 @@ from django import forms
 
 from .models import Tier, Perk, Hackathon, Sponsorship
 from companies.models import Company
-
+from ckeditor.widgets import CKEditorWidget
 
 class HackathonForm(forms.ModelForm):
     name = forms.CharField(
@@ -133,7 +133,15 @@ class SponsorshipForm(forms.ModelForm):
         widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
     )
 
+    notes = forms.CharField(
+        required=False,
+        widget=CKEditorWidget(
+            config_name = 'default',
+            attrs={"placeholder": "Notes"}
+        ),
+    )
+
     class Meta:
         model = Sponsorship
-        fields = ("hackathon", "company", "contribution", "status", "tier", "perks")
+        fields = ("hackathon", "company", "contribution", "status", "tier", "perks", "notes")
 
