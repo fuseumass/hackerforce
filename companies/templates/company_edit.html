@@ -8,7 +8,7 @@ Edit Company
 {% block formheader %}
 {{ block.super }}
 <div class="col text-right">
-    <a class="button" href="{% url 'companies:view' company.pk %}">
+    <a class="button" href="{% url 'companies:view' h.pk company.pk %}">
         <button class="btn btn-primary ml-auto" type="button">Back</button>
     </a>
 </div>

@@ -17,11 +17,11 @@ def dashboard_index(request):
         messages.info(request, "You need to select a default hackathon. This is configurable on your profile page. Until this is set, the most recent hackathon will be displayed.")
         current_hackathon = Hackathon.latest()
 
-    return redirect("dashboard:view", pk=current_hackathon.pk)
+    return redirect("dashboard:view", h_pk=current_hackathon.pk)
 
 @login_required
-def dashboard(request, pk):
-    current_hackathon = get_object_or_404(Hackathon, pk=pk)
+def dashboard(request, h_pk):
+    current_hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
     sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon).order_by(
         "updated_at"

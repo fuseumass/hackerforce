@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     ####################
     ### Project Apps ###
     ####################
-    "templatetags",
+    "shared",
     "companies",
     "contacts",
     "dashboard",
@@ -72,13 +72,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "shared.middleware.CurrentHackathonMiddleware",
 ]
 
 ROOT_URLCONF = "website.urls"
 
 TEMPLATES = [
     {
-        "BACKEND": "django_jinja.backend.Jinja2",
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -90,22 +91,9 @@ TEMPLATES = [
                 "django.template.context_processors.media",
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
-                "django.contrib.messages.context_processors.messages",
-            ],
-            "match_extension": ".html.j2",
-            "debug": DEBUG,
-        },
-    },
-    {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "shared.contextprocessors.fill_current_hackathon_as_h",
             ],
             'builtins': [
                 'django.contrib.staticfiles.templatetags.staticfiles'

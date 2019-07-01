@@ -54,7 +54,7 @@
                                     </label>
                                 </div>
                             </td>
-                            <td><a href="{% url 'hackathons:view' hackathon.pk %}" class="text-inherit">{{ hackathon.name }}</a></td>
+                            <td><a href="{% url 'dashboard:view' hackathon.pk %}" class="text-inherit">{{ hackathon.name }}</a></td>
                             <td>{{ hackathon.date }}</td>
                             <td>
                                 ${{ hackathon.fundraising_goal | intcomma }}

@@ -15,7 +15,7 @@
                 {% endif %}
             </h2>
             <div class="col text-right">
-                <a class="button" href="{% url 'contacts:edit' contact.pk %}">
+                <a class="button" href="{% url 'contacts:edit' h.pk contact.pk %}">
                     <button class="btn btn-primary ml-auto">Edit</button>
                 </a>
             </div>
@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <p class="required-field">
                         <label><b>Company: </b></label>
-                        <a href="{% url 'companies:view' contact.company.pk %}">
+                        <a href="{% url 'companies:view' h.pk contact.company.pk %}">
                             {{ contact.company.name }}
                         </a> {% if contact.company.size %}<br />{% endif %}
                         {% if contact.company.size == 'S'%}

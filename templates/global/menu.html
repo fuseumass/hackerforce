@@ -43,30 +43,34 @@
             </div>
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                    {% if h %}
                     <li class="nav-item">
-                        <a href="{% url 'dashboard:index' %}" class="nav-link">
+                        <a href="{% url 'dashboard:view' h.pk %}" class="nav-link text-default">
                             <i class="fe fe-home"></i>
-                            Dashboard
+                            <b>{{ h }}</b>
                         </a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a href="{% url 'hackathons:index' %}" class="nav-link">
                             <i class="fe fe-calendar"></i>
                             Hackathons
                         </a>
                     </li>
+                    {% if h %}
                     <li class="nav-item">
-                        <a href="{% url 'contacts:index' %}" class="nav-link">
+                        <a href="{% url 'contacts:index' h.pk %}" class="nav-link">
                             <i class="fe fe-users"></i>
                             Contacts
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'companies:index' %}" class="nav-link">
+                        <a href="{% url 'companies:index' h.pk %}" class="nav-link">
                             <i class="fe fe-share-2"></i>
                             Companies
                         </a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a href="{% url 'emails:index' %}" class="nav-link">
                             <i class="fe fe-mail"></i>

@@ -14,7 +14,7 @@ from .forms import CompanyForm
 #     return render(request, "new.html")
 
 @login_required
-def companies(request):
+def companies(request, h_pk):
     q = request.GET.get("q")
     if q:
         companies = Company.objects.filter(Q(name__icontains=q) | Q(industries__name__iexact=q))
@@ -31,20 +31,20 @@ def companies(request):
     return render(request, "companies.html", context={"companies": companies})
 
 @login_required
-def company_new(request):
+def company_new(request, h_pk):
     if request.method == "POST":
         form = CompanyForm(request.POST)
         if form.is_valid():
             company = form.save(commit=True)
             company.industries.set(form.cleaned_data["industries"])
             company.save()
-            return redirect("companies:index")
+            return redirect("companies:index", h_pk=h_pk)
     else:
         form = CompanyForm()
     return render(request, "company_new.html", {"form": form})
 
 @login_required
-def company_edit(request, pk):
+def company_edit(request, h_pk, pk):
     company = get_object_or_404(Company, pk=pk)
     if request.method == "POST":
         form = CompanyForm(request.POST, instance=company)
@@ -53,13 +53,13 @@ def company_edit(request, pk):
             company.industries.set(form.cleaned_data["industries"])
             company.save()
             messages.success(request, f"Updated {company.name}")
-            return redirect("companies:view", pk=company.pk)
+            return redirect("companies:view", h_pk=h_pk, pk=company.pk)
     else:
         form = CompanyForm(instance=company)
     return render(request, "company_edit.html", {"form": form, "company": company})
 
 @login_required
-def company_detail(request, pk):
+def company_detail(request, h_pk, pk):
     company = get_object_or_404(Company, pk=pk)
     contacts = Contact.objects.filter(company=company)
     sponsorships = Sponsorship.objects.filter(company=company)
