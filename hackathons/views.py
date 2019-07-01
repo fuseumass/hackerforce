@@ -9,9 +9,9 @@ def hackathons(request):
     return render(request, "hackathons.html", {"hackathons": hackathons})
 
 
-def hackathon_show(request, pk):
+def hackathon_detail(request, pk):
     hackathon = get_object_or_404(Hackathon, pk=pk)
-    return render(request, "hackathon_show.html", {"hackathon": hackathon})
+    return render(request, "hackathon_detail.html", {"hackathon": hackathon})
 
 
 def sponsorships_show(request, pk):

@@ -1,4 +1,5 @@
 {% extends 'global/base.html' %}
+{% load humanize %}
 
 {% block content %}
 <div class="my-3 my-md-5">
@@ -53,10 +54,10 @@
                                     </label>
                                 </div>
                             </td>
-                            <td><a href="" class="text-inherit">{{ hackathon.name }}</a></td>
-                            <td><a href="" class="text-inherit">{{ hackathon.date }}</a></td>
+                            <td><a href="{% url 'hackathons:view' hackathon.pk %}" class="text-inherit">{{ hackathon.name }}</a></td>
+                            <td>{{ hackathon.date }}</td>
                             <td>
-                                ${{ hackathon.fundraising_goal }}
+                                ${{ hackathon.fundraising_goal | intcomma }}
                             </td>
                             <td>
                                 {% for tier in hackathon.tiers.all %}
