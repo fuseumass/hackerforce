@@ -36,14 +36,14 @@ class ContactForm(forms.ModelForm):
     )
     position = forms.CharField(
         max_length=100,
-        required=True,
+        required=False,
         widget=forms.TextInput(
             attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Position"}
         ),
     )
     email = forms.EmailField(
         max_length=50,
-        required=True,
+        required=False,
         widget=forms.EmailInput(
             attrs={
                 "class": "form-control col-md-6 col-lg-4",
@@ -53,7 +53,7 @@ class ContactForm(forms.ModelForm):
     )
     phone_number = PhoneNumberField(
         max_length=50,
-        required=True,
+        required=False,
         widget=forms.TextInput(
             attrs={
                 "class": "form-control col-md-6 col-lg-4",
