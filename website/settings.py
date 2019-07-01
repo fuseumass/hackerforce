@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     ####################
     ### Project Apps ###
     ####################
+    "templatetags",
     "companies",
     "contacts",
     "dashboard",

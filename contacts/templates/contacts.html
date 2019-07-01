@@ -1,4 +1,5 @@
 {% extends 'global/base.html' %}
+{% load order_by %}
 {% block basetitle %}
     <title>Contacts</title>
 {% endblock %}
@@ -12,24 +13,26 @@
             </a>
         </div>
         <div class="col-lg-3 ml-auto">
-            <div class="row gutters-xs">
-                <div class="col">
-                    <input class="form-control" placeholder="Search for..." type="text">
+            <form action="{% url 'contacts:index' %}" method="GET">
+                <div class="row gutters-xs">
+                    <div class="col">
+                        <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
+                    </div>
+                    <span class="col-auto">
+                        <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                    </span>
                 </div>
-                <span class="col-auto">
-                    <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
-                </span>
-            </div>
+            </form>
         </div>
     </div>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Company</th>
-                    <th>Position</th>
-                    <th>Contacted</th>
+                    <th><a href="{% order_by 'last_name,first_name' %}">Name</a></th>
+                    <th><a href="{% order_by 'company' %}">Company</a></th>
+                    <th><a href="{% order_by 'position' %}">Position</a></th>
+                    <th><a href="{% order_by 'contacted' %}">Contacted</a></th>
                     <th></th>
                     <th></th>
                 </tr>

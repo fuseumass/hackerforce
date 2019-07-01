@@ -1,4 +1,5 @@
 {% extends 'global/base.html' %}
+{% load order_by %}
 {% block basetitle %}
     <title>Companies</title>
 {% endblock %}
@@ -16,26 +17,28 @@
             </div>
             {% endif %}
             <div class="col-lg-3 ml-auto">
-                <div class="row gutters-xs">
-                    <div class="col">
-                        <input class="form-control" placeholder="Search for..." type="text">
+                <form action="{% url 'companies:index' %}" method="GET">
+                    <div class="row gutters-xs">
+                        <div class="col">
+                            <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
+                        </div>
+                        <span class="col-auto">
+                            <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                        </span>
                     </div>
-                    <span class="col-auto">
-                        <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
-                    </span>
-                </div>
+                </form>
             </div>
         </div>
         <div class="table-responsive">
             <table class="table card-table table-vcenter text-nowrap">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th><a href="{% order_by 'name' %}">Name</a></th>
                         <th>Industries</th>
-                        <th>Size</th>
-                        <th>Updated</th>
-                        <th>Status</th>
-                        <th>Donated</th>
+                        <th><a href="{% order_by 'size' %}">Size</a></th>
+                        <th><a href="{% order_by 'updated' %}">Updated</a></th>
+                        <th><a href="{% order_by 'status' %}">Status</a></th>
+                        <th><a href="{% order_by 'donated' %}">Donated</a></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -48,7 +51,9 @@
                         </a></td>
                         <td>
                             {% for industry in company.industries.all %}
-                            <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
+                                <a href="?q={{ industry.name }}" class="tag tag-{{ industry.color }}">
+                                    {{ industry.name }}
+                                </a>
                             {% endfor %}
                         </td>
                         <td>

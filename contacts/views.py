@@ -2,13 +2,24 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import Contact, Company
 from .forms import ContactForm
 
 @login_required
 def contacts(request):
-    paginator = Paginator(Contact.objects.all(), 25)
+    q = request.GET.get("q")
+    if q:
+        contacts = Contact.objects.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(company__name__icontains=q))
+    else:
+        contacts = Contact.objects.all()
+        
+    order_by = request.GET.get("order_by")
+    if order_by:
+        contacts = contacts.order_by(*order_by.split(","))
+
+    paginator = Paginator(contacts, 25)
     page = request.GET.get("page")
     contacts = paginator.get_page(page)
     return render(request, "contacts.html", {"contacts": contacts})
