@@ -59,3 +59,23 @@ class Sponsorship(models.Model):
     def __str__(self):
         return f"Company: {self.company}, Status: {self.status}, Contribution: {self.contribution}"
 
+"""
+class Lead(models.Model):
+    STATUSES = (("U", "Uncontacted"), ("C", "Contacted"))
+    ROLES = (("N", "None"), ("P", "Primary"))
+
+    sponsorship = models.ForeignKey(
+        Sponsorship, on_delete=models.CASCADE, related_name="leads"
+    )
+    contact = models.ForeignKey(
+        Contact, on_delete=models.CASCADE, related_name="leads"
+    )
+
+    status = models.CharField(max_length=1, choices=STATUSES)
+    role = models.CharField(max_length=1, choices=ROLES)
+
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"Sponsorship: {self.sponsorship}, Contact: {self.contact}, Status: {self.status}, Role: {self.role}"
+"""
