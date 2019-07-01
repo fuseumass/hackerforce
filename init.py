@@ -130,12 +130,11 @@ for i in range(15):
     sponsorship = Sponsorship(
         hackathon=random.choice(hackathons),
         company=random.choice(companies),
+        tier=random.choice(tiers),
         contribution=random.randint(0, 1000),
         status=random.choice(Sponsorship.STATUSES)[0],
     )
     sponsorship.save()
-    for s in random.sample(tiers, random.randint(1, 2)):
-        sponsorship.tiers.add(s)
     for s in random.sample(perks, random.randint(1, 5)):
         sponsorship.perks.add(s)
     sponsorship.save()

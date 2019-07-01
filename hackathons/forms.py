@@ -121,10 +121,10 @@ class SponsorshipForm(forms.ModelForm):
         ),
     )
 
-    tiers = forms.ModelMultipleChoiceField(
+    tier = forms.ModelChoiceField(
         required=True,
         queryset=Tier.objects.all(),
-        widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
+        widget=forms.Select(attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Tier"}),
     )
 
     perks = forms.ModelMultipleChoiceField(
@@ -135,5 +135,5 @@ class SponsorshipForm(forms.ModelForm):
 
     class Meta:
         model = Sponsorship
-        fields = ("hackathon", "company", "contribution", "status", "tiers", "perks")
+        fields = ("hackathon", "company", "contribution", "status", "tier", "perks")
 

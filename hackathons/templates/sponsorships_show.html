@@ -1,8 +1,14 @@
 {% extends 'global/base.html' %}
 
 {% block content %}
+
 <div class="my-3 my-md-5">
     <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">
+                {{hackathon.name}}
+            </h1>
+        </div>
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Sponsorships</h3>
@@ -21,7 +27,6 @@
                 <table class="table card-table table-vcenter text-nowrap">
                     <thead>
                         <tr>
-                            <th class="w-1">Checked</th>
                             <th>Company</th>
                             <th>Status</th>
                             <th>Contribution</th>
@@ -33,24 +38,13 @@
                     <tbody>
                         {% for sponsorship in hackathon.sponsorships.all %}
                         <tr>
-                            <td>
-                                <div>
-                                    <label class="custom-control custom-checkbox custom-control-inline">
-                                        <input class="custom-control-input" name="example-inline-checkbox1" value="option1"
-                                            checked="" type="checkbox">
-                                        <span class="custom-control-label"></span>
-                                    </label>
-                                </div>
-                            </td>
                             <td><a href="" class="text-inherit">{{ sponsorship.company }}</a></td>
-                            <td><a href="" class="text-inherit">{{ sponsorship.status }}</a></td>
+                            <td>{{ sponsorship.status }}</td>
                             <td>
                                 ${{ sponsorship.contribution }}
                             </td>
                             <td>
-                                {% for tier in sponsorship.tiers.all %}
-                                <span class="tag tag-red">{{ tier.name }}</span>
-                                {% endfor %}
+                                <span class="tag tag-red">{{ sponsorship.tier.name }}</span>
                             </td>
                             <td>
                                 {% for perk in sponsorship.perks.all %}

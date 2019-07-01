@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.contrib import messages
 from .models import Tier, Perk, Hackathon, Sponsorship
 from .forms import TierForm, PerkForm, HackathonForm, SponsorshipForm
 
@@ -15,8 +15,13 @@ def hackathon_detail(request, pk):
 
 
 def sponsorships_show(request, pk):
-    hackathon = get_object_or_404(Hackathon, pk=pk)
-    return render(request, "sponsorships_show.html", {"hackathon": hackathon})
+    # hackathon = get_object_or_404(Hackathon, pk=pk)
+    if request.user.is_authenticated and request.user.current_hackathon:
+        current_hackathon = request.user.current_hackathon
+    else:
+        messages.info(request, "You need to select a default hackathon. This is configurable on your profile page. Until this is set, the most recent hackathon's sponsorships will be displayed.")
+        current_hackathon = Hackathon.latest()
+    return render(request, "sponsorships_show.html", {"hackathon": current_hackathon})
 
 
 def hackathon_new(request):
@@ -100,7 +105,7 @@ def sponsorship_new(request):
         if form.is_valid():
             sponsorship = form.save(commit=True)
             sponsorship.perks.set(form.cleaned_data["perks"])
-            sponsorship.tiers.set(form.cleaned_data["tiers"])
+            # sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
             return redirect("hackathons:sponsorships_show", pk=sponsorship.hackathon.pk)
     else:
@@ -115,7 +120,7 @@ def sponsorship_edit(request, pk):
         if form.is_valid():
             sponsorship = form.save(commit=True)
             sponsorship.perks.set(form.cleaned_data["perks"])
-            sponsorship.tiers.set(form.cleaned_data["tiers"])
+            # sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
             return redirect("hackathons:sponsorships_show", pk=sponsorship.hackathon.pk)
     else:
