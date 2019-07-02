@@ -16,7 +16,7 @@
         {% else %}
             <div class="col text-right h2">
                 <a class="button" href="{% url 'hackathons:sponsorships:new' h.pk %}?company={{ company.pk }}">
-                    <button class="btn btn-primary ml-auto">Assign to Hackathon</button>
+                    <button class="btn btn-primary ml-auto">Mark Contacted</button>
                 </a>
             </div>
         {% endif %}
@@ -29,8 +29,8 @@
             {% if not sponsorship %}
                 <div class="col-sm-8 text-center" style="font-size: 14px">
                     <i class="fe fe-alert-triangle" style="color: red"></i>
-                    <b style="font-size: 16px; color: red">This company has not been assigned to the current hackathon.</b><br />
-                    Press "Assign to Hackathon" to begin tracking this company as a potential sponsor.
+                    <b style="font-size: 16px; color: red">This company has not been contacted for the current hackathon.</b><br />
+                    Press "Mark Contacted" to begin tracking this company as a potential sponsor.
                 </div>
             {% endif %}
         </div>
@@ -97,7 +97,7 @@
         <div class="col-sm-8">
             <div class="card flex-grow-1">
                 <div class="card-header">
-                    <h2 class="card-title">Notes</h2>
+                    <h2 class="card-title">Company Notes</h2>
                 </div>
                 <div class="card-body">
                     {{ company.notes | safe }}

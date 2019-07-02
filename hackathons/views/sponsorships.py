@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.core.paginator import Paginator
 from ..models import Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
@@ -8,7 +9,34 @@ from ..forms import HackathonForm, SponsorshipForm
 
 def sponsorships_show(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
-    return render(request, "sponsorships_show.html", {"hackathon": hackathon})
+
+    def state_filter(states):
+        return Sponsorship.objects.filter(hackathon=hackathon, status__in=states)
+
+    def paginator_wrapper(name, obj):
+        order_by = request.GET.get(f"{name}_order_by")
+        if order_by:
+            obj = obj.order_by(order_by)
+        paginator = Paginator(obj, 25)
+        return paginator.get_page(request.GET.get(f"{name}_page"))
+    
+    def fake_sponsorship(company):
+        return [Sponsorship(pk=0, company=c, tier=None, contribution=0) for c in company]
+    
+    confirmed = paginator_wrapper("confirmed", state_filter([Sponsorship.CONFIRMED, Sponsorship.PAID]))
+    in_progress = paginator_wrapper("in_progress", state_filter([Sponsorship.CONTACTED, Sponsorship.RESPONDED]))
+    dead = paginator_wrapper("dead", state_filter([Sponsorship.GHOSTED, Sponsorship.DENIED]))
+
+    companies_for_hackathon = Company.objects.filter(sponsorships__hackathon__pk=h_pk).values_list("pk", flat=True)
+    companies = Company.objects.exclude(pk__in=companies_for_hackathon)
+    uncontacted = paginator_wrapper("companies", fake_sponsorship(companies))
+
+    return render(request, "sponsorships_show.html", {
+        "confirmed": confirmed,
+        "in_progress": in_progress,
+        "dead": dead,
+        "uncontacted": uncontacted,
+    })
 
 
 def sponsorship_new(request, h_pk):
@@ -30,7 +58,7 @@ def sponsorship_new(request, h_pk):
     return render(request, "sponsorship_new.html", {"form": form})
 
 def sponsorship_edit(request, h_pk, pk):
-    sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, pk=pk)
+    sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, company__pk=pk)
     if request.method == "POST":
         form = SponsorshipForm(request.POST, instance=sponsorship)
         if form.is_valid():

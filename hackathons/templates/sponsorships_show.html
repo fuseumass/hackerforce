@@ -4,64 +4,18 @@
 
 <div class="my-3 my-md-5">
     <div class="container">
-        <div class="page-header">
-            <h1 class="page-title">
-                {{hackathon.name}}
-            </h1>
-        </div>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Sponsorships</h3>
-                <div class="col-lg-3 ml-auto">
-                    <div class="row gutters-xs">
-                        <div class="col">
-                            <input class="form-control" placeholder="Search for..." type="text">
-                        </div>
-                        <span class="col-auto">
-                            <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Status</th>
-                            <th>Contribution</th>
-                            <th>Tier</th>
-                            <th>Perks</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for sponsorship in hackathon.sponsorships.all %}
-                        <tr>
-                            <td><a href="{% url 'hackathons:sponsorships:view' h.pk sponsorship.pk %}" class="text-inherit">{{ sponsorship.company }}</a></td>
-                            <td>{{ sponsorship.status }}</td>
-                            <td>
-                                ${{ sponsorship.contribution }}
-                            </td>
-                            <td>
-                                <span class="tag tag-red">{{ sponsorship.tier.name }}</span>
-                            </td>
-                            <td>
-                                {% for perk in sponsorship.perks.all %}
-                                <span class="tag tag-green">{{ perk.name }}</span>
-                                {% endfor %}
-                            </td>
-                            <td>
-                                <a class="icon" href="{% url 'hackathons:sponsorships:edit' h.pk sponsorship.company.pk %}">
-                                    <i class="fe fe-edit"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        {% with card_title='Confirmed Sponsorships' name='confirmed' page_var='confirmed_page' order_var='confirmed_order_by' sponsorships=confirmed %}
+            {% include "cards/sponsorship_table.html" %}
+        {% endwith %}
+        {% with card_title='In Progress Sponsorships' name='in_progress' page_var='in_progress_page' order_var='in_progress_order_by' sponsorships=in_progress %}
+            {% include "cards/sponsorship_table.html" %}
+        {% endwith %}
+        {% with card_title='Uncontacted Companies' name='uncontacted' page_var='uncontacted_page' order_var='uncontacted_order_by' sponsorships=uncontacted faked=1 %}
+            {% include "cards/sponsorship_table.html" %}
+        {% endwith %}
+        {% with card_title='Dead Sponsorships' name='dead' page_var='dead_page' order_var='dead_order_by' sponsorships=dead %}
+            {% include "cards/sponsorship_table.html" %}
+        {% endwith %}
     </div>
 </div>
 {% endblock %}

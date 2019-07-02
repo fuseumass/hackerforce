@@ -48,7 +48,6 @@ class Perk(models.Model):
 
 
 class Sponsorship(models.Model):
-    PREPARING = "preparing"
     CONTACTED = "contacted"
     RESPONDED = "responded"
     CONFIRMED = "confirmed"
@@ -56,7 +55,6 @@ class Sponsorship(models.Model):
     GHOSTED = "ghosted"
     PAID = "paid"
     STATUSES = (
-        (PREPARING, "Preparing"),
         (CONTACTED, "Contacted"),
         (RESPONDED, "Responded"),
         (CONFIRMED, "Confirmed"),
@@ -72,7 +70,7 @@ class Sponsorship(models.Model):
         Company, on_delete=models.CASCADE, related_name="sponsorships"
     )
     contribution = models.IntegerField(blank=True, default=0)
-    status = models.CharField(max_length=20, choices=STATUSES, default=PREPARING)
+    status = models.CharField(max_length=20, choices=STATUSES, default=CONTACTED)
     tier = models.ForeignKey(Tier, related_name="sponsorships", on_delete=models.SET_NULL, null=True)
     perks = models.ManyToManyField(Perk, blank=True)
     notes = models.TextField(blank=True)
@@ -87,9 +85,9 @@ class Sponsorship(models.Model):
         return f"Company: {self.company}, Status: {self.status}, Contribution: {self.contribution}"
 
 class Lead(models.Model):
-    UNCONTACTED = "uncontacted"
     CONTACTED = "contacted"
-    STATUSES = ((UNCONTACTED, "Uncontacted"), (CONTACTED, "Contacted"))
+    RESPONDED = "responded"
+    STATUSES = ((CONTACTED, "Contacted"), (RESPONDED, "Responded"))
     NO_ROLE = "no_role"
     PRIMARY = "primary"
     ROLES = ((NO_ROLE, "None"), (PRIMARY, "Primary"))
@@ -103,8 +101,6 @@ class Lead(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUSES)
     role = models.CharField(max_length=20, choices=ROLES)
-
-    notes = models.TextField(blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

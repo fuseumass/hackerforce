@@ -1,7 +1,5 @@
 {% if not sponsorship %}
-    <span class="status-icon bg-gray-dark"></span> Unassigned
-{% elif sponsorship.status == 'preparing' %}
-    <span class="status-icon bg-gray"></span> Uncontacted
+    <span class="status-icon bg-gray-dark"></span> Uncontacted
 {% elif sponsorship.status == 'contacted' %}
     <span class="status-icon bg-orange"></span> Contacted
 {% elif sponsorship.status == 'responded' %}
