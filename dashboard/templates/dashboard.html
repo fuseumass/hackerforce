@@ -20,11 +20,27 @@
         <div class="card">
             <div class="card-status bg-green"></div>
             <div class="card-body text-center">
-                <div class="h5">Funds raised to date</div>
-                <div class="display-4 mb-4">${{ money_raised }} <small class="display-6" style="font-size: 0.65em">/
-                        ${{ current_hackathon.fundraising_goal }}</small></div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="h5">Funds raised to date</div>
+                        <div class="display-4 mb-4">${{ money_raised }} <small class="display-6" style="font-size: 0.65em">/
+                                ${{ current_hackathon.fundraising_goal }}</small></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="h5">Expected funds</div>
+                        <div class="display-4 mb-4">${{ money_expected }} <small class="display-6" style="font-size: 0.65em">/
+                                ${{ current_hackathon.fundraising_goal }}</small></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="h5">Possible funds</div>
+                        <div class="display-4 mb-4">${{ money_possible }} <small class="display-6" style="font-size: 0.65em">/
+                                ${{ current_hackathon.fundraising_goal }}</small></div>
+                    </div>
+                </div>
                 <div class="progress progress-lg">
-                    <div class="progress-bar bg-green" style="width:{{ progress_bar_width }}%"></div>
+                    <div class="progress-bar bg-green" style="width:{{ money_raised_width }}%"></div>
+                    <div class="progress-bar bg-orange" style="width:{{ money_expected_width }}%"></div>
+                    <div class="progress-bar bg-gray" style="width:{{ money_possible_width }}%"></div>
                 </div>
             </div>
         </div>

@@ -27,9 +27,24 @@ def dashboard(request, h_pk):
         "updated_at"
     )
     money_raised = 0
+    money_expected = 0
+    money_possible = 0
 
     for sponsorship in sponsorships:
-        money_raised = money_raised + sponsorship.contribution
+        if sponsorship.status == Sponsorship.PAID:
+            money_raised += sponsorship.contribution
+        elif sponsorship.status == Sponsorship.CONFIRMED:
+            money_expected += sponsorship.contribution
+        else:
+            money_possible += sponsorship.contribution
+
+    goal = current_hackathon.fundraising_goal
+    money_raised_width = min(money_raised / goal * 100, goal)
+    money_expected_width = max(0, min(money_expected / goal * 100, goal - money_raised))
+    money_possible_width = max(0, min(money_possible / goal * 100, goal - money_raised - money_possible))
+
+    money_expected += money_raised
+    money_possible += money_expected
 
     contacted_count = 0
     uncontacted_count = 0
@@ -52,9 +67,13 @@ def dashboard(request, h_pk):
         "dashboard.html",
         {
             "current_hackathon": current_hackathon,
-            "money_raised": money_raised,
             "sponsorships": sponsorships[:5],
             "chart_data": chart,
-            "progress_bar_width": (money_raised / current_hackathon.fundraising_goal * 100),
+            "money_raised": money_raised,
+            "money_expected": money_expected,
+            "money_possible": money_possible,
+            "money_raised_width": money_raised_width,
+            "money_expected_width": money_expected_width,
+            "money_possible_width": money_possible_width,
         },
     )
