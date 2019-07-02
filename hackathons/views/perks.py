@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from ..models import Tier, Perk, Hackathon, Sponsorship
-from ..forms import TierForm, PerkForm, HackathonForm, SponsorshipForm
+from ..models import Perk
+from ..forms import PerkForm
 
 def perk_new(request):
     if request.method == "POST":

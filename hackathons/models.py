@@ -71,7 +71,7 @@ class Sponsorship(models.Model):
     company = models.ForeignKey(
         Company, on_delete=models.CASCADE, related_name="sponsorships"
     )
-    contribution = models.IntegerField()
+    contribution = models.IntegerField(blank=True, default=0)
     status = models.CharField(max_length=20, choices=STATUSES, default=PREPARING)
     tier = models.ForeignKey(Tier, related_name="sponsorships", on_delete=models.SET_NULL, null=True)
     perks = models.ManyToManyField(Perk, blank=True)
@@ -79,6 +79,9 @@ class Sponsorship(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('hackathon', 'company',)
 
     def __str__(self):
         return f"Company: {self.company}, Status: {self.status}, Contribution: {self.contribution}"
@@ -105,6 +108,15 @@ class Lead(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('sponsorship', 'contact',)
+
+    def status_pretty(self):
+        return dict(self.STATUSES)[self.status]
+
+    def role_pretty(self):
+        return dict(self.ROLES)[self.role]
 
     def __str__(self):
         return f"Sponsorship: {self.sponsorship}, Contact: {self.contact}, Status: {self.status}, Role: {self.role}"

@@ -103,32 +103,37 @@ class SponsorshipForm(forms.ModelForm):
         required=True,
         queryset=Company.objects.all(),
         widget=forms.Select(
-            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Company"}
+            attrs={"class": "custom-select col-md-6 col-lg-4",}
         ),
     )
 
     contribution = forms.IntegerField(
+        required=False,
         widget=forms.NumberInput(
             attrs={"class": "form-control cold-md-6 cold-lg-4", "placeholder": 0}
         )
     )
 
+    def clean_contribution(self):
+        contribution = self.cleaned_data.get('contribution')
+        return contribution or 0
+
     status = forms.ChoiceField(
         required=True,
         choices=Sponsorship.STATUSES,
         widget=forms.Select(
-            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Status"}
+            attrs={"class": "custom-select col-md-6 col-lg-4",}
         ),
     )
 
     tier = forms.ModelChoiceField(
-        required=True,
+        required=False,
         queryset=Tier.objects.all(),
-        widget=forms.Select(attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Tier"}),
+        widget=forms.Select(attrs={"class": "custom-select col-md-6 col-lg-4",}),
     )
 
     perks = forms.ModelMultipleChoiceField(
-        required=True,
+        required=False,
         queryset=Perk.objects.all(),
         widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
     )

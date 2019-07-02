@@ -108,7 +108,9 @@
                     <tbody>
                         {% for sponsorship in sponsorships %}
                         <tr>
-                            <td><b>{{sponsorship.hackathon.name}}</b></td>
+                            <td><a href="{% url 'hackathons:sponsorships:view' sponsorship.hackathon.pk sponsorship.company.pk %}" class="text-inherit">
+                                <b>{{sponsorship.hackathon.name}}</b>
+                            </a></td>
                             <td>{% if sponsorship.status == "pending" %}
                                 <span class="tag tag-red">Pending</span>
                                 {% else %}
@@ -118,7 +120,7 @@
                             </td>
                             <td>${{sponsorship.contribution}}</td>
                             <td class="text-nowrap">{{sponsorship.updated_at}}</td>
-                            <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' sponsorship.hackathon.pk sponsorship.pk %}"
+                            <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' sponsorship.hackathon.pk sponsorship.pk %}"
                                     class="icon"><i class="fe fe-edit"></i></a></td>
                         </tr>
                         {% empty %}

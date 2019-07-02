@@ -6,7 +6,7 @@ from profiles.models import User
 from contacts.models import Contact
 from companies.models import Company, Industry
 from emails.models import Email
-from hackathons.models import Hackathon, Tier, Perk, Sponsorship
+from hackathons.models import Hackathon, Tier, Perk, Sponsorship, Lead
 
 fake = Faker()
 
@@ -45,9 +45,7 @@ for i in range(50):
     company = Company(
         name=fake.company(),
         location=fake.address(),
-        status=random.choice(Company.STATUSES)[0],
         size=random.choice(Company.SIZES)[0],
-        donated=random.randint(0, 10000),
         updated=fake.date_time_this_month(
             before_now=True, after_now=False, tzinfo=None
         ),
@@ -69,7 +67,6 @@ for i in range(50):
         position=fake.job(),
         email=fake.email(),
         phone_number=fake.phone_number(),
-        status=random.choice(Contact.STATUSES)[0],
     )
     contact.save()
     contacts.append(contact)
@@ -126,19 +123,40 @@ for i in range(20):
 
 print("Generating sponsorships...")
 sponsorships = []
-for i in range(15):
-    sponsorship = Sponsorship(
-        hackathon=random.choice(hackathons),
-        company=random.choice(companies),
-        tier=random.choice(tiers),
-        contribution=random.randint(0, 1000),
-        status=random.choice(Sponsorship.STATUSES)[0],
-    )
-    sponsorship.save()
-    for s in random.sample(perks, random.randint(1, 5)):
-        sponsorship.perks.add(s)
-    sponsorship.save()
-    sponsorships.append(sponsorship)
+sp_companies = list(companies)
+for i in range(5):
+    for h in hackathons:
+        sp_company = random.choice(sp_companies)
+        sp_companies.remove(sp_company)
+        sponsorship = Sponsorship(
+            hackathon=h,
+            company=sp_company,
+            tier=random.choice(tiers),
+            contribution=random.randint(0, 1000),
+            status=random.choice(Sponsorship.STATUSES)[0],
+        )
+        sponsorship.save()
+        for s in random.sample(perks, random.randint(1, 5)):
+            sponsorship.perks.add(s)
+        sponsorship.save()
+        sponsorships.append(sponsorship)
+
+print("Generating leads...")
+leads = []
+for s in sponsorships:
+    l_contacts = list(s.company.contacts.all())
+    for i in range(max(0 if len(l_contacts) == 0 else 1, len(l_contacts)-1)):
+        l_contact = random.choice(l_contacts)
+        l_contacts.remove(l_contact)
+        lead = Lead(
+            sponsorship=s,
+            contact=l_contact,
+            status=random.choice(Lead.STATUSES)[0],
+            role=random.choice(Lead.ROLES)[0],
+        )
+        lead.save()
+        leads.append(lead)
+    
 
 print("\nUsers:")
 for a in users:
@@ -170,6 +188,10 @@ for a in perks:
 
 print("\nSponsorships:")
 for a in sponsorships:
+    print(a)
+
+print("\nLeads:")
+for a in leads:
     print(a)
 
 # ADMIN USER

@@ -1,0 +1,17 @@
+{% if not sponsorship %}
+    <span class="status-icon bg-gray-dark"></span> Unassigned
+{% elif sponsorship.status == 'preparing' %}
+    <span class="status-icon bg-gray"></span> Uncontacted
+{% elif sponsorship.status == 'contacted' %}
+    <span class="status-icon bg-orange"></span> Contacted
+{% elif sponsorship.status == 'responded' %}
+    <span class="status-icon bg-yellow"></span> Responded
+{% elif sponsorship.status == 'confirmed' %}
+    <span class="status-icon bg-indigo"></span> Confirmed
+{% elif sponsorship.status == 'denied' %}
+    <span class="status-icon bg-red"></span> Denied
+{% elif sponsorship.status == 'ghosted' %}
+    <span class="status-icon bg-pink"></span> Ghosted
+{% elif sponsorship.status == 'paid' %}
+    <span class="status-icon bg-green"></span> Paid
+{% endif %}

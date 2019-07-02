@@ -1,15 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from ..models import Tier, Perk, Hackathon, Sponsorship
-from ..forms import TierForm, PerkForm, HackathonForm, SponsorshipForm
+from ..models import Hackathon
+from ..forms import HackathonForm
 
 def hackathons(request):
     hackathons = Hackathon.objects.all()
     return render(request, "hackathons.html", {"hackathons": hackathons})
-
-def hackathon_detail(request, h_pk):
-    hackathon = get_object_or_404(Hackathon, pk=h_pk)
-    return render(request, "hackathon_detail.html", {"hackathon": hackathon})
 
 def hackathon_new(request):
     if request.method == "POST":
@@ -17,11 +13,11 @@ def hackathon_new(request):
         if form.is_valid():
             hackathon = form.save(commit=False)
             hackathon.save()
-            return redirect("hackathons:index")
+            messages.success(request, "Created hackathon")
+            return redirect("dashboard:view", pk=hackathon.pk)
     else:
         form = HackathonForm()
     return render(request, "hackathon_new.html", {"form": form})
-
 
 def hackathon_edit(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
@@ -30,6 +26,7 @@ def hackathon_edit(request, h_pk):
         if form.is_valid():
             hackathon = form.save(commit=False)
             hackathon.save()
+            messages.success(request, "Edited hackathon")
             return redirect("hackathons:index")
     else:
         form = HackathonForm(instance=hackathon)

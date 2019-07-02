@@ -31,14 +31,13 @@ def dashboard(request, h_pk):
     for sponsorship in sponsorships:
         money_raised = money_raised + sponsorship.contribution
 
-    companies = Company.objects.all()
     contacted_count = 0
     uncontacted_count = 0
     donated_count = 0
-    for company in companies:
-        if company.status == "C":
+    for sp in sponsorships:
+        if sp.status == Sponsorship.CONTACTED:
             contacted_count = contacted_count + 1
-        elif company.status == "D":
+        elif sp.status == Sponsorship.CONFIRMED:
             donated_count = donated_count + 1
         else:
             uncontacted_count = uncontacted_count + 1

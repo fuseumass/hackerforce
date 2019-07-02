@@ -1,56 +1,96 @@
 {% extends 'global/base.html' %}
+{% load humanize %}
 {% block basetitle %}
-<title>{{ sponsorship.company.name }}'s Sponsorship</title>
+<title>{{ company.name }}</title>
 {% endblock %}
 {% block content %}
-
 <div class="container">
     <div class="card-header">
-        <h2> {{sponsorship.company.name}}'s sponsorship of {{sponsorship.hackathon.name}} </h2>
-
-        <div class="col text-right h2">
-            <a class="button" href="{% url 'hackathons:sponsorship_edit' h.pk sponsorship.pk %}">
-                <button class="btn btn-primary ml-auto">Edit</button>
-            </a>
-        </div>
+        <h2> {{ company.name }} </h2>
+        {% if sponsorship %}
+            <div class="col text-right h2">
+                <a class="button" href="{% url 'hackathons:sponsorships:edit' h.pk company.pk %}">
+                    <button class="btn btn-primary ml-auto">Edit</button>
+                </a>
+            </div>
+        {% else %}
+            <div class="col text-right h2">
+                <a class="button" href="{% url 'hackathons:sponsorships:new' h.pk %}?company={{ company.pk }}">
+                    <button class="btn btn-primary ml-auto">Assign to Hackathon</button>
+                </a>
+            </div>
+        {% endif %}
     </div>
     <div class="card">
         <div class="card-header">
             <h2 class="col card-title">Status: &nbsp;
-                {%if sponsorship.status == 'pending'%}
-                <span class="status-icon bg-warning"></span> Payment pending
-                {% endif %}
-                {%if sponsorship.status == 'received'%}
-                <span class="status-icon bg-success"></span> Donated
-                {% endif %}
+                {% include "cards/sponsorship_status.html" %}
             </h2>
+            {% if not sponsorship %}
+                <div class="col-sm-8 text-center" style="font-size: 14px">
+                    <i class="fe fe-alert-triangle" style="color: red"></i>
+                    <b style="font-size: 16px; color: red">This company has not been assigned to the current hackathon.</b><br />
+                    Press "Assign to Hackathon" to begin tracking this company as a potential sponsor.
+                </div>
+            {% endif %}
         </div>
     </div>
+
+
+    {% if sponsorship %}
+        <div class="row row-cards">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Sponsorship Information</h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="required-field">
+                            <label><b>Amount to be donated: </b></label>
+                            ${{ sponsorship.contribution | intcomma }}
+                        </p>
+                        <p class="required-field">
+                            <label><b>Sponsorship Tier: </b></label>
+                            <span class="tag tag-red">{{ sponsorship.tier.name }}</span>
+                        </p>
+                        <p class="required-field">
+                            <label><b>Selected perks: </b></label>
+                            {% for perk in sponsorship.perks.all %}
+                            <span class="tag tag-green">{{ perk.name }}</span>
+                            {% endfor %}
+                        </p>
+                        <p class="text-right">
+                            Last Updated: {{ sponsorship.updated_at }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="card flex-grow-1">
+                    <div class="card-header">
+                        <h2 class="card-title">Notes</h2>
+                    </div>
+                    <div class="card-body">
+                        {{ sponsorship.notes | safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <div class="row row-cards">
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Sponsorship Information</h2>
+                    <h2 class="card-title">General Information</h2>
+                    <div class="col text-right">
+                        <a class="button" href="{% url 'companies:edit' company.pk %}">
+                            <button class="btn btn-primary ml-auto">Edit</button>
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <p class="required-field">
-                        <label><b>Amount to be donated: </b></label>
-                        ${{ sponsorship.contribution }}
-                    </p>
-                    <p class="required-field">
-                        <label><b>Sponsorship Tier: </b></label>
-                        <span class="tag tag-red">{{ sponsorship.tier.name }}</span>
-                    </p>
-                    <p class="required-field">
-                        <label><b>Selected perks: </b></label>
-                        {% for perk in sponsorship.perks.all %}
-                        <span class="tag tag-green">{{ perk.name }}</span>
-                        {% endfor %}
-                    </p>
-                    <p class="text-right">
-                        Last Updated: {{ sponsorship.updated_at }}
-                    </p>
+                    {% include "cards/company_general_info.html" %}
                 </div>
             </div>
         </div>
@@ -60,40 +100,121 @@
                     <h2 class="card-title">Notes</h2>
                 </div>
                 <div class="card-body">
-                    {{ sponsorship.notes | safe }}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row row-cards">
-        <div class="col-sm-4">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Company Information</h2>
-                </div>
-                <div class="card-body">
-                    {% with company=sponsorship.company %}
-                        {% include "cards/company_general_info.html" %}
-                    {% endwith %}
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-8">
-            <div class="card flex-grow-1">
-                <div class="card-header">
-                    <h2 class="card-title">Company Notes</h2>
-                    <div class="col text-right">
-                        <a class="button" href="{% url 'companies:edit' sponsorship.company.pk %}">
-                            <button class="btn btn-primary ml-auto">Edit</button>
-                        </a>
-                    </div>
-                </div>
-                <div class="card-body">
                     {{ company.notes | safe }}
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Associated Contacts</h2>
+            <div class="col text-right">
+                <a class="button" href="{% url 'contacts:new' %}?company_id={{ company.id }}">
+                    <button type="button" class="btn btn-primary ml-auto">New Contact</button>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Phone #</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in contacts %}
+                        <tr>
+                            <td><a href="{% url 'contacts:view' c.contact.pk %}" class="text-inherit">
+                                <b>{{ c.contact.name }}</b>
+                            </a></td>
+                            <td><a href="" class="text-inherit">{{ c.contact.position }}</a></td>
+                            <td><a href="" class="text-inherit">{{ c.contact.phone_number }}</a></td>
+                            <td><a href="" class="text-inherit">{{ c.contact.email }}</a></td>
+                            <td>
+                            {% if not c.lead %}
+                                <span class="status-icon bg-gray-dark"></span> Unassigned
+                            {% elif c.lead.status == 'uncontacted' %}
+                                <span class="status-icon bg-red"></span> Uncontacted
+                            {% elif c.lead.status == 'contacted' %}
+                                <span class="status-icon bg-green"></span> Contacted
+                            {% endif %}
+                            </td>
+                            <td>
+                                <a class="icon" href="{% url 'contacts:edit' c.contact.pk %}">
+                                    <i class="fe fe-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan=6>
+                        No contacts.
+                        </td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Other Sponsorships</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table card-table table-striped table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>Hackathon</th>
+                            <th>Status</th>
+                            <th>Amount</th>
+                            <th>Tier</th>
+                            <th>Perks</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in company.sponsorships.all %}
+                        {% if not sponsorship or not s == sponsorship %}
+                        <tr>
+                            <td><a href="{% url 'hackathons:sponsorships:view' s.hackathon.pk s.company.pk %}">
+                                <b>{{s.hackathon.name}}</b>
+                            </a></td>
+                            <td>{% if s.status == "pending" %}
+                                <span class="tag tag-red">Pending</span>
+                                {% else %}
+                                <span class="tag tag-green">Received</span>
+                                {% endif %}
+
+                            </td>
+                            <td>${{s.contribution|intcomma}}</td>
+                            <td><span class="tag tag-red">{{ s.tier.name }}</span></td>
+                            <td>
+                                {% for perk in s.perks.all %}
+                                <span class="tag tag-green">{{ perk.name }}</span>
+                                {% endfor %}
+                            </td>
+                            <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' s.hackathon.pk s.company.pk %}"
+                                    class="icon"><i class="fe fe-edit"></i></a></td>
+                        </tr>
+                        {% elif company.sponsorships.count == 1 %}
+                        <tr><td colspan=4>
+                        No sponsorships.
+                        </td></tr>
+                        {% endif %}
+                        {% empty %}
+                        <tr><td colspan=4>
+                        No sponsorships.
+                        </td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

@@ -39,7 +39,7 @@
                     fundraising goals (how much money and by when you need it). Each year's hackathon will also
                     allow
                     you to keep track of which the status of companies for every year.</p>
-                <a class="button" href="{% url 'hackathons:hackathon_new' %}">
+                <a class="button" href="{% url 'hackathons:new' %}">
                     <button type="button" class="btn btn-primary">Create Hackathon</button>
                 </a>
                 <a class="button" href="{% url 'hackathons:index' %}">
@@ -58,11 +58,11 @@
                         <p class="card-text">Create a new sponsorship relation between your current hackathon and a
                             given
                             company.</p>
-                        <a class="button" href="{% url 'hackathons:sponsorship_new' %}">
+                        <a class="button" href="{% url 'hackathons:sponsorships:new' h.pk %}">
                             <button type="button" class="btn btn-primary">Add new sponsorship</button>
                         </a>
-                        <a class="button" href="{% url 'hackathons:sponsorships_show' 1 %}">
-                            <button type="button" class="btn btn-primary">Manage existing sponsorship</button>
+                        <a class="button" href="{% url 'hackathons:sponsorships:show' h.pk %}">
+                            <button type="button" class="btn btn-primary">View sponsorships</button>
                         </a>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                             </td>
                             <td>${{sponsorship.contribution}}</td>
                             <td class="text-nowrap">{{sponsorship.updated_at}}</td>
-                            <td class="w-1"><a href="{% url 'hackathons:sponsorship_edit' sponsorship.hackathon.pk sponsorship.pk %}" class="icon"><i
+                            <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' sponsorship.hackathon.pk sponsorship.company.pk %}" class="icon"><i
                                         class="fe fe-edit"></i></a></td>
                         </tr>
                         {% endfor %}
