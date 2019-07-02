@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row align-items-center">
 
-            <div class="col-lg-3 ml-auto">
+            <!--div class="col-lg-3 ml-auto">
                 <form class="input-icon my-3 my-lg-0">
                     <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
 
@@ -10,7 +10,7 @@
                         <i class="fe fe-search"></i>
                     </div>
                 </form>
-            </div>
+            </div-->
             <div class="dropdown">
                 <a class="nav-link pr-0 leading-none" href="#" data-toggle="dropdown">
                     {% if user.is_authenticated %}
@@ -43,25 +43,11 @@
             </div>
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
-                    {% if h %}
+                {% if h %}
                     <li class="nav-item" style="width: 175px">
                         <a href="{% url 'dashboard:view' h.pk %}" class="nav-link text-default">
                             <i class="fe fe-home"></i>
                             <b class="dashboard-nav-text">{{ h }}</b>
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item" style="width: 175px">
-                        <a href="{% url 'dashboard:index' %}" class="nav-link text-default">
-                            <i class="fe fe-home"></i>
-                            <b class="dashboard-nav-text">Global</b>
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a href="{% url 'hackathons:index' %}" class="nav-link">
-                            <i class="fe fe-calendar"></i>
-                            Hackathons
                         </a>
                     </li>
                     <li class="nav-item">
@@ -76,11 +62,37 @@
                             Companies
                         </a>
                     </li>
+                {% else %}
+                    <li class="nav-item" style="width: 175px">
+                        <a href="{% url 'dashboard:index' %}" class="nav-link text-default">
+                            <i class="fe fe-home"></i>
+                            <b class="dashboard-nav-text">Global</b>
+                        </a>
+                    </li>
+                {% endif %}
                     <li class="nav-item">
                         <a href="{% url 'emails:index' %}" class="nav-link">
                             <i class="fe fe-mail"></i>
                             Email
                         </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" data-toggle="dropdown" class="nav-link">
+                            <i class="fe fe-settings"></i>
+                            Global
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-universe dropdown-menu-arrow">
+                            <a class="dropdown-item" href="{% url 'hackathons:index' %}">
+                                <i class="dropdown-icon fe fe-calendar"></i> Hackathons
+                            </a>
+                            <a class="dropdown-item" href="{% url 'contacts:index' %}">
+                                <i class="dropdown-icon fe fe-users"></i> Contacts
+                            </a>
+                            <a class="dropdown-item" href="{% url 'companies:index' %}">
+                                <i class="dropdown-icon fe fe-share-2"></i> Companies
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
