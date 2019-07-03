@@ -179,7 +179,19 @@ class LeadForm(forms.ModelForm):
         ),
     )
 
+    times_contacted = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(
+            attrs={"class": "form-control cold-md-6 cold-lg-4", "placeholder": 1}
+        )
+    )
+
     class Meta:
         model = Lead
-        fields = ("sponsorship", "contact", "status")
-
+        fields = ("sponsorship", "contact", "status", "times_contacted")
+    
+    def __init__(self, hackathon, company=None, *args, **kwargs):
+        super(LeadForm, self).__init__(*args, **kwargs)
+        self.fields['sponsorship'].queryset = Sponsorship.objects.filter(hackathon=hackathon)
+        if company:
+            self.fields['contact'].queryset = Contact.objects.filter(company=company)

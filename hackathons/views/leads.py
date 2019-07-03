@@ -11,7 +11,6 @@ from ..forms import HackathonForm, LeadForm
 def leads_show(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
-
     def state_filter(states):
         return Lead.objects.filter(sponsorship__hackathon=hackathon, status__in=states)
 
@@ -58,47 +57,54 @@ def leads_show(request, h_pk):
 
 def lead_new(request, h_pk):
     if request.method == "POST":
-        form = LeadForm(request.POST)
+        form = LeadForm(request.hackathon, None, request.POST)
         if form.is_valid():
             lead = form.save(commit=True)
             lead.save()
             return redirect("hackathons:leads:view", h_pk=h_pk, pk=lead.contact.pk)
     else:
-        company_pk = request.GET.get("company")
-        sponsorship = Sponsorship.objects.filter(hackathon__pk=h_pk, company__pk=company_pk)
-        if company_pk and not sponsorship:
-            messages.info(request, "You need to create a sponsorship object for this company first")
-            return redirect(reverse("hackathons:sponsorships:new", h.pk) + "?company=" + company_pk)
+        contact_pk = request.GET.get("contact")
+        contact = get_object_or_404(Contact, pk=contact_pk) if contact_pk else None
+        sponsorship = None
+        company = None
+        if contact:
+            sponsorship = Sponsorship.objects.filter(hackathon__pk=h_pk, company__pk=contact.company.pk)
+            sponsorship = sponsorship[0] if sponsorship else None
+            company = get_object_or_404(Company, pk=contact.company.pk)
+            if not sponsorship:
+                messages.info(request, f"Before you can create a lead for {contact}, you need to begin tracking {company}. Press save below and then navigate back to the contact page.")
+                return redirect(reverse("hackathons:sponsorships:new", args=(h_pk,)) + "?company=" + str(company.pk))
+        
         initial = {
-            "hackathon": get_object_or_404(Hackathon, pk=h_pk),
-            "company": sponsorship if company_pk else None,
+            "contact": contact if contact_pk else None,
+            "sponsorship": sponsorship if company_pk else None,
         }
-        form = LeadForm(initial=initial)
+        form = LeadForm(request.hackathon, company, initial=initial)
     return render(request, "lead_new.html", {"form": form})
 
 def lead_edit(request, h_pk, pk):
-    lead = get_object_or_404(Lead, hackathon__pk=h_pk, contact__pk=pk)
+    lead = get_object_or_404(Lead, sponsorship__hackathon__pk=h_pk, contact__pk=pk)
     if request.method == "POST":
-        form = LeadForm(request.POST, instance=lead)
+        form = LeadForm(request.hackathon, lead.sponsorship.company, request.POST, instance=lead)
         if form.is_valid():
             lead = form.save(commit=True)
             lead.save()
             return redirect("hackathons:leads:view", h_pk=h_pk, pk=lead.contact.pk)
     else:
-        form = LeadForm(instance=lead)
+        form = LeadForm(request.hackathon, lead.sponsorship.company, instance=lead)
     return render(request, "lead_edit.html", {"form": form})
 
 def lead_detail(request, h_pk, pk):
     contact = get_object_or_404(Contact, pk=pk)
 
-    lead = Lead.objects.filter(hackathon__pk=h_pk, contact__pk=pk)
+    lead = Lead.objects.filter(sponsorship__hackathon__pk=h_pk, contact__pk=pk)
     lead = lead[0] if lead else None
 
     sponsorship = Sponsorship.objects.filter(hackathon__pk=h_pk, company__pk=contact.company.pk)
     sponsorship = sponsorship[0] if sponsorship else None
 
     lead_contacts = sponsorship.leads.all().values_list('contact__id', flat=True) if sponsorship else []
-    non_lead_contacts = set(company.contacts.all().values_list('id', flat=True)) - set(lead_contacts)
+    non_lead_contacts = set(contact.company.contacts.all().values_list('id', flat=True)) - set(lead_contacts)
 
     contacts = [{"lead": lead, "contact": lead.contact} for lead in Lead.objects.filter(contact__id__in=lead_contacts)]
     contacts += [{"contact": contact} for contact in Contact.objects.filter(id__in=non_lead_contacts)]

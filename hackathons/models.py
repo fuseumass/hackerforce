@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from companies.models import Company
 from contacts.models import Contact
@@ -82,7 +83,7 @@ class Sponsorship(models.Model):
         unique_together = ('hackathon', 'company',)
 
     def __str__(self):
-        return f"Company: {self.company}, Status: {self.status}, Contribution: {self.contribution}"
+        return f"{self.company} for {self.hackathon}"
 
 class Lead(models.Model):
     CONTACTED = "contacted"
@@ -118,4 +119,12 @@ class Lead(models.Model):
         return dict(self.ROLES)[self.role]
 
     def __str__(self):
-        return f"Sponsorship: {self.sponsorship}, Contact: {self.contact}, Status: {self.status}, Role: {self.role}"
+        return f"{self.contact} for {self.sponsorship.hackathon}"
+
+    
+    def clean(self):
+        if self.contact.company != self.sponsorship.company:
+            raise ValidationError(f"Contact {self.contact} is not a member of this company: {self.sponsorship}")
+        if not self.times_contacted:
+            self.times_contacted = 1
+
