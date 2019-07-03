@@ -61,11 +61,10 @@ class ContactForm(forms.ModelForm):
             }
         ),
     )
-    status = forms.ChoiceField(
-        required=True,
-        choices=(Contact.STATUSES),
-        widget=forms.Select(
-            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Status"}
+    primary = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            # attrs={"class": "custom-control-input"}
         ),
     )
     notes = forms.CharField(
@@ -85,6 +84,6 @@ class ContactForm(forms.ModelForm):
             "position",
             "email",
             "phone_number",
-            "status",
+            "primary",
             "notes",
         )

@@ -65,6 +65,7 @@ for i in range(50):
         last_name=fake.last_name(),
         company=random.choice(companies),
         position=fake.job(),
+        primary=bool(random.getrandbits(1)),
         email=fake.email(),
         phone_number=fake.phone_number(),
     )
@@ -156,7 +157,7 @@ for s in sponsorships:
         )
         lead.save()
         leads.append(lead)
-    
+
 
 print("\nUsers:")
 for a in users:

@@ -5,12 +5,12 @@ from companies.models import Company
 
 
 class Contact(models.Model):
-    STATUSES = (("U", "Uncontacted"), ("C", "Contacted"))
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='contacts')
     position = models.CharField(max_length=100)
+    primary = models.BooleanField(default=False)
 
     email = models.EmailField()
     phone_number = PhoneNumberField(blank=True)
