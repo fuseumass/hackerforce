@@ -32,5 +32,10 @@ class Company(models.Model):
     notes = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
 
+    # A special bool for emails
+    # if true, this company won't get selected by the blast email selections
+    # you can still email them by selecting them manually
+    email_exclude = models.BooleanField(default=False, blank=True)
+
     def __str__(self):
         return self.name

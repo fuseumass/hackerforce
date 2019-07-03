@@ -1,0 +1,40 @@
+{% extends 'global/base.html' %}
+{% block basetitle %}
+<title>Compose an Email</title>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <h2> Send an Email </h2>
+  <h4> Choose how you'll decide who to send this to... </h4>
+  <div class="card">
+    <div class="card-header">
+      <h2 class="col card-title"> I'll choose the contacts I want to send this to by hand </h2>
+      <div class="col text-right">
+        <a class="button" href="">
+          <button class="btn btn-primary ml-auto" type="button">Compose</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h2 class="col card-title"> I'll choose the companies I want, help me pick the contacts </h2>
+      <div class="col text-right">
+        <a class="button" href="">
+          <button class="btn btn-primary ml-auto" type="button">Compose</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h2 class="col card-title"> Help me choose the contacts & the companies </h2>
+      <div class="col text-right">
+        <a class="button" href="">
+          <button class="btn btn-primary ml-auto" type="button">Compose</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
