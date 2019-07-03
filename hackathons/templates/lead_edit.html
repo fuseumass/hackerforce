@@ -3,3 +3,54 @@
 {% block title %}
 Edit Lead
 {% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    {{ lead_form.media }}
+    {{ contact_form.media }}
+    <style>
+    .table-responsive select, .table-responsive input {
+        max-width: 100%;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="post-form">{% csrf_token %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                Edit Lead
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-borderless table-vcenter text-nowrap">
+                    {{ lead_form }}
+                </table>
+            </div>
+        </div>
+        <div class="card-header">
+            <h3 class="card-title">
+                Edit Contact
+            </h3>
+            <div class="col text-right">
+                <i class="fe fe-alert-triangle" style="color: red"></i>
+                <b style="color: red">Changes will apply globally.</b>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-borderless table-vcenter text-nowrap">
+                    {{ contact_form }}
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="submit" class="btn btn-primary ml-auto">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

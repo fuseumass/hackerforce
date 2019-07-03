@@ -24,10 +24,10 @@
             from <a href="{% url 'hackathons:sponsorships:view' h.pk contact.company.pk %}">
                 <b>{{ contact.company }}</b></a>
             as contacted for <b>{{ h }}</b>?</p>
+            <p><b>{{ contact.company }}</b> is currently&nbsp; {% include "cards/sponsorship_status.html" %}</p>
             {% if sponsorship %}
                 <p><b>Update sponsorship notes:</b></p>
             {% else %}
-                <p>This will also mark the company <b>{{ contact.company }}</b> as contacted.</p>
                 <p><b>Add sponsorship notes:</b></p>
             {% endif %}
             <div class="table-responsive">

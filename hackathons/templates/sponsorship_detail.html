@@ -130,7 +130,7 @@
                     <tbody>
                         {% for c in contacts %}
                         <tr>
-                            <td><a href="{% url 'contacts:view' c.contact.pk %}" class="text-inherit">
+                            <td><a href="{% url 'hackathons:leads:view' h.pk c.contact.pk %}" class="text-inherit">
                                 <b>{{ c.contact.name }}</b>
                             </a></td>
                             <td><a href="" class="text-inherit">{{ c.contact.position }}</a></td>
@@ -146,7 +146,7 @@
                             {% endif %}
                             </td>
                             <td>
-                                <a class="icon" href="{% url 'contacts:edit' c.contact.pk %}">
+                                <a class="icon" href="{% url 'hackathons:leads:edit' h.pk c.contact.pk %}">
                                     <i class="fe fe-edit"></i>
                                 </a>
                             </td>

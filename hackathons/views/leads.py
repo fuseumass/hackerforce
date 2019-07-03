@@ -1,3 +1,4 @@
+from django import forms
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -5,6 +6,7 @@ from django.db.models import Q
 from ..models import Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
+from contacts.forms import ContactForm
 from ..forms import HackathonForm, LeadForm, SponsorshipMarkContactedForm, LeadMarkContactedForm
 
 
@@ -133,14 +135,29 @@ def lead_mark_contacted(request, h_pk, c_pk):
 def lead_edit(request, h_pk, pk):
     lead = get_object_or_404(Lead, sponsorship__hackathon__pk=h_pk, contact__pk=pk)
     if request.method == "POST":
-        form = LeadForm(request.hackathon, lead.sponsorship.company, request.POST, instance=lead)
-        if form.is_valid():
-            lead = form.save(commit=True)
+        lead_form = LeadForm(request.hackathon, lead.sponsorship.company, request.POST, instance=lead, prefix="lead")
+        if lead_form.is_valid():
+            lead = lead_form.save(commit=True)
             lead.save()
+            ok = True
+        else:
+            ok = False
+        contact_form = ContactForm(request.POST, instance=lead.contact, prefix="contact")
+        if contact_form.is_valid():
+            contact = contact_form.save(commit=True)
+            contact.save()
+            ok = ok and True
+        else:
+            ok = False
+        if ok:
+            messages.success(request, f"Updated {lead.contact}")
             return redirect("hackathons:leads:view", h_pk=h_pk, pk=lead.contact.pk)
     else:
-        form = LeadForm(request.hackathon, lead.sponsorship.company, instance=lead)
-    return render(request, "lead_edit.html", {"form": form})
+        lead_form = LeadForm(request.hackathon, lead.sponsorship.company, instance=lead, prefix="lead")
+        contact_form = ContactForm(instance=lead.contact, prefix="contact")
+    lead_form.fields['sponsorship'].widget = forms.HiddenInput()
+    lead_form.fields['contact'].widget = forms.HiddenInput()
+    return render(request, "lead_edit.html", {"lead_form": lead_form, "contact_form": contact_form})
 
 def lead_detail(request, h_pk, pk):
     contact = get_object_or_404(Contact, pk=pk)
