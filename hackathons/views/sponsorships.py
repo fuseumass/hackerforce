@@ -102,5 +102,6 @@ def sponsorship_detail(request, h_pk, pk):
     return render(request, "sponsorship_detail.html", {
         "sponsorship": sponsorship,
         "company": company,
-        "contacts": contacts
+        "contacts": contacts,
+        "no_contacted_employees": len(lead_contacts) == 0 if sponsorship else False
     })

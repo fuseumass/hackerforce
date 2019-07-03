@@ -48,7 +48,7 @@
                     </div-->
                 </div>
                 <div class="card-body">
-                    {% with hackathon=h %}
+                    {% with hackathon=h hide_company_info=True %}
                         {% include "cards/contact_general_info.html" %}
                     {% endwith %}
                 </div>
@@ -72,7 +72,7 @@
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Company Information</h2>
+                        <h2 class="card-title">{{ lead.sponsorship.company }}</h2>
                     </div>
                     <div class="card-body">
                     {% with company=lead.sponsorship.company %}

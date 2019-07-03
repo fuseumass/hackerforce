@@ -1,3 +1,4 @@
+{% if not hide_company_info %}
 <p class="required-field">
     <label><b>Company: </b></label>
     {% if hackathon %}<a href="{% url 'hackathons:sponsorships:view' hackathon.pk contact.company.pk %}">
@@ -14,8 +15,8 @@
     {% for industry in contact.company.industries.all %}
         <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
     {% endfor %}
-
 </p>
+{% endif %}
 <p class="required-field">
     <label><b>Position: </b></label>
     {{ contact.position }}
