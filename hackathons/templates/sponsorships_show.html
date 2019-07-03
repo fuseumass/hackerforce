@@ -25,22 +25,22 @@
 
 <div class="my-3 my-md-5">
     <div class="container">
-        {% with card_title='Confirmed Sponsorships' name='confirmed' page_var='confirmed_page' order_var='confirmed_order_by' show_search=0 name_q=request.GET.confirmed_q sponsorships=confirmed %}
+        {% with card_title='Confirmed Sponsorships' color='green' name='confirmed' page_var='confirmed_page' order_var='confirmed_order_by' show_search=0 name_q=request.GET.confirmed_q sponsorships=confirmed %}
         {% if sponsorships %}
             {% include "cards/sponsorship_table.html" %}
         {% endif %}
         {% endwith %}
-        {% with card_title='In Progress Sponsorships' name='in_progress' page_var='in_progress_page' order_var='in_progress_order_by' show_search=0 name_q=request.GET.in_progress_q sponsorships=in_progress %}
+        {% with card_title='In Progress Sponsorships' color='orange' name='in_progress' page_var='in_progress_page' order_var='in_progress_order_by' show_search=0 name_q=request.GET.in_progress_q sponsorships=in_progress %}
         {% if sponsorships %}
             {% include "cards/sponsorship_table.html" %}
         {% endif %}
         {% endwith %}
-        {% with card_title='Uncontacted Companies' name='uncontacted' page_var='uncontacted_page' order_var='uncontacted_order_by' show_search=0 name_q=request.GET.uncontacted_q sponsorships=uncontacted faked=1 %}
+        {% with card_title='Uncontacted Companies' color='gray-dark' name='uncontacted' page_var='uncontacted_page' order_var='uncontacted_order_by' show_search=0 name_q=request.GET.uncontacted_q sponsorships=uncontacted faked=1 %}
         {% if sponsorships %}
             {% include "cards/sponsorship_table.html" %}
         {% endif %}
         {% endwith %}
-        {% with card_title='Dead Sponsorships' name='dead' page_var='dead_page' order_var='dead_order_by' show_search=0 name_q=request.GET.dead_q sponsorships=dead %}
+        {% with card_title='Dead Sponsorships' color='red' name='dead' page_var='dead_page' order_var='dead_order_by' show_search=0 name_q=request.GET.dead_q sponsorships=dead %}
         {% if sponsorships %}
             {% include "cards/sponsorship_table.html" %}
         {% endif %}

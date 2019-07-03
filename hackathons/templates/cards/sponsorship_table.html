@@ -1,6 +1,9 @@
 {% load humanize %}
 {% load order_by %}
 <div class="card" id="{{ name }}" name="{{ name }}">
+    {% if color %}
+        <div class="card-status bg-{{ color }}"></div>
+    {% endif %}
     <div class="card-header">
         <h3 class="card-title">{{ card_title }}</h3>
         {% if show_search %}
