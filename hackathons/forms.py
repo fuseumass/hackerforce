@@ -152,6 +152,20 @@ class SponsorshipForm(forms.ModelForm):
         fields = ("hackathon", "company", "contribution", "status", "tier", "perks", "notes")
 
 
+class SponsorshipMarkContactedForm(SponsorshipForm):
+    class Meta:
+        model = Sponsorship
+        fields = ("hackathon", "company", "notes",)
+    
+    def __init__(self, *args, **kwargs):
+        super(SponsorshipMarkContactedForm, self).__init__(*args, **kwargs)
+        self.fields['hackathon'].widget = forms.HiddenInput()
+        self.fields['company'].widget = forms.HiddenInput()
+        del self.fields['contribution']
+        del self.fields['status']
+        del self.fields['tier']
+        del self.fields['perks']
+
 class LeadForm(forms.ModelForm):
     sponsorship = forms.ModelChoiceField(
         required=True,
@@ -195,3 +209,15 @@ class LeadForm(forms.ModelForm):
         self.fields['sponsorship'].queryset = Sponsorship.objects.filter(hackathon=hackathon)
         if company:
             self.fields['contact'].queryset = Contact.objects.filter(company=company)
+
+class LeadMarkContactedForm(LeadForm):
+    class Meta:
+        model = Lead
+        fields = ("sponsorship", "contact",)
+    
+    def __init__(self, hackathon, company=None, *args, **kwargs):
+        super(LeadMarkContactedForm, self).__init__(hackathon, company, *args, **kwargs)
+        self.fields['sponsorship'].widget = forms.HiddenInput()
+        self.fields['contact'].widget = forms.HiddenInput()
+        del self.fields['status']
+        del self.fields['times_contacted']

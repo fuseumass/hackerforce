@@ -50,7 +50,7 @@
                     </td>
                     <td>
                     {% if faked %}
-                        <a class="tag tag-red float-right" href="{% url 'hackathons:leads:new' h.pk %}?contact={{ l.contact.pk }}">
+                        <a class="tag tag-red float-right" href="{% url 'hackathons:leads:mark_contacted' h.pk l.contact.pk %}">
                             Mark Contacted
                         </a>
                     {% else %}

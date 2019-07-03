@@ -24,6 +24,7 @@ urlpatterns_leads = [
     path("<int:h_pk>/leads/<int:pk>/edit", leads.lead_edit, name="edit"),
     path("<int:h_pk>/leads/<int:pk>", leads.lead_detail, name="view"),
     path("<int:h_pk>/leads/new", leads.lead_new, name="new"),
+    path("<int:h_pk>/leads/mark_contacted/<int:c_pk>", leads.lead_mark_contacted, name="mark_contacted"),
 ]
 
 app_name = "hackathons"

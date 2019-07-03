@@ -5,7 +5,7 @@ from django.db.models import Q
 from ..models import Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
-from ..forms import HackathonForm, LeadForm
+from ..forms import HackathonForm, LeadForm, SponsorshipMarkContactedForm, LeadMarkContactedForm
 
 
 def leads_show(request, h_pk):
@@ -77,10 +77,58 @@ def lead_new(request, h_pk):
         
         initial = {
             "contact": contact if contact_pk else None,
-            "sponsorship": sponsorship if company_pk else None,
+            "sponsorship": sponsorship,
         }
         form = LeadForm(request.hackathon, company, initial=initial)
     return render(request, "lead_new.html", {"form": form})
+
+def lead_mark_contacted(request, h_pk, c_pk):
+    contact = get_object_or_404(Contact, pk=c_pk)
+    company = get_object_or_404(Company, pk=contact.company.pk)
+    sponsorship = Sponsorship.objects.filter(hackathon__pk=h_pk, company__pk=contact.company.pk)
+    sponsorship = sponsorship[0] if sponsorship else None
+    if Lead.objects.filter(sponsorship=sponsorship, contact=contact):
+        messages.info(request, f"{contact} has already been contacted for {sponsorship.hackathon}")
+        return redirect("hackathons:leads:edit", h_pk=h_pk, pk=contact.pk)
+    
+    sp_initial = {
+        "hackathon": get_object_or_404(Hackathon, pk=h_pk),
+        "company": company,
+    }
+    if request.method == "POST":
+        if sponsorship:
+            sp_form = SponsorshipMarkContactedForm(request.POST, instance=sponsorship, prefix="sponsorship")
+        else:
+            sp_form = SponsorshipMarkContactedForm(request.POST, prefix="sponsorship")
+        
+        l_form = LeadMarkContactedForm(request.hackathon, company, request.POST.copy(), prefix="lead")
+        if sp_form.is_valid():
+            sp = sp_form.save(commit=True)
+            l_form.data['lead-sponsorship'] = str(sp.pk)
+            print('l_form', l_form.data)
+            if l_form.is_valid():
+                l = l_form.save(commit=True)
+                l.save()
+                sp.save()
+                messages.success(request, f"Marked {contact} as contacted")
+                return redirect("hackathons:leads:view", h_pk=h_pk, pk=contact.pk)
+    else:
+        if sponsorship:
+            sp_form = SponsorshipMarkContactedForm(instance=sponsorship, prefix="sponsorship")
+        else:
+            sp_form = SponsorshipMarkContactedForm(initial=sp_initial, prefix="sponsorship")
+
+        l_form = LeadMarkContactedForm(request.hackathon, company, initial={
+            "contact": contact,
+            "sponsorship": sponsorship,
+        }, prefix="lead")
+
+    return render(request, "lead_mark_contacted.html", {
+        "sp_form": sp_form,
+        "l_form": l_form,
+        "sponsorship": sponsorship,
+        "contact": contact,
+    })
 
 def lead_edit(request, h_pk, pk):
     lead = get_object_or_404(Lead, sponsorship__hackathon__pk=h_pk, contact__pk=pk)
