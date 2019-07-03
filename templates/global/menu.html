@@ -62,6 +62,24 @@
                             Sponsorships
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="dropdown" class="nav-link">
+                            <i class="fe fe-mail"></i>
+                            Email
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-universe dropdown-menu-arrow">
+                            <a class="dropdown-item" href="{% url 'emails:compose' h.pk %}">
+                                <i class="dropdown-icon fe fe-plus"></i> New Email
+                            </a>
+                            <a class="dropdown-item" href="{% url 'emails:drafts' h.pk %}" class="nav-link">
+                                <i class="fe fe-mail"></i>
+                                Drafts
+                            </a>
+                            <a class="dropdown-item" href="{% url 'emails:sent' h.pk %}">
+                                <i class="dropdown-icon fe fe-send"></i> Sent
+                            </a>
+                        </div>
+                    </li>
                 {% else %}
                     <li class="nav-item" style="width: 175px">
                         <a href="{% url 'dashboard:index' %}" class="nav-link text-default">
@@ -70,12 +88,6 @@
                         </a>
                     </li>
                 {% endif %}
-                    <li class="nav-item">
-                        <a href="{% url 'emails:compose' %}" class="nav-link">
-                            <i class="fe fe-mail"></i>
-                            Email
-                        </a>
-                    </li>
 
                     <li class="nav-item">
                         <a href="#" data-toggle="dropdown" class="nav-link">
