@@ -130,13 +130,9 @@
                             <td><a href="" class="text-inherit">{{ c.contact.phone_number }}</a></td>
                             <td><a href="" class="text-inherit">{{ c.contact.email }}</a></td>
                             <td>
-                            {% if not c.lead %}
-                                <span class="status-icon bg-gray-dark"></span> Unassigned
-                            {% elif c.lead.status == 'uncontacted' %}
-                                <span class="status-icon bg-red"></span> Uncontacted
-                            {% elif c.lead.status == 'contacted' %}
-                                <span class="status-icon bg-green"></span> Contacted
-                            {% endif %}
+                                {% with lead=c.lead %}
+                                    {% include "cards/lead_status.html" %}
+                                {% endwith %}
                             </td>
                             <td>
                                 <a class="icon" href="{% url 'contacts:edit' c.contact.pk %}">

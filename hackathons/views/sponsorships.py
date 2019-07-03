@@ -63,7 +63,7 @@ def sponsorship_new(request, h_pk):
             sponsorship.perks.set(form.cleaned_data["perks"])
             # sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
-            return redirect("hackathons:sponsorships:view", h_pk=h_pk, pk=sponsorship.hackathon.pk)
+            return redirect("hackathons:sponsorships:view", h_pk=h_pk, pk=sponsorship.company.pk)
     else:
         company_pk = request.GET.get("company")
         initial = {

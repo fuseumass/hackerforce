@@ -138,7 +138,10 @@ def lead_mark_contacted(request, h_pk, c_pk):
     })
 
 def lead_edit(request, h_pk, pk):
-    lead = get_object_or_404(Lead, sponsorship__hackathon__pk=h_pk, contact__pk=pk)
+    lead = Lead.objects.filter(sponsorship__hackathon__pk=h_pk, contact__pk=pk)
+    lead = lead[0] if lead else None
+    if not lead:
+        return redirect(reverse("contacts:edit", args=(pk,))+"?next="+reverse("hackathons:leads:view", args=(h_pk,pk,)))
     if request.method == "POST":
         lead_form = LeadForm(request.hackathon, lead.sponsorship.company, request.POST, instance=lead, prefix="lead")
         if lead_form.is_valid():

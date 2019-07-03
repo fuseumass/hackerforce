@@ -5,7 +5,6 @@ from companies.models import Company
 
 
 class Contact(models.Model):
-    STATUSES = (("U", "Uncontacted"), ("C", "Contacted"))
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
 

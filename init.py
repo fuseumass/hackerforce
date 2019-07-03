@@ -59,7 +59,7 @@ for i in range(50):
 
 print("Generating contacts...")
 contacts = []
-for i in range(50):
+for i in range(150):
     contact = Contact(
         first_name=fake.first_name(),
         last_name=fake.last_name(),
@@ -98,7 +98,7 @@ for i in range(3):
     hackathon = Hackathon(
         name="Hack " + fake.state(),
         date=fake.future_date(end_date="+30d", tzinfo=None),
-        fundraising_goal=random.randint(1000, 10000),
+        fundraising_goal=random.randint(5000, 20000),
     )
     hackathon.save()
     hackathons.append(hackathon)
@@ -123,34 +123,28 @@ for i in range(20):
 
 print("Generating sponsorships...")
 sponsorships = []
-sp_companies = list(companies)
-for i in range(5):
-    for h in hackathons:
-        sp_company = random.choice(sp_companies)
-        sp_companies.remove(sp_company)
-        sponsorship = Sponsorship(
-            hackathon=h,
-            company=sp_company,
-            tier=random.choice(tiers),
-            contribution=random.randint(0, 1000),
-            status=random.choice(Sponsorship.STATUSES)[0],
-        )
-        sponsorship.save()
-        for s in random.sample(perks, random.randint(1, 5)):
-            sponsorship.perks.add(s)
-        sponsorship.save()
-        sponsorships.append(sponsorship)
+for c in companies:
+    sponsorship = Sponsorship(
+        hackathon=random.choice(hackathons),
+        company=c,
+        tier=random.choice(tiers),
+        contribution=random.randint(0, 1000),
+        status=random.choice(Sponsorship.STATUSES)[0],
+    )
+    sponsorship.save()
+    for s in random.sample(perks, random.randint(1, 5)):
+        sponsorship.perks.add(s)
+    sponsorship.save()
+    sponsorships.append(sponsorship)
 
 print("Generating leads...")
 leads = []
 for s in sponsorships:
-    l_contacts = list(s.company.contacts.all())
-    for i in range(max(0 if len(l_contacts) == 0 else 1, len(l_contacts)-1)):
-        l_contact = random.choice(l_contacts)
-        l_contacts.remove(l_contact)
+    contacts = s.company.contacts.all()
+    if contacts:
         lead = Lead(
             sponsorship=s,
-            contact=l_contact,
+            contact=random.choice(contacts),
             status=random.choice(Lead.STATUSES)[0],
             role=random.choice(Lead.ROLES)[0],
         )

@@ -32,7 +32,9 @@ def contact_new(request):
         if form.is_valid():
             contact = form.save(commit=False)
             contact.save()
-            messages.success(request, "Added contact")
+            messages.success(request, f"Added {contact}")
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("contacts:index")
     elif request.GET.get("company_id") is not None:
         company = get_object_or_404(Company, pk=request.GET.get("company_id"))
@@ -49,7 +51,9 @@ def contact_edit(request, pk):
         if form.is_valid():
             contact = form.save(commit=False)
             contact.save()
-            messages.success(request, "Updated contact")
+            messages.success(request, f"Updated {contact}")
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("contacts:view", pk=contact.pk)
     else:
         form = ContactForm(instance=contact)
