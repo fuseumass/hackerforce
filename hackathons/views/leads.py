@@ -17,11 +17,16 @@ def leads_show(request, h_pk):
         return Lead.objects.filter(sponsorship__hackathon=hackathon, status__in=states)
 
     def paginator_wrapper(name, obj):
-        order_by = request.GET.get(f"{name}_order_by")
-        if order_by:
-            obj = obj.order_by(order_by)
         paginator = Paginator(obj, 25)
         return paginator.get_page(request.GET.get(f"{name}_page"))
+    
+    def order_by_wrapper(name, obj, strip=None):
+        order_by = request.GET.get(f"{name}_order_by")
+        if strip and order_by:
+            order_by = order_by.replace(strip, '')
+        if order_by:
+            obj = obj.order_by(*order_by.split(','))
+        return obj
     
     def get_q(name):
         return request.GET["q"] if request.GET.get("q") else request.GET.get(f"{name}_q")
@@ -31,7 +36,7 @@ def leads_show(request, h_pk):
         q = get_q(name)
         if q:
             obj = obj.filter(Q(contact__first_name__icontains=q) | Q(contact__last_name__icontains=q) | Q(contact__company__name__icontains=q) | Q(contact__company__industries__name__iexact=q))
-        return paginator_wrapper(name, obj.distinct())
+        return paginator_wrapper(name, order_by_wrapper(name, obj.distinct()))
     
     def contact_wrapper(name):
         contacts_for_hackathon = Contact.objects.filter(leads__sponsorship__hackathon__pk=h_pk).values_list("pk", flat=True)
@@ -39,7 +44,7 @@ def leads_show(request, h_pk):
         q = get_q(name)
         if q:
             obj = obj.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(company__name__icontains=q))
-        return paginator_wrapper(name, fake_leads(obj.distinct()))
+        return paginator_wrapper(name, fake_leads(order_by_wrapper(name, obj.distinct(), 'contact__')))
 
     def fake_leads(contacts):
         return [Lead(pk=0, contact=c, sponsorship=Sponsorship(pk=0, company=c.company)) for c in contacts]

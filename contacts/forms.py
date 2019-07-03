@@ -1,5 +1,4 @@
 from django import forms
-from phonenumber_field.formfields import PhoneNumberField
 from ckeditor.widgets import CKEditorWidget
 
 from .models import Contact
@@ -51,13 +50,14 @@ class ContactForm(forms.ModelForm):
             }
         ),
     )
-    phone_number = PhoneNumberField(
+    phone_number = forms.CharField(
         max_length=50,
         required=False,
         widget=forms.TextInput(
             attrs={
                 "class": "form-control col-md-6 col-lg-4",
                 "placeholder": "(000) 000-0000",
+                "type": "tel",
             }
         ),
     )

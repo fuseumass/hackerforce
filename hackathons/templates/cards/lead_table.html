@@ -22,9 +22,10 @@
         <table class="table card-table table-vcenter text-nowrap">
             <thead>
                 <tr>
-                    <th><a href="{% order_by_custom order_var 'name' %}#{{ name }}">Name</a></th>
-                    <th><a href="{% order_by_custom order_var 'company' %}#{{ name }}">Company</a></th>
-                    <th><a href="{% order_by_custom order_var 'status' %}#{{ name }}">Status</a></th>
+                    <th><a href="{% order_by_custom order_var 'contact__last_name,contact__first_name' %}#{{ name }}">Name</a></th>
+                    <th><a href="{% order_by_custom order_var 'contact__company' %}#{{ name }}">Company</a></th>
+                    <th><a href="{% if not faked %}{% order_by_custom order_var 'status' %}{% endif %}#{{ name }}">Status</a></th>
+                    <th><a href="{% if not faked %}{% order_by_custom order_var 'times_contacted' %}{% endif %}#{{ name }}">Contacted</a></th>
                     <th style="width: 115px"></th>
                 </tr>
             </thead>
@@ -47,6 +48,13 @@
                             {% include "cards/lead_status.html" %}
                         {% endwith %}
                     {% endif %}
+                    </td>
+                    <td style="text-align: center">
+                        {% if faked %}
+                            0
+                        {% else %}
+                            {{ l.times_contacted }}
+                        {% endif %}
                     </td>
                     <td>
                     {% if faked %}

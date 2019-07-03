@@ -13,7 +13,7 @@ class Contact(models.Model):
     position = models.CharField(max_length=100)
 
     email = models.EmailField()
-    phone_number = PhoneNumberField(blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
 
     notes = models.TextField(blank=True)
     updated = models.DateField(auto_now=True)
