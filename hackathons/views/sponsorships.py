@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db.models import Q
 from ..models import Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
@@ -20,16 +21,31 @@ def sponsorships_show(request, h_pk):
         paginator = Paginator(obj, 25)
         return paginator.get_page(request.GET.get(f"{name}_page"))
     
+    def get_q(name):
+        return request.GET["q"] if request.GET.get("q") else request.GET.get(f"{name}_q")
+    
+    def sponsorship_wrapper(name, states):
+        obj = state_filter(states)
+        q = get_q(name)
+        if q:
+            obj = obj.filter(Q(company__name__icontains=q) | Q(company__industries__name__iexact=q))
+        return paginator_wrapper(name, obj.distinct())
+    
+    def company_wrapper(name):
+        companies_for_hackathon = Company.objects.filter(sponsorships__hackathon__pk=h_pk).values_list("pk", flat=True)
+        obj = Company.objects.exclude(pk__in=companies_for_hackathon)
+        q = get_q(name)
+        if q:
+            obj = obj.filter(Q(name__icontains=q) | Q(industries__name__iexact=q))
+        return paginator_wrapper(name, fake_sponsorship(obj.distinct()))
+
     def fake_sponsorship(company):
         return [Sponsorship(pk=0, company=c, tier=None, contribution=0) for c in company]
     
-    confirmed = paginator_wrapper("confirmed", state_filter([Sponsorship.CONFIRMED, Sponsorship.PAID]))
-    in_progress = paginator_wrapper("in_progress", state_filter([Sponsorship.CONTACTED, Sponsorship.RESPONDED]))
-    dead = paginator_wrapper("dead", state_filter([Sponsorship.GHOSTED, Sponsorship.DENIED]))
-
-    companies_for_hackathon = Company.objects.filter(sponsorships__hackathon__pk=h_pk).values_list("pk", flat=True)
-    companies = Company.objects.exclude(pk__in=companies_for_hackathon)
-    uncontacted = paginator_wrapper("companies", fake_sponsorship(companies))
+    confirmed = sponsorship_wrapper("confirmed", [Sponsorship.CONFIRMED, Sponsorship.PAID])
+    in_progress = sponsorship_wrapper("in_progress", [Sponsorship.CONTACTED, Sponsorship.RESPONDED])
+    dead = sponsorship_wrapper("dead", [Sponsorship.GHOSTED, Sponsorship.DENIED])
+    uncontacted = company_wrapper("companies")
 
     return render(request, "sponsorships_show.html", {
         "confirmed": confirmed,

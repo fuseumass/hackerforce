@@ -5,10 +5,10 @@
         <h3 class="card-title">{{ card_title }}</h3>
         {% if show_search %}
         <div class="col-lg-3 ml-auto">
-            <form action="{% url 'hackathons:sponsorship:show' %}" method="GET">
+            <form action="{% url 'hackathons:sponsorships:show' h.pk %}" method="GET">
                 <div class="row gutters-xs">
                     <div class="col">
-                        <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
+                        <input class="form-control" placeholder="Search for..." type="text" name="{{ name }}_q" value="{{ name_q }}" />
                     </div>
                     <span class="col-auto">
                         <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>

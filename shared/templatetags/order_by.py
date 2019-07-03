@@ -8,6 +8,8 @@ def order_by(context, arg):
 
 @register.simple_tag(takes_context=True)
 def order_by_custom(context, get_name, arg):
-    q = context.request.GET.get("q") or ""
-    order_by = f"-{arg}" if context.request.GET.get(get_name) == arg else arg
-    return f"?q={q}&{get_name}={order_by}"
+    existing_arg = context.request.GET.get(get_name)
+    existing = context.request.GET.urlencode()
+    existing = existing.replace(f'&{get_name}={existing_arg}', '')
+    order_by = f"-{arg}" if existing_arg == arg else arg
+    return f"?{existing}&{get_name}={order_by}"
