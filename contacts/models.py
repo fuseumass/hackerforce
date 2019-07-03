@@ -10,6 +10,7 @@ class Contact(models.Model):
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='contacts')
     position = models.CharField(max_length=100)
+    primary = models.BooleanField(default=False)
 
     email = models.EmailField()
     phone_number = models.CharField(max_length=20, blank=True)

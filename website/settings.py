@@ -168,12 +168,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 django_heroku.settings(locals())
 
 # Email thing
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "TODO: email host"
-EMAIL_HOST_USER = "TODO: email host user"
-EMAIL_HOST_PASSWORD = "TODO: email host password"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_HOST = "TODO: email host"
+# EMAIL_HOST_USER = "TODO: email host user"
+# EMAIL_HOST_PASSWORD = "TODO: email host password"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
 # CKEditor
 CKEDITOR_CONFIGS = {
