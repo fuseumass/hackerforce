@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from companies.models import Company
 from contacts.models import Contact
@@ -82,12 +83,13 @@ class Sponsorship(models.Model):
         unique_together = ('hackathon', 'company',)
 
     def __str__(self):
-        return f"Company: {self.company}, Status: {self.status}, Contribution: {self.contribution}"
+        return f"{self.company} for {self.hackathon}"
 
 class Lead(models.Model):
     CONTACTED = "contacted"
+    GHOSTED = "ghosted"
     RESPONDED = "responded"
-    STATUSES = ((CONTACTED, "Contacted"), (RESPONDED, "Responded"))
+    STATUSES = ((CONTACTED, "Contacted"), (GHOSTED, "Ghosted"), (RESPONDED, "Responded"))
     NO_ROLE = "no_role"
     PRIMARY = "primary"
     ROLES = ((NO_ROLE, "None"), (PRIMARY, "Primary"))
@@ -99,8 +101,10 @@ class Lead(models.Model):
         Contact, on_delete=models.CASCADE, related_name="leads"
     )
 
-    status = models.CharField(max_length=20, choices=STATUSES)
+    status = models.CharField(max_length=20, choices=STATUSES, default=CONTACTED)
     role = models.CharField(max_length=20, choices=ROLES)
+
+    times_contacted = models.IntegerField(blank=True, default=1)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -115,4 +119,12 @@ class Lead(models.Model):
         return dict(self.ROLES)[self.role]
 
     def __str__(self):
-        return f"Sponsorship: {self.sponsorship}, Contact: {self.contact}, Status: {self.status}, Role: {self.role}"
+        return f"{self.contact} for {self.sponsorship.hackathon}"
+
+    
+    def clean(self):
+        if self.contact.company != self.sponsorship.company:
+            raise ValidationError(f"Contact {self.contact} is not a member of this company: {self.sponsorship}")
+        if not self.times_contacted:
+            self.times_contacted = 1
+

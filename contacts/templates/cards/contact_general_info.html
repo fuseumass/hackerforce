@@ -1,0 +1,33 @@
+<p class="required-field">
+    <label><b>Company: </b></label>
+    {% if hackathon %}<a href="{% url 'hackathons:sponsorships:view' hackathon.pk contact.company.pk %}">
+    {% else %}<a href="{% url 'companies:view' contact.company.pk %}">{% endif %}
+        {{ contact.company.name }}
+    </a> {% if contact.company.size %}<br />{% endif %}
+    {% if contact.company.size == 'S'%}
+    <span class="tag tag-green">Small</span>
+    {% elif contact.company.size == 'M'%}
+    <span class="tag tag-yellow">Medium</span>
+    {% elif contact.company.size == 'L'%}
+    <span class="tag tag-red">Large</span>
+    {% endif %}
+    {% for industry in contact.company.industries.all %}
+        <span class="tag tag-{{ industry.color }}">{{ industry.name }}</span>
+    {% endfor %}
+
+</p>
+<p class="required-field">
+    <label><b>Position: </b></label>
+    {{ contact.position }}
+</p>
+<p class="required-field">
+    <label><b>Email: </b></label>
+    <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+</p>
+<p class="required-field">
+        <label><b>Phone Number: </b></label>
+        <a href="mailto:{{ contact.phone_number }}">{{ contact.phone_number }}</a>
+    </p>
+<p class="text-right">
+    Last Updated: {{ contact.updated }}
+</p>

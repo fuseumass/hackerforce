@@ -1,0 +1,9 @@
+{% if not lead %}
+    <span class="status-icon bg-gray-dark"></span> Uncontacted
+{% elif lead.status == 'contacted' %}
+    <span class="status-icon bg-orange"></span> Contacted ({{ lead.times_contacted }}x)
+{% elif lead.status == 'responded' %}
+    <span class="status-icon bg-green"></span> Responded
+{% elif lead.status == 'ghosted' %}
+    <span class="status-icon bg-pink"></span> Ghosted
+{% endif %}

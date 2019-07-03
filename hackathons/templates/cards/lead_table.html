@@ -5,7 +5,7 @@
         <h3 class="card-title">{{ card_title }}</h3>
         {% if show_search %}
         <div class="col-lg-3 ml-auto">
-            <form action="{% url 'hackathons:sponsorships:show' h.pk %}" method="GET">
+            <form action="{% url 'hackathons:leads:show' h.pk %}" method="GET">
                 <div class="row gutters-xs">
                     <div class="col">
                         <input class="form-control" placeholder="Search for..." type="text" name="{{ name }}_q" value="{{ name_q }}" />
@@ -22,39 +22,39 @@
         <table class="table card-table table-vcenter text-nowrap">
             <thead>
                 <tr>
+                    <th><a href="{% order_by_custom order_var 'name' %}#{{ name }}">Name</a></th>
                     <th><a href="{% order_by_custom order_var 'company' %}#{{ name }}">Company</a></th>
-                    <th><a href="{% order_by_custom order_var 'tier' %}#{{ name }}">Tier</a></th>
-                    <th><a href="{% order_by_custom order_var 'contribution' %}#{{ name }}">Contribution</a></th>
                     <th><a href="{% order_by_custom order_var 'status' %}#{{ name }}">Status</a></th>
                     <th style="width: 115px"></th>
                 </tr>
             </thead>
             <tbody>
-                {% for s in sponsorships %}
+                {% for l in leads %}
                 <tr>
-                    <td><a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}" class="text-inherit">
-                        <b>{{ s.company.name }}</b>
+                    <td><a href="{% url 'hackathons:leads:view' h.pk l.contact.pk %}" class="text-inherit">
+                        <b>{{ l.contact.name }}</b>
                     </a></td>
-                    <td>{{ s.tier }}</td>
-                    <td>${{ s.contribution|intcomma }}</td>
+                    <td><a href="{% url 'hackathons:sponsorships:view' h.pk l.sponsorship.company.pk %}" class="text-inherit">
+                        <b>{{ l.sponsorship.company.name }}</b>
+                    </a></td>
                     <td>
                     {% if faked %}
-                        {% with sponsorship=None %}
-                            {% include "cards/sponsorship_status.html" %}
+                        {% with lead=None %}
+                            {% include "cards/lead_status.html" %}
                         {% endwith %}
                     {% else %}
-                        {% with sponsorship=s %}
-                            {% include "cards/sponsorship_status.html" %}
+                        {% with lead=l %}
+                            {% include "cards/lead_status.html" %}
                         {% endwith %}
                     {% endif %}
                     </td>
                     <td>
                     {% if faked %}
-                        <a class="tag tag-red float-right" href="{% url 'hackathons:sponsorships:new' h.pk %}?company={{ s.company.pk }}">
+                        <a class="tag tag-red float-right" href="{% url 'hackathons:leads:mark_contacted' h.pk l.contact.pk %}">
                             Mark Contacted
                         </a>
                     {% else %}
-                        <a class="icon" href="{% url 'hackathons:sponsorships:edit' h.pk s.company.pk %}">
+                        <a class="icon" href="{% url 'hackathons:leads:edit' h.pk l.contact.pk %}">
                             <i class="fe fe-edit"></i>
                         </a>
                     {% endif %}
@@ -66,21 +66,21 @@
     </div>
     <div class="card-footer">
         <div class="pagination">
-            {% if sponsorships.has_previous %}
+            {% if leads.has_previous %}
                 <div class="col text-left">
-                    <a href="?{{ page_var }}={{ sponsorships.previous_page_number }}#{{ name }}" class="button">
+                    <a href="?{{ page_var }}={{ leads.previous_page_number }}#{{ name }}" class="button">
                         <button type="button" class="btn btn-primary">&laquo; Previous</button>
                     </a>
                 </div>
             {% endif %}
 
             <span class="btn">
-                Page {{ sponsorships.number }} of {{ sponsorships.paginator.num_pages }}
+                Page {{ leads.number }} of {{ leads.paginator.num_pages }}
             </span>
 
-            {% if sponsorships.has_next %}
+            {% if leads.has_next %}
                 <div class="col text-right">
-                    <a href="?{{ page_var }}={{ sponsorships.next_page_number }}#{{ name }}" class="button">
+                    <a href="?{{ page_var }}={{ leads.next_page_number }}#{{ name }}" class="button">
                         <button type="button" class="btn btn-primary">Next &raquo;</button>
                     </a>
                 </div>

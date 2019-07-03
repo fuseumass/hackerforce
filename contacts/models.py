@@ -20,7 +20,7 @@ class Contact(models.Model):
     # sponsorships field
 
     def __str__(self):
-        return f"Name: {self.name()}, Company: {self.company}, Position: {self.position}, Email: {self.email}, Phone: {self.phone_number}"
+        return f"{self.name()} ({self.company})"
 
     def name(self):
         return f"{self.first_name} {self.last_name}"

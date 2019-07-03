@@ -1,0 +1,47 @@
+{% extends 'global/base.html' %}
+
+{% block css %}
+    {{ block.super }}
+    {{ sp_form.media }}
+    {{ l_form.media }}
+    <style>
+    .table-responsive th {
+        display: none;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Mark Contacted</h3>
+        </div>
+        <div class="card-body">
+            <p>Do you want to mark <a href="{% url 'hackathons:leads:view' h.pk contact.pk %}">
+                <b>{{ contact.name }}</b></a>
+            from <a href="{% url 'hackathons:sponsorships:view' h.pk contact.company.pk %}">
+                <b>{{ contact.company }}</b></a>
+            as contacted for <b>{{ h }}</b>?</p>
+            <p><b>{{ contact.company }}</b> is currently&nbsp; {% include "cards/sponsorship_status.html" %}</p>
+            {% if sponsorship %}
+                <p><b>Update sponsorship notes:</b></p>
+            {% else %}
+                <p><b>Add sponsorship notes:</b></p>
+            {% endif %}
+            <div class="table-responsive">
+                <table class="table table-borderless table-vcenter text-nowrap">
+                    {{ sp_form }}
+                    {{ l_form }}
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="submit" class="btn btn-primary ml-auto">OK</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

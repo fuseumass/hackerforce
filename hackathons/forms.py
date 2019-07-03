@@ -1,7 +1,8 @@
 from django import forms
 
-from .models import Tier, Perk, Hackathon, Sponsorship
+from .models import Tier, Perk, Hackathon, Sponsorship, Lead
 from companies.models import Company
+from contacts.models import Contact
 from ckeditor.widgets import CKEditorWidget
 
 class HackathonForm(forms.ModelForm):
@@ -150,3 +151,73 @@ class SponsorshipForm(forms.ModelForm):
         model = Sponsorship
         fields = ("hackathon", "company", "contribution", "status", "tier", "perks", "notes")
 
+
+class SponsorshipMarkContactedForm(SponsorshipForm):
+    class Meta:
+        model = Sponsorship
+        fields = ("hackathon", "company", "notes",)
+    
+    def __init__(self, *args, **kwargs):
+        super(SponsorshipMarkContactedForm, self).__init__(*args, **kwargs)
+        self.fields['hackathon'].widget = forms.HiddenInput()
+        self.fields['company'].widget = forms.HiddenInput()
+        del self.fields['contribution']
+        del self.fields['status']
+        del self.fields['tier']
+        del self.fields['perks']
+
+class LeadForm(forms.ModelForm):
+    sponsorship = forms.ModelChoiceField(
+        required=True,
+        queryset=Sponsorship.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "class": "custom-select col-md-6 col-lg-4",
+            }
+        ),
+    )
+
+    contact = forms.ModelChoiceField(
+        required=True,
+        queryset=Contact.objects.all(),
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4",}
+        ),
+    )
+
+    status = forms.ChoiceField(
+        required=True,
+        choices=Lead.STATUSES,
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4",}
+        ),
+    )
+
+    times_contacted = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(
+            attrs={"class": "form-control cold-md-6 cold-lg-4", "placeholder": 1}
+        )
+    )
+
+    class Meta:
+        model = Lead
+        fields = ("sponsorship", "contact", "status", "times_contacted")
+    
+    def __init__(self, hackathon, company=None, *args, **kwargs):
+        super(LeadForm, self).__init__(*args, **kwargs)
+        self.fields['sponsorship'].queryset = Sponsorship.objects.filter(hackathon=hackathon)
+        if company:
+            self.fields['contact'].queryset = Contact.objects.filter(company=company)
+
+class LeadMarkContactedForm(LeadForm):
+    class Meta:
+        model = Lead
+        fields = ("sponsorship", "contact",)
+    
+    def __init__(self, hackathon, company=None, *args, **kwargs):
+        super(LeadMarkContactedForm, self).__init__(hackathon, company, *args, **kwargs)
+        self.fields['sponsorship'].widget = forms.HiddenInput()
+        self.fields['contact'].widget = forms.HiddenInput()
+        del self.fields['status']
+        del self.fields['times_contacted']
