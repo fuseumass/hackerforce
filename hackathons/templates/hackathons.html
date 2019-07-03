@@ -8,13 +8,13 @@
             <div class="card-header">
                 <h3 class="card-title">Hackathons</h3>
                 <div class="col text-right">
-                    <a class="button" href="{% url 'hackathons:hackathon_new' %}">
+                    <a class="button" href="{% url 'hackathons:new' %}">
                         <button type="button" class="btn btn-primary ml-auto">New Hackathon</button>
                     </a>
-                    <a class="button" href="{% url 'hackathons:tier_new' %}">
+                    <a class="button" href="{% url 'hackathons:tiers:new' %}">
                         <button type="button" class="btn btn-primary ml-auto">New Tier</button>
                     </a>
-                    <a class="button" href="{% url 'hackathons:perk_new' %}">
+                    <a class="button" href="{% url 'hackathons:perks:new' %}">
                         <button type="button" class="btn btn-primary ml-auto">New Perk</button>
                     </a>
                 </div>
@@ -37,8 +37,8 @@
                             <th>Name</th>
                             <th>Date</th>
                             <th>Fundraising Goal</th>
-                            <th>Tier</th>
-                            <th>Perks</th>
+                            <!--th>Tier</th>
+                            <th>Perks</th-->
                             <th></th>
                         </tr>
                     </thead>
@@ -59,22 +59,22 @@
                             <td>
                                 ${{ hackathon.fundraising_goal | intcomma }}
                             </td>
-                            <td>
+                            <!--td>
                                 {% for tier in hackathon.tiers.all %}
-                                <a href="{% url 'hackathons:tier_edit' tier.pk %}">
+                                <a href="{% url 'hackathons:tiers:edit' tier.pk %}">
                                     <span class="tag tag-red">{{ tier.name }}</span>
                                 </a>
                                 {% endfor %}
                             </td>
                             <td>
                                 {% for perk in hackathon.perks.all %}
-                                <a href="{% url 'hackathons:perk_edit' perk.pk %}">
+                                <a href="{% url 'hackathons:perks:edit' perk.pk %}">
                                     <span class="tag tag-green">{{ perk.name }}</span>
                                 </a>
                                 {% endfor %}
-                            </td>
+                            </td-->
                             <td>
-                                <a class="icon" href="{% url 'hackathons:hackathon_edit' hackathon.pk %}">
+                                <a class="icon" href="{% url 'hackathons:edit' hackathon.pk %}">
                                     <i class="fe fe-edit"></i>
                                 </a>
                             </td>

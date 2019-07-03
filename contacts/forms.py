@@ -84,6 +84,5 @@ class ContactForm(forms.ModelForm):
             "position",
             "email",
             "phone_number",
-            "primary",
             "notes",
         )
