@@ -21,6 +21,7 @@
             </div>
         {% endif %}
     </div>
+
     <div class="card">
         <div class="card-header">
             <h2 class="col card-title">Status: &nbsp;
@@ -32,10 +33,15 @@
                     <b style="font-size: 16px; color: red">This company has not been contacted for the current hackathon.</b><br />
                     Press "Mark Contacted" to begin tracking this company as a potential sponsor.
                 </div>
+            {% elif no_contacted_employees %}
+                <div class="col-sm-8 text-center" style="font-size: 14px">
+                    <i class="fe fe-alert-triangle" style="color: red"></i>
+                    <b style="font-size: 16px; color: red">No employees of this company have been marked as contacted.</b><br />
+                    Press "Mark Contacted" for the contact(s) below who were contacted.
+                </div>
             {% endif %}
         </div>
     </div>
-
 
     {% if sponsorship %}
         <div class="row row-cards">
