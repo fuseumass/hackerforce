@@ -1,7 +1,8 @@
 from django import forms
 
-from .models import Tier, Perk, Hackathon, Sponsorship
+from .models import Tier, Perk, Hackathon, Sponsorship, Lead
 from companies.models import Company
+from contacts.models import Contact
 from ckeditor.widgets import CKEditorWidget
 
 class HackathonForm(forms.ModelForm):
@@ -149,4 +150,36 @@ class SponsorshipForm(forms.ModelForm):
     class Meta:
         model = Sponsorship
         fields = ("hackathon", "company", "contribution", "status", "tier", "perks", "notes")
+
+
+class LeadForm(forms.ModelForm):
+    sponsorship = forms.ModelChoiceField(
+        required=True,
+        queryset=Sponsorship.objects.all(),
+        widget=forms.Select(
+            attrs={
+                "class": "custom-select col-md-6 col-lg-4",
+            }
+        ),
+    )
+
+    contact = forms.ModelChoiceField(
+        required=True,
+        queryset=Contact.objects.all(),
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4",}
+        ),
+    )
+
+    status = forms.ChoiceField(
+        required=True,
+        choices=Lead.STATUSES,
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4",}
+        ),
+    )
+
+    class Meta:
+        model = Lead
+        fields = ("sponsorship", "contact", "status")
 

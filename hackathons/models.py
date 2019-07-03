@@ -86,8 +86,9 @@ class Sponsorship(models.Model):
 
 class Lead(models.Model):
     CONTACTED = "contacted"
+    GHOSTED = "ghosted"
     RESPONDED = "responded"
-    STATUSES = ((CONTACTED, "Contacted"), (RESPONDED, "Responded"))
+    STATUSES = ((CONTACTED, "Contacted"), (GHOSTED, "Ghosted"), (RESPONDED, "Responded"))
     NO_ROLE = "no_role"
     PRIMARY = "primary"
     ROLES = ((NO_ROLE, "None"), (PRIMARY, "Primary"))
@@ -99,8 +100,10 @@ class Lead(models.Model):
         Contact, on_delete=models.CASCADE, related_name="leads"
     )
 
-    status = models.CharField(max_length=20, choices=STATUSES)
+    status = models.CharField(max_length=20, choices=STATUSES, default=CONTACTED)
     role = models.CharField(max_length=20, choices=ROLES)
+
+    times_contacted = models.IntegerField(blank=True, default=1)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
