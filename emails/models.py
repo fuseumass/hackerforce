@@ -1,18 +1,26 @@
 from django.db import models
 from django.utils import timezone
 
-from companies.models import Company
+from companies.models import Company, Industry
 from profiles.models import User
-
+from contacts.models import Contact
+from hackathons.models import Hackathon
 
 class Email(models.Model):
-    """Object representing the Contact."""
-
+    """Object representing an Email."""
     STATUS_CHOICES = [("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")]
+    CONTACTED_CHOICES = [("U", "Uncontacted"), ("C1", "Contacted <= 1"), ("C2", "Contacted <= 2"), ("C0", "Contacted > 0")]
+    SIZE_CHOICES = [("S", "Small"), ("M", "Medium"), ("L", "Large")]
+    PRIMARY_CHOICES = [("P", "Primary"), ("NP", "Not-Primary")]
 
-    #STATUS_CHOICES = models.CharField(max_length=20)
+    hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE, related_name="emails")
 
-    to = models.ManyToManyField(Company, blank=True)
+    to_companies = models.ManyToManyField(Company, blank=True, null=True, related_name="email_templates")
+    to_contacts = models.ManyToManyField(Contact, blank=True, null=True, related_name="email_templates")
+    to_industries = models.ManyToManyField(Industry, blank=True, null=True)
+    contacted_selection = models.CharField(max_length=10, choices=CONTACTED_CHOICES, blank=True)
+    size_selection = models.CharField(max_length=10, choices=SIZE_CHOICES, blank=True)
+    primary_selection = models.CharField(max_length=10, choices=PRIMARY_CHOICES, blank=True)
 
     subject = models.CharField(max_length=100, help_text="Enter an email subject")
 
@@ -30,7 +38,7 @@ class Email(models.Model):
     last_update = models.DateTimeField(auto_now_add=True, blank=True)
 
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="emails"
+        User, on_delete=models.SET_NULL, related_name="emails", null=True
     )
 
     def __str__(self):
