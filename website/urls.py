@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.urls import path, re_path, include
 
+from django.conf import settings
 from django.contrib import admin
 from django.conf.urls import url
 from profiles import views as profile_views
@@ -43,3 +44,9 @@ urlpatterns = [
     ),
     url(r"^.*/$", dashboard_views.page404, name="404"),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

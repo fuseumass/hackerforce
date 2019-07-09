@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "debug_toolbar",
     # HTML
     "django_jinja",
     "widget_tweaks",
@@ -73,6 +74,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "shared.middleware.CurrentHackathonMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "website.urls"
@@ -185,4 +187,11 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Basic',
         'width': '100%',
     },
+}
+
+def is_debug(self):
+    return DEBUG
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': is_debug,
 }

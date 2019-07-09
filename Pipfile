@@ -19,5 +19,6 @@ faker = "==1.0.0"
 django-ckeditor = "*"
 django-extensions = "*"
 django-multiselectfield="*"
+django-debug-toolbar = "*"
 
 [dev-packages]
