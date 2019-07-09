@@ -8,6 +8,9 @@
   <div class="card-header">
     <h2> {{ email.subject }} </h2>
     <div class="col text-right h2">
+      <a class="button" href="{% url 'emails:render' h.pk email.pk %}">
+        <button class="btn btn-primary ml-auto">Render</button>
+      </a>
       <a class="button" href="">
         <button class="btn btn-primary ml-auto">Edit</button>
       </a>
@@ -25,6 +28,14 @@
         <span class="status-icon bg-green"></span> Sent
         {% endif %}
       </h2>
+
+      {% if uses_context %}
+        <div class="col-sm-8 text-center" style="font-size: 14px">
+          <i class="fe fe-alert-triangle" style="color: red"></i>
+          <b style="font-size: 16px; color: red">This email uses per-recipient custom fields in its body.</b><br />
+          Press "Render Email" on a contact below to see an example email.
+        </div>
+      {% endif %}
     </div>
   </div>
 
@@ -240,9 +251,15 @@
           <h2 class="card-title">{% if email.to_contacts.count %}Selected Contacts{% else %}Matched Contacts{% endif %}</h2>
       </div>
       <div class="card-body">
-        {% with show_company_name=1 view_action_button=1 %}
-          {% include "cards/lead_contacts_combined_table.html" %}
-        {% endwith %}
+        {% if uses_context %}
+          {% with show_company_name=1 view_action_button=1 email_render_pk=email.pk %}
+            {% include "cards/lead_contacts_combined_table.html" %}
+          {% endwith %}
+        {% else %}
+          {% with show_company_name=1 view_action_button=1 %}
+            {% include "cards/lead_contacts_combined_table.html" %}
+          {% endwith %}
+        {% endif %}
       </div>
   </div>
 

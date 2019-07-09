@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from django.template import Template, Context
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
@@ -130,6 +131,18 @@ class Email(models.Model):
                 )
             
             return leads, without_leads
+    
+    def render_body(self, contact=None):
+        ctx = Context()
+        if contact:
+            ctx = Context(self.render_body_context(contact))
+        return Template(self.body).render(ctx)
+    
+    def render_body_context(self, contact):
+        return {
+            "contact": contact,
+            "company": contact.company if contact else None,
+        }
 
     def __str__(self):
         """String for representing the Email Model"""

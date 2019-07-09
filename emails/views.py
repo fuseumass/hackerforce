@@ -1,8 +1,10 @@
+from pprint import pformat
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
+from contacts.models import Contact
 from companies.models import Company
 from hackathons.models import Hackathon
 from hackathons.views.sponsorships import combine_lead_and_contacts
@@ -18,7 +20,7 @@ def emails(request, h_pk):
 
 @login_required
 def email_detail(request, h_pk, pk):
-  email = get_object_or_404(Email, pk=pk)
+  email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
   hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
   leads, non_leads = email.get_leads_and_contacts()
@@ -27,11 +29,32 @@ def email_detail(request, h_pk, pk):
   company_ids = set(leads.values_list("contact__company__pk", flat=True)).union(set(non_leads.values_list("company__pk", flat=True)))
   companies = [{"company": c, "sponsorship": c.sponsorships.filter(hackathon__pk=h_pk).first()} for c in Company.objects.filter(pk__in=company_ids)]
 
+  uses_context = ("{" + "{") in email.body
+
   return render(request, "email_detail_view.html", {
     "email": email,
     "hackathon": hackathon,
     "contacts": contacts,
-    "companies": companies
+    "companies": companies,
+    "uses_context": uses_context,
+  })
+
+@login_required
+def render_message(request, h_pk, pk):
+  email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
+  contact_pk = request.GET.get("contact_pk")
+  contact = get_object_or_404(Contact, pk=contact_pk) if contact_pk else None
+
+  message = email.render_body(contact)
+  cvars = {k: vars(v) if v else None for k,v in email.render_body_context(contact).items()}
+  context = pformat(cvars, indent=2)
+  
+
+  return render(request, "email_render_message.html", {
+    "email": email,
+    "message": message,
+    "contact": contact,
+    "context": context,
   })
 
 @login_required
@@ -47,6 +70,7 @@ def drafts(request, h_pk):
   page = request.GET.get("page")
   emails = paginator.get_page(page)
   return render(request, "email_drafts.html", {"emails" : emails})
+
 
 @login_required
 def sent(request, h_pk):

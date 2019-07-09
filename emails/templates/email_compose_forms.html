@@ -1,0 +1,8 @@
+{% extends 'global/forms.html' %}
+
+{% block formbodyfooter %}
+<div>
+    <b>You can reference fields which are mail-merged in the email body for each recipient, such as:</b><br />
+    <code>{% verbatim %}{{ contact.first_name }} {{ contact.last_name }} {{ company.name }}{% endverbatim %}</code>
+</div>
+{% endblock %}

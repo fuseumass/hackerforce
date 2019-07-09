@@ -42,9 +42,16 @@
                 
                 <td>
                 {% if view_action_button %}
-                    <a class="tag tag-green float-right" href="{% url 'hackathons:leads:view' h.pk c.contact.pk %}">
-                        View Contact
-                    </a>
+                    <span class="float-right">
+                        <a class="tag tag-green" href="{% url 'hackathons:leads:view' h.pk c.contact.pk %}">
+                            View Contact
+                        </a>
+                        {% if email_render_pk %}
+                        <a class="tag tag-orange" href="{% url 'emails:render' h.pk email_render_pk %}?contact_pk={{ c.contact.pk }}">
+                            Render Email
+                        </a>
+                        {% endif %}
+                    </span>
                 {% else %}
                     {% if c.lead %}
                         <a class="icon" href="{% url 'hackathons:leads:edit' h.pk c.contact.pk %}">
