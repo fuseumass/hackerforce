@@ -26,13 +26,13 @@
             <table class="table card-table table-vcenter text-nowrap">
                 <thead>
                     <tr>
-                        <th><a href="{% order_by 'Subject' %}">Subject</a></th>
+                        <th><a href="{% order_by 'subject' %}">Subject</a></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for email in emails %}
                     <tr>
-                        <td><a href="" class="text-inherit">
+                        <td><a href="{% url 'emails:view' h.pk email.pk %}" class="text-inherit">
                             <b>{{ email.subject }}</b>
                         </a></td>
                     </tr>
