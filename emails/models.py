@@ -16,9 +16,9 @@ class Email(models.Model):
 
     hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE, related_name="emails")
 
-    to_companies = models.ManyToManyField(Company, blank=True, null=True, related_name="email_templates")
-    to_contacts = models.ManyToManyField(Contact, blank=True, null=True, related_name="email_templates")
-    to_industries = models.ManyToManyField(Industry, blank=True, null=True)
+    to_companies = models.ManyToManyField(Company, blank=True, related_name="email_templates")
+    to_contacts = models.ManyToManyField(Contact, blank=True, related_name="email_templates")
+    to_industries = models.ManyToManyField(Industry, blank=True)
     contacted_selection = MultiSelectField(max_choices=4, choices=CONTACTED_CHOICES, blank=True)
     size_selection = MultiSelectField(choices=SIZE_CHOICES, max_choices=3, blank=True)
     primary_selection = MultiSelectField(choices=PRIMARY_CHOICES, max_choices=2, blank=True)
