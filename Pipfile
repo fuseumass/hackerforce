@@ -18,5 +18,6 @@ django-widget-tweaks = "*"
 faker = "==1.0.0"
 django-ckeditor = "*"
 django-extensions = "*"
+django-multiselectfield="*"
 
 [dev-packages]

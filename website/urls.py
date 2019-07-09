@@ -31,7 +31,7 @@ urlpatterns = [
     path("h/", include("hackathons.urls")),
     path("global/companies/", include("companies.urls")),
     path("global/contacts/", include("contacts.urls")),
-    path("email/", include("emails.urls")),
+    path("", include("emails.urls")),
     path("settings/", include("profiles.urls")),
     path("register/", register, name="register"),
     path("login/", login, name="login"),

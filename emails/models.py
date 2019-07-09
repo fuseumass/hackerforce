@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from multiselectfield import MultiSelectField
 
 from companies.models import Company, Industry
 from profiles.models import User
@@ -18,9 +19,9 @@ class Email(models.Model):
     to_companies = models.ManyToManyField(Company, blank=True, null=True, related_name="email_templates")
     to_contacts = models.ManyToManyField(Contact, blank=True, null=True, related_name="email_templates")
     to_industries = models.ManyToManyField(Industry, blank=True, null=True)
-    contacted_selection = models.CharField(max_length=10, choices=CONTACTED_CHOICES, blank=True)
-    size_selection = models.CharField(max_length=10, choices=SIZE_CHOICES, blank=True)
-    primary_selection = models.CharField(max_length=10, choices=PRIMARY_CHOICES, blank=True)
+    contacted_selection = MultiSelectField(max_choices=4, choices=CONTACTED_CHOICES, blank=True)
+    size_selection = MultiSelectField(choices=SIZE_CHOICES, max_choices=3, blank=True)
+    primary_selection = MultiSelectField(choices=PRIMARY_CHOICES, max_choices=2, blank=True)
 
     subject = models.CharField(max_length=100, help_text="Enter an email subject")
 
