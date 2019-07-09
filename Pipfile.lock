@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "701b822383e5e78924e8fe3fbe99eba8f98c3cd41aa0e2fc07b1b7893c64703c"
+            "sha256": "c28b4ea4f9f454cda5b1ba36a68030a654ad50d2da8aa050618e52725e39e97d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,11 +32,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:5052def4ff0a84bdf669827fdbd7b7cc1ac058f10232be6b21f37c6824f578da",
-                "sha256:bb72b5f8b53f8156280eaea520b548ac128a53f80cebc856c5e0fb555d44d529"
+                "sha256:65e2a548a52fca560cdd4e35f4fa1a79140f405af48950e59702a37e4227e958",
+                "sha256:d4244e2c9653e1349b37ab0cdf108607ba9d1e41f71d0711ac71360e4026ce94"
             ],
             "index": "pypi",
-            "version": "==2.1.9"
+            "version": "==2.1.10"
         },
         "django-ckeditor": {
             "hashes": [
@@ -76,6 +76,13 @@
                 "sha256:c163ae80d2e0b22d8fb598047cd0dcef31f81830e127cfecae278ad574167260"
             ],
             "version": "==1.2.2"
+        },
+        "django-multiselectfield": {
+            "hashes": [
+                "sha256:52483d23aecbf6b502f9e6806e97da9288d5d7f2a3f99f736390763de68c8fd7"
+            ],
+            "index": "pypi",
+            "version": "==0.1.8"
         },
         "django-phonenumber-field": {
             "hashes": [
