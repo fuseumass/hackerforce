@@ -45,6 +45,35 @@
             3
             {% endif %}
           </p>
+          {% if email.to_industries %}
+          <p class="required-field">
+            <label><b>Selected Industries: </b></label>
+            {% for industry in email.to_industries.all %}
+            <span class="tag tag-{{industry.color}}">{{ industry.name }}</span>
+            {% endfor %}
+          </p>
+          <p class="required-field">
+            <label><b>Company Sizes: </b></label>
+            {% for size in email.size_selection %}
+            {% if size == 'S' %}
+            <span class="tag tag-blue">{{ size }}</span>
+            {% elif size == 'M' %}
+            <span class="tag tag-orange">{{ size }}</span>
+            {% elif size == 'L' %}
+            <span class="tag tag-pink">{{ size }}</span>
+            {% endif %}
+            {% endfor %}
+          </p>
+          {% endif %}
+          {% if email.contacted_selection %}
+          <p class="required-field">
+            <label><b>Contacts who are: </b></label>
+            {% for contacted in email.contacted_selection %}
+            
+            <span class="tag tag-red">{{ contacted }}</span>
+            {% endfor %}
+          </p>
+          {% endif %}
           <p class="text-right">
             Last Updated: {{ email.last_update }}
           </p>
