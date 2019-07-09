@@ -5,3 +5,13 @@
 {% block title %}
 New Email
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+require(["{% static 'select2/select2.min.js' %}"], function() {
+    $("#id_to_companies").select2();
+    $("#id_primary_selection").select2();
+    $("#id_contacted_selection").select2();
+});
+</script>
+{% endblock %}

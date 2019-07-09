@@ -53,7 +53,6 @@
                             <th>Position</th>
                             <th>Phone #</th>
                             <th>Email</th>
-                            <th>Contacted</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -63,16 +62,9 @@
                             <td><a href="{% url 'contacts:view' contact.pk %}" class="text-inherit">
                                 <b>{{ contact.name }}</b>
                             </a></td>
-                            <td><a href="" class="text-inherit">{{ contact.position }}</a></td>
-                            <td><a href="" class="text-inherit">{{ contact.phone_number }}</a></td>
-                            <td><a href="" class="text-inherit">{{ contact.email }}</a></td>
-                            <td>
-                            {% if contact.status == 'C' %}
-                                <span class="status-icon bg-success"></span> Contacted
-                            {% elif contact.status == 'U' %}
-                                <span class="status-icon bg-danger"></span> Uncontacted
-                            {% endif %}
-                            </td>
+                            <td>{{ contact.position }}</td>
+                            <td><a href="tel:{{ contact.phone_number }}" class="text-inherit">{{ contact.phone_number }}</a></td>
+                            <td><a href="mailto:{{ contact.email }}" class="text-inherit">{{ contact.email }}</a></td>
                             <td>
                                 <a class="icon" href="{% url 'contacts:edit' contact.pk %}">
                                     <i class="fe fe-edit"></i>

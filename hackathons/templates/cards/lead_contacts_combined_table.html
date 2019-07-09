@@ -1,0 +1,68 @@
+<div class="table-responsive">
+    <table class="table card-table table-vcenter text-nowrap">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                {% if show_company_name %}
+                    <th>Company</th>
+                {% else %}
+                    <th>Phone #</th>
+                    <th>Email</th>
+                {% endif %}
+                <th>Status</th>
+                <th>Times</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in contacts %}
+            <tr>
+                <td><a href="{% url 'hackathons:leads:view' h.pk c.contact.pk %}" class="text-inherit">
+                    <b>{{ c.contact.name }}</b>
+                </a></td>
+                <td>{{ c.contact.position|truncatechars:30 }}</td>
+                {% if show_company_name %}
+                    <td><a href="{% url 'hackathons:sponsorships:view' h.pk c.contact.company.pk %}" class="text-inherit">
+                        {{ c.contact.company }}
+                    </a></td>
+                {% else %}
+                    <td><a href="" class="text-inherit">{{ c.contact.phone_number }}</a></td>
+                    <td><a href="" class="text-inherit">{{ c.contact.email }}</a></td>
+                {% endif %}
+                
+                <td>
+                    {% with lead=c.lead %}
+                        {% include "cards/lead_status.html" %}
+                    {% endwith %}
+                </td>
+                <td style="text-align:center">
+                    {% if c.lead %}{{ c.lead.times_contacted }}{% else %}0{% endif %}
+                </td>
+                
+                <td>
+                {% if view_action_button %}
+                    <a class="tag tag-green float-right" href="{% url 'hackathons:leads:view' h.pk c.contact.pk %}">
+                        View Contact
+                    </a>
+                {% else %}
+                    {% if c.lead %}
+                        <a class="icon" href="{% url 'hackathons:leads:edit' h.pk c.contact.pk %}">
+                            <i class="fe fe-edit"></i>
+                        </a>
+                    {% else %}
+                        <a class="tag tag-red float-right" href="{% url 'hackathons:leads:mark_contacted' h.pk c.contact.pk %}">
+                            Mark Contacted
+                        </a>
+                    {% endif %}
+                {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan=6>
+            No contacts.
+            </td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -121,55 +121,7 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Phone #</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for c in contacts %}
-                        <tr>
-                            <td><a href="{% url 'hackathons:leads:view' h.pk c.contact.pk %}" class="text-inherit">
-                                <b>{{ c.contact.name }}</b>
-                            </a></td>
-                            <td><a href="" class="text-inherit">{{ c.contact.position }}</a></td>
-                            
-                            <td><a href="" class="text-inherit">{{ c.contact.phone_number }}</a></td>
-                            <td><a href="" class="text-inherit">{{ c.contact.email }}</a></td>
-                            
-                            <td>
-                                {% with lead=c.lead %}
-                                    {% include "cards/lead_status.html" %}
-                                {% endwith %}
-                            </td>
-                            
-                            <td>
-                                {% if c.lead %}
-                                    <a class="icon" href="{% url 'hackathons:leads:edit' h.pk c.contact.pk %}">
-                                        <i class="fe fe-edit"></i>
-                                    </a>
-                                {% else %}
-                                    <a class="tag tag-red float-right" href="{% url 'hackathons:leads:mark_contacted' h.pk c.contact.pk %}">
-                                        Mark Contacted
-                                    </a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan=6>
-                        No contacts.
-                        </td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            {% include "cards/lead_contacts_combined_table.html" %}
         </div>
     </div>
     <div class="card">

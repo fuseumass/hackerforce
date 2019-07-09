@@ -155,55 +155,9 @@
             <h2 class="card-title">Other Company Sponsorships</h2>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table card-table table-striped table-vcenter">
-                    <thead>
-                        <tr>
-                            <th>Hackathon</th>
-                            <th>Status</th>
-                            <th>Amount</th>
-                            <th>Tier</th>
-                            <th>Perks</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for s in contact.company.sponsorships.all %}
-                        {% if not lead or not s == lead.sponsorship %}
-                        <tr>
-                            <td><a href="{% url 'hackathons:sponsorships:view' s.hackathon.pk s.company.pk %}">
-                                <b>{{s.hackathon.name}}</b>
-                            </a></td>
-                            <td>{% if s.status == "pending" %}
-                                <span class="tag tag-red">Pending</span>
-                                {% else %}
-                                <span class="tag tag-green">Received</span>
-                                {% endif %}
-
-                            </td>
-                            <td>${{s.contribution|intcomma}}</td>
-                            <td><span class="tag tag-red">{{ s.tier.name }}</span></td>
-                            <td>
-                                {% for perk in s.perks.all %}
-                                <span class="tag tag-green">{{ perk.name }}</span>
-                                {% endfor %}
-                            </td>
-                            <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' s.hackathon.pk s.company.pk %}"
-                                    class="icon"><i class="fe fe-edit"></i></a></td>
-                        </tr>
-                        {% elif company.sponsorships.count == 1 %}
-                        <tr><td colspan=4>
-                        No sponsorships.
-                        </td></tr>
-                        {% endif %}
-                        {% empty %}
-                        <tr><td colspan=4>
-                        No sponsorships.
-                        </td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            {% with company=contact.company %}
+                {% include "cards/company_sponsorships_table.html" %}
+            {% endwith %}
         </div>
     </div>
     {% endblock %}

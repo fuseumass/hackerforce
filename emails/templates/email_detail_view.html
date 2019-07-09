@@ -37,13 +37,7 @@
         <div class="card-body">
           <p class="required-field">
             <label><b>Email Compose Template:</b></label>
-            {% if email.to_contacts %}
-            1
-            {% elif email.to_companies %}
-            2
-            {% else %}
-            3
-            {% endif %}
+            {{ email.email_type }}
           </p>
           {% if email.to_industries %}
           <p class="required-field">
@@ -90,6 +84,166 @@
         </div>
       </div>
     </div>
+  </div>
+
+  {% if email.to_companies.all or not email.to_contacts.all %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Email Filter</h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table card-table table-vcenter text-nowrap">
+        {% if email.to_companies.all %}
+          <tr>
+            <th style="width: 150px">
+              Companies:
+            </th>
+            <td>
+              {% for c in email.to_companies.all %}
+                {{ c }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+        {% elif email.to_industries.all %}
+          <tr>
+            <th style="width: 150px">
+              Industries:
+            </th>
+            <td>
+              {% for i in email.to_industries.all %}
+                {{ i }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              With Size:
+            </th>
+            <td>
+              {% for s in email.size_selection %}
+                {{ s }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+        {% endif %}
+          <tr>
+            <th>
+              With Primary:
+            </th>
+            <td>
+              {% for p in email.primary_selection %}
+                {% if p == 'P' %}Primary{% elif p == 'NP' %}Not Primary{% endif %}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <th>
+              With Times Contacted:
+            </th>
+            <td>
+              {% for c in email.contacted_selection %}
+                {% if c == 'U' %}
+                Uncontacted{% elif c == 'C1' %}
+                Contacted 1x{% elif c == 'C2' %}
+                Contacted 2x{% elif c == 'C3' %}
+                Contacted 3x or more{% endif %}{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if not email.to_companies.all and not email.to_contacts.all %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Matched Companies</h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+          <table class="table card-table table-vcenter text-nowrap">
+              <thead>
+                  <tr>
+                      <th>Company</th>
+                      <th>Industries</th>
+                      <th>Size</th>
+                      <th>Tier</th>
+                      <th>Contribution</th>
+                      <th>Status</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for c in companies %}
+                  <tr>
+                      <td><a href="{% url 'hackathons:sponsorships:view' h.pk c.company.pk %}" class="text-inherit">
+                          <b>{{ c.company }}</b>
+                      </a></td>
+                      <td>
+                      {% for i in c.company.industries.all %}
+                          <span class="tag tag-{{ i.color }}">{{ i.name }}</span>
+                      {% endfor %}
+                      </td>
+                      <td>
+                      {% if c.company.size == 'S' %}
+                          <span class="tag tag-green">S</span>
+                      {% endif %}
+                      {% if c.company.size == 'M' %}
+                          <span class="tag tag-yellow">M</span>
+                      {% endif %}
+                      {% if c.company.size == 'L' %}
+                          <span class="tag tag-red">L</span>
+                      {% endif %}
+                      </td>
+                      <td>
+                        {% if c.sponsorship %}
+                          {{ c.sponsorship.tier }}
+                        {% else %}
+                          None
+                        {% endif %}
+                      </td>
+                      <td>
+                        {% if c.sponsorship %}
+                          ${{ c.sponsorship.contribution|intcomma }}
+                        {% else %}
+                          None
+                        {% endif %}
+                      </td>
+                      <td>
+                          {% with sponsorship=c.sponsorship %}
+                              {% include "cards/sponsorship_status.html" %}
+                          {% endwith %}
+                      </td>
+                      <td>
+                          <a class="tag tag-green float-right" href="{% url 'hackathons:sponsorships:view' h.pk c.company.pk %}">
+                              View Company
+                          </a>
+                      </td>
+                  </tr>
+                  {% empty %}
+                  <tr><td colspan=6>
+                  No companies.
+                  </td></tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  <div class="card">
+      <div class="card-header">
+          <h2 class="card-title">Matched Contacts</h2>
+      </div>
+      <div class="card-body">
+        {% with show_company_name=1 view_action_button=1 %}
+          {% include "cards/lead_contacts_combined_table.html" %}
+        {% endwith %}
+      </div>
   </div>
 
 </div>

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from ..models import Hackathon, Sponsorship, Lead
@@ -7,7 +8,7 @@ from companies.models import Company
 from contacts.models import Contact
 from ..forms import HackathonForm, SponsorshipForm
 
-
+@login_required
 def sponsorships_show(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
@@ -54,7 +55,7 @@ def sponsorships_show(request, h_pk):
         "uncontacted": uncontacted,
     })
 
-
+@login_required
 def sponsorship_new(request, h_pk):
     if request.method == "POST":
         form = SponsorshipForm(request.POST)
@@ -73,6 +74,7 @@ def sponsorship_new(request, h_pk):
         form = SponsorshipForm(initial=initial)
     return render(request, "sponsorship_new.html", {"form": form})
 
+@login_required
 def sponsorship_edit(request, h_pk, pk):
     sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, company__pk=pk)
     if request.method == "POST":
@@ -87,6 +89,7 @@ def sponsorship_edit(request, h_pk, pk):
         form = SponsorshipForm(instance=sponsorship)
     return render(request, "sponsorship_edit.html", {"form": form})
 
+@login_required
 def sponsorship_detail(request, h_pk, pk):
     company = get_object_or_404(Company, pk=pk)
 
@@ -96,8 +99,7 @@ def sponsorship_detail(request, h_pk, pk):
     lead_contacts = sponsorship.leads.all().values_list('contact__id', flat=True) if sponsorship else []
     non_lead_contacts = set(company.contacts.all().values_list('id', flat=True)) - set(lead_contacts)
 
-    contacts = [{"lead": lead, "contact": lead.contact} for lead in Lead.objects.filter(contact__id__in=lead_contacts)]
-    contacts += [{"contact": contact} for contact in Contact.objects.filter(id__in=non_lead_contacts)]
+    contacts = combine_lead_and_contacts(lead_contacts, non_lead_contacts)
 
     return render(request, "sponsorship_detail.html", {
         "sponsorship": sponsorship,
@@ -105,3 +107,9 @@ def sponsorship_detail(request, h_pk, pk):
         "contacts": contacts,
         "no_contacted_employees": len(lead_contacts) == 0 if sponsorship else False
     })
+
+def combine_lead_and_contacts(lead_contact_ids, non_lead_contact_ids):
+    contacts = [{"lead": lead, "contact": lead.contact} for lead in Lead.objects.filter(contact__id__in=lead_contact_ids)]
+    contacts += [{"contact": contact} for contact in Contact.objects.filter(id__in=non_lead_contact_ids)]
+
+    return contacts
