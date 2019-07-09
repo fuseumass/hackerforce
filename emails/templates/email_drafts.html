@@ -27,6 +27,8 @@
                 <thead>
                     <tr>
                         <th><a href="{% order_by 'subject' %}">Subject</a></th>
+                        <th><a href="#">Type</a></th>
+                        <th><a href="{% order_by 'last_update' %}">Last Update</a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +37,12 @@
                         <td><a href="{% url 'emails:view' h.pk email.pk %}" class="text-inherit">
                             <b>{{ email.subject }}</b>
                         </a></td>
+                        <td>
+                            {{ email.email_type }}
+                        </td>
+                        <td>
+                            {{ email.last_update }}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

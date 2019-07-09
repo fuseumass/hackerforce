@@ -10,7 +10,7 @@
     <div class="card-header">
       <h2 class="col card-title"> I'll choose the contacts I want to send this to by hand </h2>
       <div class="col text-right">
-        <a class="button" href=" {% url 'emails:compose1' h.pk %} ">
+        <a class="button" href=" {% url 'emails:compose_from_contacts' h.pk %} ">
           <button class="btn btn-primary ml-auto" type="button">Compose</button>
         </a>
       </div>
@@ -20,7 +20,7 @@
     <div class="card-header">
       <h2 class="col card-title"> I'll choose the companies I want, help me pick the contacts </h2>
       <div class="col text-right">
-        <a class="button" href=" {% url 'emails:compose2' h.pk %} ">
+        <a class="button" href=" {% url 'emails:compose_from_company' h.pk %} ">
           <button class="btn btn-primary ml-auto" type="button">Compose</button>
         </a>
       </div>
@@ -30,7 +30,7 @@
     <div class="card-header">
       <h2 class="col card-title"> Help me choose the contacts & the companies </h2>
       <div class="col text-right">
-        <a class="button" href=" {% url 'emails:compose3' h.pk %} ">
+        <a class="button" href=" {% url 'emails:compose_from_industry' h.pk %} ">
           <button class="btn btn-primary ml-auto" type="button">Compose</button>
         </a>
       </div>

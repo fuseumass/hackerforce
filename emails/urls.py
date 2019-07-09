@@ -9,7 +9,7 @@ urlpatterns = [
     path("h/<int:h_pk>/emails/drafts", views.drafts, name="drafts"),
     path("h/<int:h_pk>/emails/sent", views.sent, name="sent"),
     path("h/<int:h_pk>/emails/compose", views.emails, name="compose"),
-    path("h/<int:h_pk>/emails/compose1", views.compose1, name="compose1"),
-    path("h/<int:h_pk>/emails/compose2", views.compose2, name="compose2"),
-    path("h/<int:h_pk>/emails/compose3", views.compose3, name="compose3")
+    path("h/<int:h_pk>/emails/compose/from_contacts", views.compose_from_contacts, name="compose_from_contacts"),
+    path("h/<int:h_pk>/emails/compose/from_company", views.compose_from_company, name="compose_from_company"),
+    path("h/<int:h_pk>/emails/compose/from_industry", views.compose_from_industry, name="compose_from_industry")
 ]

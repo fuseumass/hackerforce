@@ -57,7 +57,7 @@ class Email(models.Model):
 
     def get_leads_and_contacts(self):
         if self.email_type == self.FROM_CONTACTS:
-            leads = Lead.objects.filter(contacts__in=self.to_contacts.all(), sponsorship__hackathon=self.hackathon)
+            leads = Lead.objects.filter(contact__in=self.to_contacts.all(), sponsorship__hackathon=self.hackathon)
             without_leads = self.to_contacts.exclude(leads__sponsorship__hackathon=self.hackathon)
             return leads, without_leads
         elif self.email_type == self.FROM_COMPANY:

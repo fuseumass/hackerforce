@@ -8,7 +8,7 @@ from hackathons.models import Hackathon
 from hackathons.views.sponsorships import combine_lead_and_contacts
 
 from .models import Email
-from .forms import Compose1, Compose2, Compose3
+from .forms import ComposeFromContactsForm, ComposeFromCompanyForm, ComposeFromIndustryForm
 
 # Create your views here.
 @login_required
@@ -53,10 +53,10 @@ def sent(request, h_pk):
   return render(request, "email_sent.html")
 
 @login_required
-def compose1(request, h_pk):
+def compose_from_contacts(request, h_pk):
   hackathon = get_object_or_404(Hackathon, pk=h_pk)
   if request.method == "POST":
-    form = Compose1(request.POST)
+    form = ComposeFromContactsForm(request.POST)
     if form.is_valid():
       email = form.save(commit=False)
       email.hackathon = hackathon
@@ -67,14 +67,14 @@ def compose1(request, h_pk):
       messages.success(request, f"Created email with subject: {email.subject}")
       return redirect("emails:view", h_pk=h_pk, pk=email.pk)
   else:
-    form = Compose1()
-  return render(request, "email_compose1.html", {"form" : form})
+    form = ComposeFromContactsForm()
+  return render(request, "email_compose_from_contacts.html", {"form" : form})
 
 @login_required
-def compose2(request, h_pk):
+def compose_from_company(request, h_pk):
   hackathon = get_object_or_404(Hackathon, pk=h_pk)
   if request.method == "POST":
-    form = Compose2(request.POST)
+    form = ComposeFromCompanyForm(request.POST)
     if form.is_valid():
       email = form.save(commit=False)
       email.hackathon = hackathon
@@ -85,14 +85,14 @@ def compose2(request, h_pk):
       messages.success(request, f"Created email with subject: {email.subject}")
       return redirect("emails:drafts", h_pk=h_pk)
   else:
-    form = Compose2()
-  return render(request, "email_compose2.html", {"form": form})
+    form = ComposeFromCompanyForm()
+  return render(request, "email_compose_from_company.html", {"form": form})
 
 @login_required
-def compose3(request, h_pk):
+def compose_from_industry(request, h_pk):
   hackathon = get_object_or_404(Hackathon, pk=h_pk)
   if request.method == "POST":
-    form = Compose3(request.POST)
+    form = ComposeFromIndustryForm(request.POST)
     if form.is_valid():
       email = form.save(commit=False)
       email.hackathon = hackathon
@@ -103,5 +103,5 @@ def compose3(request, h_pk):
       messages.success(request, f"Created email with subject: {email.subject}")
       return redirect("emails:drafts", h_pk=h_pk)
   else:
-    form = Compose3()
-  return render(request, "email_compose3.html", {"form": form})
+    form = ComposeFromIndustryForm()
+  return render(request, "email_compose_from_industry.html", {"form": form})

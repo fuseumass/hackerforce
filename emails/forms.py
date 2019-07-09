@@ -5,14 +5,14 @@ from companies.models import Company, Industry
 from contacts.models import Contact
 from ckeditor.widgets import CKEditorWidget
 
-from shared.fields import GroupedModelChoiceField
+from shared.fields import GroupedModelMultiChoiceField
 
-class Compose1(forms.ModelForm):
+class ComposeFromContactsForm(forms.ModelForm):
 
-    to_contacts = GroupedModelChoiceField(
+    to_contacts = GroupedModelMultiChoiceField(
         required=True,
-        queryset=Contact.objects.exclude(company=None).order_by("company"),
-        choices_groupby='company',
+        queryset=Contact.objects.order_by("company"),
+        group_by_field='company',
         widget=forms.SelectMultiple(
             attrs={
                 "class": "col-sm-10",
@@ -46,7 +46,7 @@ class Compose1(forms.ModelForm):
         model = Email
         fields = ('to_contacts', 'subject', 'body')
 
-class Compose2(forms.ModelForm):
+class ComposeFromCompanyForm(forms.ModelForm):
 
     to_companies = forms.ModelMultipleChoiceField(
         required=True,
@@ -100,7 +100,7 @@ class Compose2(forms.ModelForm):
         model = Email
         fields = ('to_companies', 'primary_selection', 'contacted_selection', 'subject', 'body')
 
-class Compose3(forms.ModelForm):
+class ComposeFromIndustryForm(forms.ModelForm):
 
     to_industries = forms.ModelMultipleChoiceField(
         required=True,
