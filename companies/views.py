@@ -59,6 +59,15 @@ def company_edit(request, pk):
     return render(request, "company_edit.html", {"form": form, "company": company})
 
 @login_required
+def company_delete(request, pk):
+    company = get_object_or_404(Company, pk=pk)
+    if request.method == "POST" and request.POST.get("delete") == "yes":
+        company.delete()
+        messages.success(request, f"Deleted {company}")
+        return redirect("companies:index")
+    return render(request, "company_delete.html", {"company": company})
+
+@login_required
 def company_detail(request, pk):
     company = get_object_or_404(Company, pk=pk)
     contacts = Contact.objects.filter(company=company)

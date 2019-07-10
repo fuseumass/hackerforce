@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-from hackathons.models import Hackathon
+from hackathons.models import Hackathon, Lead, Sponsorship
 from .models import Contact, Company
 from .forms import ContactForm
 
@@ -60,6 +60,17 @@ def contact_edit(request, pk):
     return render(request, "contact_edit.html", {"form": form, "contact": contact})
 
 @login_required
+def contact_delete(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    if request.method == "POST" and request.POST.get("delete") == "yes":
+        contact.delete()
+        messages.success(request, f"Deleted {contact}")
+        return redirect("contacts:index")
+    return render(request, "contact_delete.html", {"contact": contact})
+
+@login_required
 def contact_detail(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
-    return render(request, "contact_detail.html", {"contact": contact})
+    leads = Lead.objects.filter(contact=contact)
+    sponsorships = Sponsorship.objects.filter(company=contact.company)
+    return render(request, "contact_detail.html", {"contact": contact, "leads": leads, "sponsorships": sponsorships})

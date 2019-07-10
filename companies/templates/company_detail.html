@@ -81,48 +81,5 @@
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header">
-            <h2 class="card-title">Associated Sponsorships</h2>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table card-table table-striped table-vcenter">
-                    <thead>
-                        <tr>
-                            <th>Hackathon</th>
-                            <th>Status</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for sponsorship in sponsorships %}
-                        <tr>
-                            <td><a href="{% url 'hackathons:sponsorships:view' sponsorship.hackathon.pk sponsorship.company.pk %}" class="text-inherit">
-                                <b>{{sponsorship.hackathon.name}}</b>
-                            </a></td>
-                            <td>{% if sponsorship.status == "pending" %}
-                                <span class="tag tag-red">Pending</span>
-                                {% else %}
-                                <span class="tag tag-green">Received</span>
-                                {% endif %}
-
-                            </td>
-                            <td>${{sponsorship.contribution}}</td>
-                            <td class="text-nowrap">{{sponsorship.updated_at}}</td>
-                            <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' sponsorship.hackathon.pk sponsorship.pk %}"
-                                    class="icon"><i class="fe fe-edit"></i></a></td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan=4>
-                        No sponsorships.
-                        </td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    {% include "cards/company_associated_sponsorships.html" %}
     {% endblock %}

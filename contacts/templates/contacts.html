@@ -32,7 +32,6 @@
                     <th><a href="{% order_by 'last_name,first_name' %}">Name</a></th>
                     <th><a href="{% order_by 'company' %}">Company</a></th>
                     <th><a href="{% order_by 'position' %}">Position</a></th>
-                    <th><a href="{% order_by 'contacted' %}">Contacted</a></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -45,24 +44,11 @@
                     </a></td>
                     <td><a href="{% url 'companies:view' contact.company.pk %}" class="text-inherit">{{ contact.company }}</a></td>
                     <td>{{ contact.position }}</td>
-                    <td>
-                        {% if contact.status == 'C' %}
-                            <span class="status-icon bg-success"></span> Contacted
-                        {% elif contact.status == 'U' %}
-                            <span class="status-icon bg-danger"></span> Uncontacted
-                        {% endif %}
-                    </td>
                     <td class="text-right">
                         <div class="item-action dropdown">
                             <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-                            <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-calendar"></i>
-                                    Schedule </a>
-                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-paperclip"></i>
-                                    Attach File </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i>
+                                <a href="{% url 'contacts:delete' contact.pk %}" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i>
                                     Delete </a>
                             </div>
                         </div>

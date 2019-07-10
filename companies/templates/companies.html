@@ -37,8 +37,6 @@
                         <th>Industries</th>
                         <th><a href="{% order_by 'size' %}">Size</a></th>
                         <th><a href="{% order_by 'updated' %}">Updated</a></th>
-                        <th><a href="{% order_by 'status' %}">Status</a></th>
-                        <th><a href="{% order_by 'donated' %}">Donated</a></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -68,20 +66,14 @@
                             {% endif %}
                         </td>
                         <td> {{ company.updated }} </td>
-                        <td>
-                            {%if company.status == 'U'%}
-                            <span class="status-icon bg-danger"></span> Uncontacted
-                            {% endif %}
-                            {%if company.status == 'C'%}
-                            <span class="status-icon bg-warning"></span> Contacted
-                            {% endif %}
-                            {%if company.status == 'D'%}
-                            <span class="status-icon bg-success"></span> Donated
-                            {% endif %}
-
-                        </td>
-                        <td>${{ company.donated }}</td>
-                        <td class="text-right">
+                    <td class="text-right">
+                            <div class="item-action dropdown">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="{% url 'companies:delete' company.pk %}" class="dropdown-item"><i class="dropdown-icon fe fe-trash-2"></i>
+                                        Delete </a>
+                                </div>
+                            </div>
                         </td>
                         <td>
                             {% if user.is_authenticated %}

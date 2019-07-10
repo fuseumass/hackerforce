@@ -7,8 +7,8 @@
     <div class="card-header">
         <h2> {{ contact.name }} </h2>
         <span class="col text-right h2">
-            <a class="button" href="{% url 'companies:view' contact.company.pk %}">
-                <button class="btn btn-primary ml-auto">View Company</button>
+            <a class="button" href="{% url 'contacts:delete' contact.pk %}">
+                <button class="btn btn-primary ml-auto">Delete</button>
             </a> &nbsp; 
             <a class="button" href="{% url 'contacts:edit' contact.pk %}">
                 <button class="btn btn-primary ml-auto">Edit</button>
@@ -40,4 +40,59 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Associated Leads</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table card-table table-striped table-vcenter">
+                    <thead>
+                        <tr>
+                            <th>Hackathon</th>
+                            <th>Lead Status</th>
+                            <th>Times</th>
+                            <th>Sponsorship Status</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lead in leads %}
+                        <tr>
+                            <td><a href="{% url 'hackathons:leads:view' lead.sponsorship.hackathon.pk lead.contact.pk %}" class="text-inherit">
+                                <b>{{lead.sponsorship.hackathon.name}}</b>
+                            </a></td>
+                            <td>
+                                {% include "cards/lead_status.html" %}
+                            </td>
+                            <td>
+                                {{ lead.times_contacted }}
+                            </td>
+                            <td>
+                                {% with sponsorship=lead.sponsorship %}
+                                    {% include "cards/sponsorship_status.html" %}
+                                {% endwith %}
+                            </td>
+                            <td>
+                                ${{ lead.sponsorship.contribution|intcomma}}
+                            </td>
+                            <td class="text-nowrap">{{lead.updated_at}}</td>
+                            <td class="w-1"><a href="{% url 'hackathons:leads:edit' lead.sponsorship.hackathon.pk lead.contact.pk %}"
+                                    class="icon"><i class="fe fe-edit"></i></a></td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan=4>
+                        No leads.
+                        </td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% include "cards/company_associated_sponsorships.html" %}
     {% endblock %}

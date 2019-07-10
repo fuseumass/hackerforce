@@ -11,5 +11,8 @@ Edit Company
     <a class="button" href="javascript:history.go(-1)">
         <button class="btn btn-primary ml-auto" type="button">Back</button>
     </a>
+    <a class="button" href="{% url 'companies:delete' company.pk %}">
+        <button class="btn btn-primary ml-auto" type="button">Delete</button>
+    </a>
 </div>
 {% endblock %}
