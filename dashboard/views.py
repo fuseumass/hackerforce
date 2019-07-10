@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from hackathons.models import Sponsorship, Hackathon
+from hackathons.models import Sponsorship, Hackathon, Lead
 from companies.models import Company
+from contacts.models import Contact
 
 
 def page404(request):
@@ -23,9 +24,7 @@ def dashboard_index(request):
 def dashboard(request, h_pk):
     current_hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
-    sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon).order_by(
-        "updated_at"
-    )
+    sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon).order_by("-updated_at")[:10].select_related()
     money_raised = 0
     money_expected = 0
     money_possible = 0
@@ -45,30 +44,21 @@ def dashboard(request, h_pk):
 
     money_expected += money_raised
     money_possible += money_expected
+    
+    sponsorship_chart = gen_sponsorship_chart(sponsorships, current_hackathon)
 
-    contacted_count = 0
-    uncontacted_count = 0
-    donated_count = 0
-    for sp in sponsorships:
-        if sp.status == Sponsorship.CONTACTED:
-            contacted_count = contacted_count + 1
-        elif sp.status == Sponsorship.CONFIRMED:
-            donated_count = donated_count + 1
-        else:
-            uncontacted_count = uncontacted_count + 1
+    leads = Lead.objects.filter(sponsorship__hackathon=current_hackathon).order_by("-updated_at")[:10].select_related()
+    lead_chart = gen_lead_chart(leads, current_hackathon)
 
-    chart = [
-        ["Contacted", contacted_count],
-        ["Uncontacted", uncontacted_count],
-        ["Donated", donated_count],
-    ]
     return render(
         request,
         "dashboard.html",
         {
             "current_hackathon": current_hackathon,
-            "sponsorships": sponsorships[:5],
-            "chart_data": chart,
+            "sponsorships": sponsorships,
+            "sponsorship_chart_data": sponsorship_chart,
+            "leads": leads,
+            "lead_chart_data": lead_chart,
             "money_raised": money_raised,
             "money_expected": money_expected,
             "money_possible": money_possible,
@@ -77,3 +67,43 @@ def dashboard(request, h_pk):
             "money_possible_width": money_possible_width,
         },
     )
+
+def gen_lead_chart(leads, hackathon):
+    responded_count = 0
+    contacted_count = 0
+    ghosted_count = 0
+    for l in leads:
+        if l.status in [Lead.RESPONDED]:
+            responded_count += 1
+        elif l.status in [Lead.CONTACTED]:
+            contacted_count += 1
+        elif l.status in [Lead.GHOSTED]:
+            ghosted_count += 1
+
+    uncontacted_count = Contact.objects.exclude(leads__sponsorship__hackathon=hackathon).count()
+    return [
+        ["Responded", responded_count, "responded", "green"],
+        ["Contacted", contacted_count, "contacted", "orange"],
+        ["Uncontacted", uncontacted_count, "uncontacted", "gray-dark"],
+        ["Ghosted", ghosted_count, "dead", "pink"],
+    ]
+
+def gen_sponsorship_chart(sponsorships, hackathon):
+    confirmed_count = 0
+    progress_count = 0
+    dead_count = 0
+    for sp in sponsorships:
+        if sp.status in [Sponsorship.CONFIRMED, Sponsorship.PAID]:
+            confirmed_count += 1
+        elif sp.status in [Sponsorship.CONTACTED, Sponsorship.RESPONDED]:
+            progress_count += 1
+        elif sp.status in [Sponsorship.DENIED, Sponsorship.GHOSTED]:
+            dead_count += 1
+
+    uncontacted_count = Company.objects.exclude(sponsorships__hackathon=hackathon).count()
+    return [
+        ["Confirmed", confirmed_count, "confirmed", "green"],
+        ["In Progress", progress_count, "in_progress", "orange"],
+        ["Uncontacted", uncontacted_count, "uncontacted", "gray-dark"],
+        ["Dead", dead_count, "dead", "pink"],
+    ]

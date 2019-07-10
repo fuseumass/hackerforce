@@ -30,6 +30,7 @@ def sponsorships_show(request, h_pk):
         q = get_q(name)
         if q:
             obj = obj.filter(Q(company__name__icontains=q) | Q(company__industries__name__iexact=q))
+        obj = obj.select_related()
         return paginator_wrapper(name, obj.distinct())
     
     def company_wrapper(name):
@@ -38,6 +39,7 @@ def sponsorships_show(request, h_pk):
         q = get_q(name)
         if q:
             obj = obj.filter(Q(name__icontains=q) | Q(industries__name__iexact=q))
+        obj = obj.select_related()
         return paginator_wrapper(name, fake_sponsorship(obj.distinct()))
 
     def fake_sponsorship(company):

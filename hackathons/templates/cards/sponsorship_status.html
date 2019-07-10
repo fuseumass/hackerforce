@@ -1,3 +1,4 @@
+<span style="white-space: nowrap">
 {% if not sponsorship %}
     <span class="status-icon bg-gray-dark"></span> Uncontacted
 {% elif sponsorship.status == 'contacted' %}
@@ -13,3 +14,4 @@
 {% elif sponsorship.status == 'paid' %}
     <span class="status-icon bg-green"></span> Paid
 {% endif %}
+</span>

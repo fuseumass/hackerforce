@@ -3,7 +3,20 @@
     <title>Dashboard</title>
 {% endblock %}
 {% block css %}
-{# import css here if you want it otherwise delete this block #}
+<style>
+.condensed-table tr td, .condensed-table tr th {
+    padding: 0.75rem 0.25rem;
+}
+.updated-at {
+    white-space: nowrap;
+    text-overflow: clip;
+    overflow: hidden;
+    max-width: 130px;
+}
+a.no-underline {
+    text-decoration: none !important;
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -46,6 +59,7 @@
         </div>
     </div>
 
+    <!--
     <div class="col-lg-6">
         <div class="card">
             <div class="card-status bg-purple"></div>
@@ -87,6 +101,89 @@
         </div>
 
     </div>
+    -->
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="text-center">
+                <div class="row" style="margin: 0">
+                    {% for data in lead_chart_data %}
+                    <div class="col-sm-3">
+                        <div class="card-status bg-{{ data.3 }}"></div>
+                        <a href="{% url 'hackathons:leads:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
+                            <div class="p-3 text-center" style="white-space: nowrap">
+                                <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
+                                <div class="mb-0">{{ data.0 }}</div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="text-center">
+                <div class="row" style="margin: 0">
+                    {% for data in sponsorship_chart_data %}
+                    <div class="col-sm-3">
+                        <div class="card-status bg-{{ data.3 }}"></div>
+                        <a href="{% url 'hackathons:sponsorships:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
+                            <div class="p-3 text-center" style="white-space: nowrap">
+                                    <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
+                                <div class="mb-0">{{ data.0 }}</div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card">
+            <div class="card-status bg-red"></div>
+            <div class="card-header">
+                <h3 class="card-title">Most Recent Leads</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-striped table-vcenter condensed-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Times</th>
+                            <th>Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for l in leads %}
+                        <tr>
+                            <td><a href="{% url 'hackathons:leads:view' h.pk l.contact.pk %}" class="text-inherit">
+                                    <b>{{ l.contact.name }}</b>
+                                </a></td>
+                                <td>
+                                    {% with lead=l %}
+                                        {% include "cards/lead_status.html" %}
+                                    {% endwith %}
+                                </td>
+                                <td style="text-align: center">
+                                    {{ l.times_contacted }}
+                                </td>
+                                <td class="updated-at">
+                                    {{ l.updated_at|naturaltime|slice:":-4" }}
+                                </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 
     <div class="col-lg-6">
 
@@ -96,31 +193,30 @@
                 <h3 class="card-title">Most Recent Sponsorships</h3>
             </div>
             <div class="table-responsive">
-                <table class="table card-table table-striped table-vcenter">
+                <table class="table card-table table-striped table-vcenter condensed-table">
                     <thead>
                         <tr>
                             <th>Company</th>
-                            <th>Status</th>
                             <th>Amount</th>
-                            <th>Date</th>
-                            <th></th>
+                            <th>Status</th>
+                            <th>Updated</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for sponsorship in sponsorships %}
+                        {% for s in sponsorships %}
                         <tr>
-                            <td>{{sponsorship.company}}</td>
-                            <td>{% if sponsorship.status == "pending" %}
-                                <span class="tag tag-red">Pending</span>
-                                {% else %}
-                                <span class="tag tag-green">Received</span>
-                                {% endif %}
-
-                            </td>
-                            <td>${{sponsorship.contribution}}</td>
-                            <td class="text-nowrap">{{sponsorship.updated_at}}</td>
-                            <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' sponsorship.hackathon.pk sponsorship.company.pk %}" class="icon"><i
-                                        class="fe fe-edit"></i></a></td>
+                            <td><a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}" class="text-inherit">
+                                    <b>{{ s.company.name }}</b>
+                                </a></td>
+                                <td>${{ s.contribution|intcomma }}</td>
+                                <td>
+                                    {% with sponsorship=s %}
+                                        {% include "cards/sponsorship_status.html" %}
+                                    {% endwith %}
+                                </td>
+                                <td class="updated-at">
+                                    {{ s.updated_at|naturaltime|slice:":-4" }}
+                                </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -128,21 +224,9 @@
             </div>
         </div>
 
-        <div class="row row-cards">
-            {% for data in chart_data %}
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body p-3 text-center">
-                        <div class="h1 m-0">{{ data.1 }}</div>
-                        <div class="text-muted mb-4">{{ data.0 }}</div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
     </div>
-
+    
+    <!--
     <div class="col-lg-6">
         <div class="card">
             <div class="card-status bg-orange"></div>
@@ -154,5 +238,6 @@
             </div>
         </div>
     </div>
+    -->
 </div>
 {% endblock %}

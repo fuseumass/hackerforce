@@ -1,3 +1,4 @@
+<span style="white-space: nowrap">
 {% if not lead %}
     <span class="status-icon bg-gray-dark"></span> Uncontacted
 {% elif lead.status == 'contacted' %}
@@ -7,3 +8,4 @@
 {% elif lead.status == 'ghosted' %}
     <span class="status-icon bg-pink"></span> Ghosted
 {% endif %}
+</span>

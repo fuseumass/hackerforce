@@ -36,6 +36,7 @@ def leads_show(request, h_pk):
         q = get_q(name)
         if q:
             obj = obj.filter(Q(contact__first_name__icontains=q) | Q(contact__last_name__icontains=q) | Q(contact__company__name__icontains=q) | Q(contact__company__industries__name__iexact=q))
+        obj = obj.select_related()
         return paginator_wrapper(name, order_by_wrapper(name, obj.distinct()))
     
     def contact_wrapper(name):
@@ -44,6 +45,7 @@ def leads_show(request, h_pk):
         q = get_q(name)
         if q:
             obj = obj.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(company__name__icontains=q))
+        obj = obj.select_related()
         return paginator_wrapper(name, fake_leads(order_by_wrapper(name, obj.distinct(), 'contact__')))
 
     def fake_leads(contacts):
