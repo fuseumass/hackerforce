@@ -1,5 +1,7 @@
 # Created by https://www.gitignore.io/api/node,linux,macos,django,python,windows,pycharm,vagrant,intellij,virtualenv,sublimetext,jupyternotebook,visualstudiocode
 
+website/settings_secret.py
+
 ### Django ###
 *.log
 *.pot

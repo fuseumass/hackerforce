@@ -38,7 +38,7 @@
     </div>
     {% if messages %}
         {% for message in messages %}
-            <div class="alert {{ message.tags }}" role="alert">{{ message }}</div>
+            <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
         {% endfor %}
     {% endif %}
     <form class="card" action="" method="post">
@@ -78,7 +78,11 @@
     </div>
 
     <div class="text-center text-muted">
-        Don't have account yet? <a href="{% url 'register' %}">Sign up</a>
+    {% if registration_enabled %}
+        Need to create an account? <a href="{% url 'register' %}">Sign up</a>
+    {% else %}
+        Account registration is disabled.<br />To create an account, please contact your administrator.
+    {% endif %}
     </div>
 
 </div>

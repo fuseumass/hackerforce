@@ -52,7 +52,7 @@
         {% endfor %}
     {% endif %}
 
-<form class="card" action="" method="post">
+<form class="card" action="?{{ request.GET.urlencode }}" method="post">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
     <div class="card-body p-6">

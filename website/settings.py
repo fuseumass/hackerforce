@@ -26,13 +26,14 @@ SECRET_KEY = "2hp_c&e=@jq4l*_x64n26!8w&h)7*cc-qe4q#0(+as7x6c+n1#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+PRODUCTION = False
 
 # Application definition
 
 INSTALLED_APPS = [
-    ###################
+    ####################
     ### Dependencies ###
-    ###################
+    ####################
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -98,7 +99,8 @@ TEMPLATES = [
                 "shared.contextprocessors.fill_current_hackathon_as_h",
             ],
             'builtins': [
-                'django.contrib.staticfiles.templatetags.staticfiles'
+                'django.contrib.staticfiles.templatetags.staticfiles',
+                'django.contrib.humanize.templatetags.humanize',
             ],
             "debug": DEBUG,
         },
@@ -211,3 +213,16 @@ DEBUG_TOOLBAR_CONFIG = {
     ),
     'SHOW_COLLAPSED': True,
 }
+
+if PRODUCTION:
+    import uuid
+    # This should be overridden in settings_secret.py
+    REGISTRATION_TOKEN = str(uuid.uuid4())
+elif DEBUG:
+    # Disables token requirement
+    REGISTRATION_TOKEN = None
+
+try:
+    from .settings_secret import *
+except ImportError:
+    pass

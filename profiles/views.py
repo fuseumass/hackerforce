@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
+from django.conf import settings
 from django.contrib.auth import login as login_auth, authenticate, logout as logout_auth
 from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm, AuthenticationFormWithCSS, ProfileForm
@@ -15,6 +16,12 @@ from .models import User
 from django.contrib import messages
 
 def register(request):
+    token = request.GET.get("token")
+    if not settings.REGISTRATION_TOKEN:
+        pass
+    elif token != settings.REGISTRATION_TOKEN:
+        messages.error(request, "Registration is disabled without a valid registration token. Please contact your administrator.", extra_tags="danger")
+        return redirect('login')
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -77,7 +84,8 @@ def login(request):
             messages.error(request, "Invalid username or password", extra_tags="danger")
     else:
         form = AuthenticationFormWithCSS()
-    return render(request, "login.html", {"form": form})
+    registration_enabled = (settings.REGISTRATION_TOKEN is None)
+    return render(request, "login.html", {"form": form, "registration_enabled": registration_enabled})
 
 
 def logout(request):
@@ -85,7 +93,7 @@ def logout(request):
     return redirect("/login")
 
 @login_required
-def settings(request):
+def settings_view(request):
     return render(request, "settings.html")
 
 
