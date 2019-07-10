@@ -21,7 +21,7 @@ a.no-underline {
 
 {% block content %}
 {# main Context goes here #}
-<div class="page-header">
+<div class="page-header mt-0">
     <h1 class="page-title">
         <i class="fe fe-home page-title-icon"></i> {{current_hackathon.name}}
     </h1>
@@ -31,29 +31,37 @@ a.no-underline {
 
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-status bg-green"></div>
-            <div class="card-body text-center">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="h5">Funds raised to date</div>
-                        <div class="display-4 mb-4"><span class="text-green">${{ money_raised }}</span> <small class="display-6" style="font-size: 0.65em">/
-                                ${{ current_hackathon.fundraising_goal }}</small></div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="h5">Expected funds</div>
-                        <div class="display-4 mb-4"><span class="text-orange">${{ money_expected }}</span> <small class="display-6" style="font-size: 0.65em">/
-                                ${{ current_hackathon.fundraising_goal }}</small></div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="h5">Possible funds</div>
-                        <div class="display-4 mb-4"><span class="text-gray">${{ money_possible }}</span> <small class="display-6" style="font-size: 0.65em">/
-                                ${{ current_hackathon.fundraising_goal }}</small></div>
-                    </div>
+            <div class="row text-center" style="margin: 0">
+                <div class="col-lg-4">
+                    <div class="card-status bg-green"></div>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q=paid" class="text-inherit no-underline p-1">
+                            <div class="h5">Funds raised to date</div>
+                            <div class="display-4"><span class="text-green">${{ money_raised }}</span> <small class="display-6" style="font-size: 0.65em">/
+                                    ${{ current_hackathon.fundraising_goal }}</small></div>
+                        </a>
                 </div>
+                <div class="col-lg-4">
+                    <div class="card-status bg-orange"></div>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q=confirmed" class="text-inherit no-underline p-1">
+                            <div class="h5">Expected funds</div>
+                            <div class="display-4"><span class="text-orange">${{ money_expected }}</span> <small class="display-6" style="font-size: 0.65em">/
+                                    ${{ current_hackathon.fundraising_goal }}</small></div>
+                        </a>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card-status bg-gray"></div>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q=responded" class="text-inherit no-underline p-1">
+                            <div class="h5">Possible funds</div>
+                            <div class="display-4"><span class="text-gray">${{ money_possible }}</span> <small class="display-6" style="font-size: 0.65em">/
+                                    ${{ current_hackathon.fundraising_goal }}</small></div>
+                        </a>
+                </div>
+            </div>
+            <div class="card-body text-center pt-0">
                 <div class="progress progress-lg">
-                    <div class="progress-bar bg-green" style="width:{{ money_raised_width }}%"></div>
-                    <div class="progress-bar bg-orange" style="width:{{ money_expected_width }}%"></div>
-                    <div class="progress-bar bg-gray" style="width:{{ money_possible_width }}%"></div>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q=paid" class="progress-bar bg-green" style="width:{{ money_raised_width }}%"></a>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q=confirmed" class="progress-bar bg-orange" style="width:{{ money_expected_width }}%"></a>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q=responded" class="progress-bar bg-gray" style="width:{{ money_possible_width }}%"></a>
                 </div>
             </div>
         </div>
@@ -102,52 +110,23 @@ a.no-underline {
 
     </div>
     -->
-
     <div class="col-lg-6">
-        <div class="card">
-            <div class="text-center">
-                <div class="row" style="margin: 0">
-                    {% for data in lead_chart_data %}
-                    <div class="col-sm-3">
-                        <div class="card-status bg-{{ data.3 }}"></div>
-                        <a href="{% url 'hackathons:leads:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
-                            <div class="p-3 text-center" style="white-space: nowrap">
-                                <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
-                                <div class="mb-0">{{ data.0 }}</div>
-                            </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
+        <div class="card-header">
+            <h3 class="card-title">Recent Leads</h3>
         </div>
-    </div>
-    <div class="col-lg-6">
         <div class="card">
-            <div class="text-center">
-                <div class="row" style="margin: 0">
-                    {% for data in sponsorship_chart_data %}
-                    <div class="col-sm-3">
-                        <div class="card-status bg-{{ data.3 }}"></div>
-                        <a href="{% url 'hackathons:sponsorships:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
-                            <div class="p-3 text-center" style="white-space: nowrap">
-                                    <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
-                                <div class="mb-0">{{ data.0 }}</div>
-                            </div>
-                        </a>
-                    </div>
-                    {% endfor %}
+            <div class="row" style="margin: 0">
+                {% for data in lead_chart_data %}
+                <div class="col-sm-3">
+                    <div class="card-status bg-{{ data.3 }}"></div>
+                    <a href="{% url 'hackathons:leads:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
+                        <div class="p-3 text-center" style="white-space: nowrap">
+                            <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
+                            <div class="mb-0">{{ data.0 }}</div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-
-        <div class="card">
-            <div class="card-status bg-red"></div>
-            <div class="card-header">
-                <h3 class="card-title">Most Recent Leads</h3>
+                {% endfor %}
             </div>
             <div class="table-responsive">
                 <table class="table card-table table-striped table-vcenter condensed-table">
@@ -186,11 +165,22 @@ a.no-underline {
     </div>
 
     <div class="col-lg-6">
-
+        <div class="card-header">
+            <h3 class="card-title">Recent Sponsorships</h3>
+        </div>
         <div class="card">
-            <div class="card-status bg-red"></div>
-            <div class="card-header">
-                <h3 class="card-title">Most Recent Sponsorships</h3>
+            <div class="row" style="margin: 0">
+                {% for data in sponsorship_chart_data %}
+                <div class="col-sm-3">
+                    <div class="card-status bg-{{ data.3 }}"></div>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
+                        <div class="p-3 text-center" style="white-space: nowrap">
+                                <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
+                            <div class="mb-0">{{ data.0 }}</div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
             </div>
             <div class="table-responsive">
                 <table class="table card-table table-striped table-vcenter condensed-table">

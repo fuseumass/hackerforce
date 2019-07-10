@@ -24,7 +24,7 @@ def dashboard_index(request):
 def dashboard(request, h_pk):
     current_hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
-    sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon).order_by("-updated_at")[:10].select_related()
+    sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon).order_by("-updated_at").select_related()
     money_raised = 0
     money_expected = 0
     money_possible = 0
@@ -34,7 +34,7 @@ def dashboard(request, h_pk):
             money_raised += sponsorship.contribution
         elif sponsorship.status == Sponsorship.CONFIRMED:
             money_expected += sponsorship.contribution
-        else:
+        elif sponsorship.status == Sponsorship.RESPONDED:
             money_possible += sponsorship.contribution
 
     goal = current_hackathon.fundraising_goal
@@ -47,7 +47,7 @@ def dashboard(request, h_pk):
     
     sponsorship_chart = gen_sponsorship_chart(sponsorships, current_hackathon)
 
-    leads = Lead.objects.filter(sponsorship__hackathon=current_hackathon).order_by("-updated_at")[:10].select_related()
+    leads = Lead.objects.filter(sponsorship__hackathon=current_hackathon).order_by("-updated_at").select_related()
     lead_chart = gen_lead_chart(leads, current_hackathon)
 
     return render(
@@ -55,9 +55,9 @@ def dashboard(request, h_pk):
         "dashboard.html",
         {
             "current_hackathon": current_hackathon,
-            "sponsorships": sponsorships,
+            "sponsorships": sponsorships[:10],
             "sponsorship_chart_data": sponsorship_chart,
-            "leads": leads,
+            "leads": leads[:10],
             "lead_chart_data": lead_chart,
             "money_raised": money_raised,
             "money_expected": money_expected,
