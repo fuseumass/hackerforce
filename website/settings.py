@@ -25,8 +25,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = "2hp_c&e=@jq4l*_x64n26!8w&h)7*cc-qe4q#0(+as7x6c+n1#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-PRODUCTION = True if os.environ['PRODUCTION'] == 'True' else False
-DEBUG = True if os.environ['DEBUG'] == 'True' else False
+PRODUCTION = True if os.environ['PRODUCTION'] else False
+DEBUG = True if os.environ['DEBUG'] else not PRODUCTION
 
 # Application definition
 
@@ -216,7 +216,6 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 if PRODUCTION:
-    import uuid
     REGISTRATION_TOKEN = os.environ['REGISTRATION_TOKEN']
     SECRET_KEY = os.environ['SECRET_KEY']
 elif DEBUG:
