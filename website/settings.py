@@ -173,7 +173,8 @@ STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "static")]
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'my_project.storage.WhiteNoiseStaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
