@@ -14,7 +14,11 @@ import dj_database_url
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
+# BASE_DIR = /path/to/app
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# PROJECT_ROOT = /path/to/app/website
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 def bool_environ(name):
@@ -35,9 +39,17 @@ DEBUG = bool_environ('DEBUG')
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
 
+if PRODUCTION:
+    REGISTRATION_TOKEN = os.environ['REGISTRATION_TOKEN']
+    SECRET_KEY = os.environ['SECRET_KEY']
+elif DEBUG:
+    # Disables token requirement
+    REGISTRATION_TOKEN = None
+
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.staticfiles",
     ####################
     ### Dependencies ###
     ####################
@@ -48,11 +60,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.humanize",
     "django_extensions",
-    # Disable Django's own staticfiles handling in favour of WhiteNoise, for
-    # greater consistency between gunicorn and `./manage.py runserver`. See:
-    # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
-    "whitenoise.runserver_nostatic",
-    "django.contrib.staticfiles",
     "debug_toolbar",
     # HTML
     "django_jinja",
@@ -74,7 +81,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -171,11 +177,7 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "static")]
 
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
@@ -224,12 +226,6 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_COLLAPSED': True,
 }
 
-if PRODUCTION:
-    REGISTRATION_TOKEN = os.environ['REGISTRATION_TOKEN']
-    SECRET_KEY = os.environ['SECRET_KEY']
-elif DEBUG:
-    # Disables token requirement
-    REGISTRATION_TOKEN = None
 
 LOGGING = {
     'version': 1,
