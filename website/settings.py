@@ -25,8 +25,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = "2hp_c&e=@jq4l*_x64n26!8w&h)7*cc-qe4q#0(+as7x6c+n1#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-PRODUCTION = False
+PRODUCTION = True if os.environ['PRODUCTION'] == 'True' else False
+DEBUG = not PRODUCTION
 
 # Application definition
 
@@ -217,13 +217,8 @@ DEBUG_TOOLBAR_CONFIG = {
 
 if PRODUCTION:
     import uuid
-    # This should be overridden in settings_secret.py
-    REGISTRATION_TOKEN = str(uuid.uuid4())
+    REGISTRATION_TOKEN = os.environ['REGISTRATION_TOKEN']
+    SECRET_KEY = os.environ['SECRET_KEY']
 elif DEBUG:
     # Disables token requirement
     REGISTRATION_TOKEN = None
-
-try:
-    from .settings_secret import *
-except ImportError:
-    pass
