@@ -109,3 +109,6 @@ def profile_edit(request):
     else:
         form = ProfileForm(instance=request.user)
     return render(request, "profile_edit.html", {"form": form})
+
+def trigger_500(request):
+    raise AssertionError("this should throw a 500")

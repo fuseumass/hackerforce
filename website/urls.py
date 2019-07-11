@@ -24,7 +24,7 @@ from dashboard import views as dashboard_views
 
 admin.autodiscover()
 
-from profiles.views import register, login, logout
+from profiles.views import register, login, logout, trigger_500
 
 urlpatterns = [
     path("", include("dashboard.urls")),
@@ -37,6 +37,7 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("login/", login, name="login"),
     path("logout/", logout, name="logout"),
+    path("trigger_500", trigger_500, name="trigger_500"),
     url(
         r"^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$",
         profile_views.activate,

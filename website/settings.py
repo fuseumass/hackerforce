@@ -25,8 +25,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = "2hp_c&e=@jq4l*_x64n26!8w&h)7*cc-qe4q#0(+as7x6c+n1#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-PRODUCTION = True if os.environ['PRODUCTION'] else False
-DEBUG = True if os.environ['DEBUG'] else not PRODUCTION
+PRODUCTION = True if 'PRODUCTION' in os.environ else False
+DEBUG = True if 'DEBUG' in os.environ else not PRODUCTION
 
 # Application definition
 
