@@ -17,6 +17,10 @@ import django_heroku
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+def bool_environ(name):
+    if name in os.environ:
+        return os.environ[name].lower() == 'true'
+    return False
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -25,8 +29,11 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = "2hp_c&e=@jq4l*_x64n26!8w&h)7*cc-qe4q#0(+as7x6c+n1#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-PRODUCTION = True if 'PRODUCTION' in os.environ else False
-DEBUG = True if 'DEBUG' in os.environ else not PRODUCTION
+PRODUCTION = bool_environ('PRODUCTION')
+DEBUG = bool_environ('DEBUG')
+
+if not PRODUCTION and 'DEBUG' not in os.environ:
+    DEBUG = True
 
 # Application definition
 
