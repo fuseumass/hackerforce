@@ -26,7 +26,7 @@ SECRET_KEY = "2hp_c&e=@jq4l*_x64n26!8w&h)7*cc-qe4q#0(+as7x6c+n1#"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = True if os.environ['PRODUCTION'] == 'True' else False
-DEBUG = not PRODUCTION
+DEBUG = True if os.environ['DEBUG'] == 'True' else False
 
 # Application definition
 
