@@ -24,3 +24,6 @@ class Contact(models.Model):
 
     def name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    class Meta:
+        ordering = ('last_name', 'first_name')

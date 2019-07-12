@@ -25,7 +25,7 @@
         <table class="table card-table table-vcenter text-nowrap">
             <thead>
                 <tr>
-                    <th><a href="{% order_by_custom order_var 'contact__last_name,contact__first_name' %}#{{ name }}">Name</a></th>
+                    <th><a href="{% order_by_custom order_var '-contact__last_name,contact__first_name' %}#{{ name }}">Name</a></th>
                     <th style="width: 150px"><a href="{% if not faked %}{% order_by_custom order_var 'status' %}{% endif %}#{{ name }}">Lead Status</a></th>
                     <th style="width: 70px"><a href="{% if not faked %}{% order_by_custom order_var 'times_contacted' %}{% endif %}#{{ name }}">Times</a></th>
                     <th style="width: 300px"><a href="{% order_by_custom order_var 'contact__company' %}#{{ name }}">Company</a></th>

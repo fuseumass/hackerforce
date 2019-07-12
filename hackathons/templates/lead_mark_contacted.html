@@ -24,7 +24,10 @@
             from <a href="{% url 'hackathons:sponsorships:view' h.pk contact.company.pk %}">
                 <b>{{ contact.company }}</b></a>
             as contacted for <b>{{ h }}</b>?</p>
-            <p><b>{{ contact.company }}</b> is currently&nbsp; {% include "cards/sponsorship_status.html" %}</p>
+            <p>
+                <b>{{ contact.company }}</b> is currently&nbsp; {% include "cards/sponsorship_status.html" %}
+                {% if not sponsorship %} &nbsp; and will be marked as Contacted.{% endif %}
+            </p>
             {% if sponsorship %}
                 <p><b>Update sponsorship notes:</b></p>
             {% else %}
@@ -39,7 +42,7 @@
         </div>
         <div class="card-footer text-right">
             <div class="d-flex">
-                <button type="submit" class="btn btn-primary ml-auto">OK</button>
+                <button type="submit" class="btn btn-primary ml-auto">Mark Contacted</button>
             </div>
         </div>
     </div>

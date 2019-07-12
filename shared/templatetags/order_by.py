@@ -12,4 +12,6 @@ def order_by_custom(context, get_name, arg):
     existing = context.request.GET.urlencode()
     existing = existing.replace(f'&{get_name}={existing_arg}', '')
     order_by = f"-{arg}" if existing_arg == arg else arg
+    if order_by[:2] == "--":
+        order_by = order_by[2:]
     return f"?{existing}&{get_name}={order_by}"

@@ -5,3 +5,12 @@
 {% block title %}
 New Company
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+require(["{% static 'select2/select2.min.js' %}"], function() {
+    $("#id_industries").select2();
+    $("#id_size").select2();
+});
+</script>
+{% endblock %}

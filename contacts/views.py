@@ -16,7 +16,7 @@ def contacts(request):
     else:
         contacts = Contact.objects.all()
         
-    order_by = request.GET.get("order_by")
+    order_by = request.GET.get("order_by") or "last_name,first_name"
     if order_by:
         contacts = contacts.order_by(*order_by.split(","))
 

@@ -1,15 +1,20 @@
 {% extends 'global/base.html' %}
 
 {% block content %}
-{% if request.GET.urlencode|length > 1 %}
 <div class="col-lg-3 float-left">
     <div class="row gutters-xs">
         <div class="col">
-            <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
+            <a href="{% url 'companies:new' %}?next={% url 'hackathons:sponsorships:show' h.pk %}">
+                <button class="btn btn-primary" type="button">Add Company</button>
+            </a>
         </div>
+        {% if request.GET.urlencode|length > 1 %}
+            <div class="col">
+                <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
+            </div>
+        {% endif %}
     </div>
 </div>
-{% endif %}
 <div class="col-lg-3 ml-auto">
     <form action="{% url 'hackathons:sponsorships:show' h.pk %}" method="GET">
         <div class="row gutters-xs">

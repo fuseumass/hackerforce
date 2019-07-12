@@ -31,7 +31,7 @@ def sponsorships_show(request, h_pk):
         if q:
             obj = obj.filter(Q(company__name__icontains=q) | Q(company__industries__name__iexact=q) | Q(status__iexact=q))
         obj = obj.select_related()
-        return paginator_wrapper(name, obj.distinct())
+        return paginator_wrapper(name, obj.order_by("company__name").distinct())
     
     def company_wrapper(name):
         companies_for_hackathon = Company.objects.filter(sponsorships__hackathon__pk=h_pk).values_list("pk", flat=True)
@@ -40,7 +40,7 @@ def sponsorships_show(request, h_pk):
         if q:
             obj = obj.filter(Q(name__icontains=q) | Q(industries__name__iexact=q))
         obj = obj.select_related()
-        return paginator_wrapper(name, fake_sponsorship(obj.distinct()))
+        return paginator_wrapper(name, fake_sponsorship(obj.order_by("name").distinct()))
 
     def fake_sponsorship(company):
         return [Sponsorship(pk=0, company=c, tier=None, contribution=0) for c in company]

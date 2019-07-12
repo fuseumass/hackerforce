@@ -21,7 +21,7 @@ def leads_show(request, h_pk):
         return paginator.get_page(request.GET.get(f"{name}_page"))
     
     def order_by_wrapper(name, obj, strip=None):
-        order_by = request.GET.get(f"{name}_order_by")
+        order_by = request.GET.get(f"{name}_order_by") or "contact__last_name,contact__first_name"
         if strip and order_by:
             order_by = order_by.replace(strip, '')
         if order_by:

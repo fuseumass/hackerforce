@@ -20,6 +20,9 @@ class Hackathon(models.Model):
             return Hackathon.objects.latest("date")
         except Exception:
             return None
+    
+    class Meta:
+        ordering = ('name',)
 
 
 class Tier(models.Model):
@@ -34,6 +37,9 @@ class Tier(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ('name',)
 
 
 class Perk(models.Model):
@@ -49,6 +55,9 @@ class Perk(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ('name',)
 
 
 class Sponsorship(models.Model):
@@ -84,6 +93,7 @@ class Sponsorship(models.Model):
 
     class Meta:
         unique_together = ('hackathon', 'company',)
+        ordering = ('company__name', 'hackathon__name')
 
     def __str__(self):
         return f"{self.company} for {self.hackathon}"
@@ -114,6 +124,7 @@ class Lead(models.Model):
 
     class Meta:
         unique_together = ('sponsorship', 'contact',)
+        ordering = ('contact__name', 'contact__company__name')
 
     def status_pretty(self):
         return dict(self.STATUSES)[self.status]

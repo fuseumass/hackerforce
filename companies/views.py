@@ -38,6 +38,9 @@ def company_new(request):
             company = form.save(commit=True)
             company.industries.set(form.cleaned_data["industries"])
             company.save()
+            messages.success(request, f"Added {company}")
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("companies:index")
     else:
         form = CompanyForm()
