@@ -42,6 +42,8 @@ if not PRODUCTION and 'DEBUG' not in os.environ:
 if PRODUCTION:
     REGISTRATION_TOKEN = os.environ['REGISTRATION_TOKEN']
     SECRET_KEY = os.environ['SECRET_KEY']
+    if not bool_environ('ALLOW_HTTP'):
+        SECURE_SSL_REDIRECT = True
 elif DEBUG:
     # Disables token requirement
     REGISTRATION_TOKEN = None
