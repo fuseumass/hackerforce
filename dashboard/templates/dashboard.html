@@ -27,7 +27,7 @@ a.no-underline {
     </h1>
 
     <div class="col text-right">
-        <a class="button" href="{% url 'hackathons:edit' h.pk %}">
+        <a class="button" href="{% url 'hackathons:edit' h.pk %}?next={{ request.get_full_path|urlencode }}">
             <button class="btn btn-primary ml-auto">Edit</button>
         </a>
     </div>
@@ -142,12 +142,14 @@ a.no-underline {
             <div class="table-responsive">
                 <table class="table card-table table-striped table-vcenter condensed-table">
                     <thead>
+                        {% if leads %}
                         <tr>
                             <th>Name</th>
                             <th>Status</th>
                             <th>Times</th>
                             <th>Updated</th>
                         </tr>
+                        {% endif %}
                     </thead>
                     <tbody>
                         {% for l in leads %}
@@ -205,12 +207,14 @@ a.no-underline {
             <div class="table-responsive">
                 <table class="table card-table table-striped table-vcenter condensed-table">
                     <thead>
+                        {% if sponsorships %}
                         <tr>
                             <th>Company</th>
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Updated</th>
                         </tr>
+                        {% endif %}
                     </thead>
                     <tbody>
                         {% for s in sponsorships %}
@@ -258,7 +262,7 @@ a.no-underline {
         <div class="card-header">
             <h4 class="card-title">Tiers</h4>
             <div class="col text-right">
-                <a class="button" href="{% url 'hackathons:tiers:new' %}?hackathon_id={{ current_hackathon.pk }}&next={{ request.get_full_path|urlencode }}">
+                <a class="button" href="{% url 'hackathons:tiers:new' %}?hackathon={{ current_hackathon.pk }}&next={{ request.get_full_path|urlencode }}">
                     <button class="btn btn-sm btn-primary ml-auto">New Tier</button>
                 </a>
             </div>
@@ -279,7 +283,7 @@ a.no-underline {
         <div class="card-header">
             <h4 class="card-title">Perks</h4>
             <div class="col text-right">
-                <a class="button" href="{% url 'hackathons:perks:new' %}?hackathon_id={{ current_hackathon.pk }}&next={{ request.get_full_path|urlencode }}">
+                <a class="button" href="{% url 'hackathons:perks:new' %}?hackathon={{ current_hackathon.pk }}&next={{ request.get_full_path|urlencode }}">
                     <button class="btn btn-sm btn-primary ml-auto">New Perk</button>
                 </a>
             </div>

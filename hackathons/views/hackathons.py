@@ -13,7 +13,9 @@ def hackathon_new(request):
         if form.is_valid():
             hackathon = form.save(commit=False)
             hackathon.save()
-            messages.success(request, "Created hackathon")
+            messages.success(request, f"Created hackathon {hackathon}")
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("dashboard:view", pk=hackathon.pk)
     else:
         form = HackathonForm()
@@ -28,7 +30,9 @@ def hackathon_edit(request, h_pk):
             hackathon.tiers.set(form.cleaned_data["tiers"])
             hackathon.perks.set(form.cleaned_data["perks"])
             hackathon.save()
-            messages.success(request, "Edited hackathon")
+            messages.success(request, f"Edited hackathon {hackathon}")
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("hackathons:index")
     else:
         form = HackathonForm(instance=hackathon, hackathon=hackathon)
