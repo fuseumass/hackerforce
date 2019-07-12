@@ -16,7 +16,10 @@ class Hackathon(models.Model):
         return self.name
 
     def latest():
-        return Hackathon.objects.latest("date")
+        try:
+            return Hackathon.objects.latest("date")
+        except Exception:
+            return None
 
 
 class Tier(models.Model):

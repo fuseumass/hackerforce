@@ -17,6 +17,8 @@ def dashboard_index(request):
     else:
         messages.info(request, "You need to select a default hackathon. This is configurable on your profile page. Until this is set, the most recent hackathon will be displayed.")
         current_hackathon = Hackathon.latest()
+        if not current_hackathon:
+            return redirect("hackathons:index")
 
     return redirect("dashboard:view", h_pk=current_hackathon.pk)
 
