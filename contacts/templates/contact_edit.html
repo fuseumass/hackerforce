@@ -16,3 +16,11 @@ Edit Contact
     </a>
 </div>
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_company").select2();
+});
+</script>
+{% endblock %}

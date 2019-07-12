@@ -16,3 +16,12 @@ Edit Company
     </a>
 </div>
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_industries").select2();
+    $("#id_size").select2();
+});
+</script>
+{% endblock %}

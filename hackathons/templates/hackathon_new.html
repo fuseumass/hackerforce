@@ -3,3 +3,12 @@
 {% block title %}
 New Hackathon
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_tiers").select2();
+    $("#id_perks").select2();
+});
+</script>
+{% endblock %}

@@ -8,7 +8,7 @@ New Company
 
 {% block js %}
 <script type="text/javascript">
-require(["{% static 'select2/select2.min.js' %}"], function() {
+requireSelect2(function() {
     $("#id_industries").select2();
     $("#id_size").select2();
 });

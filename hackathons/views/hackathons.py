@@ -22,13 +22,15 @@ def hackathon_new(request):
 def hackathon_edit(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
     if request.method == "POST":
-        form = HackathonForm(request.POST, instance=hackathon)
+        form = HackathonForm(request.POST, instance=hackathon, hackathon=hackathon)
         if form.is_valid():
             hackathon = form.save(commit=False)
+            hackathon.tiers.set(form.cleaned_data["tiers"])
+            hackathon.perks.set(form.cleaned_data["perks"])
             hackathon.save()
             messages.success(request, "Edited hackathon")
             return redirect("hackathons:index")
     else:
-        form = HackathonForm(instance=hackathon)
+        form = HackathonForm(instance=hackathon, hackathon=hackathon)
     return render(request, "hackathon_edit.html", {"form": form})
 

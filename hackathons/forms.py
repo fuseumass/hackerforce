@@ -24,9 +24,30 @@ class HackathonForm(forms.ModelForm):
         widget=forms.NumberInput(attrs={"class": "form-control cold-md-6 cold-lg-4"})
     )
 
+    tiers = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=Tier.objects.all(),
+        widget=forms.SelectMultiple(),
+    )
+
+    perks = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset=Perk.objects.all(),
+        widget=forms.SelectMultiple(),
+    )
+
     class Meta:
         model = Hackathon
-        fields = ("name", "date", "fundraising_goal")
+        fields = ("name", "date", "fundraising_goal", "tiers", "perks")
+
+    def __init__(self, *args, **kwargs):
+        hackathon = kwargs.pop('hackathon', None)
+        if hackathon:
+            initial = kwargs.pop('initial', {})
+            initial['tiers'] = hackathon.tiers.all()
+            initial['perks'] = hackathon.perks.all()
+            kwargs['initial'] = initial
+        super(HackathonForm, self).__init__(*args, **kwargs)
 
 
 class TierForm(forms.ModelForm):
@@ -150,6 +171,13 @@ class SponsorshipForm(forms.ModelForm):
     class Meta:
         model = Sponsorship
         fields = ("hackathon", "company", "contribution", "status", "tier", "perks", "notes")
+    
+    def __init__(self, *args, **kwargs):
+        hackathon = kwargs.pop('hackathon', None)
+        super(SponsorshipForm, self).__init__(*args, **kwargs)
+        if hackathon:
+            self.fields['tier'].queryset = Tier.objects.filter(hackathon=hackathon)
+            self.fields['perks'].queryset = Perk.objects.filter(hackathon=hackathon)
 
 
 class SponsorshipMarkContactedForm(SponsorshipForm):

@@ -7,14 +7,16 @@ New Contact
 {% endblock %}
 
 {% block formbodyheader %}
+{% if not request.GET.company_id %}
 <p>
     If this contact is for a new company, <a href="{% url 'companies:new' %}?next={{ request.get_full_path|urlencode }}">create the company first</a>.
 </p>
+{% endif %}
 {% endblock %}
 
 {% block js %}
 <script type="text/javascript">
-require(["{% static 'select2/select2.min.js' %}"], function() {
+requireSelect2(function() {
     $("#id_company").select2();
 });
 </script>

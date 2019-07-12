@@ -60,7 +60,7 @@ def sponsorships_show(request, h_pk):
 @login_required
 def sponsorship_new(request, h_pk):
     if request.method == "POST":
-        form = SponsorshipForm(request.POST)
+        form = SponsorshipForm(request.POST, hackathon=Hackathon.objects.get(pk=h_pk))
         if form.is_valid():
             sponsorship = form.save(commit=True)
             sponsorship.perks.set(form.cleaned_data["perks"])
@@ -73,14 +73,14 @@ def sponsorship_new(request, h_pk):
             "hackathon": get_object_or_404(Hackathon, pk=h_pk),
             "company": get_object_or_404(Company, pk=company_pk) if company_pk else None,
         }
-        form = SponsorshipForm(initial=initial)
+        form = SponsorshipForm(initial=initial, hackathon=Hackathon.objects.get(pk=h_pk))
     return render(request, "sponsorship_new.html", {"form": form})
 
 @login_required
 def sponsorship_edit(request, h_pk, pk):
     sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, company__pk=pk)
     if request.method == "POST":
-        form = SponsorshipForm(request.POST, instance=sponsorship)
+        form = SponsorshipForm(request.POST, instance=sponsorship, hackathon=sponsorship.hackathon)
         if form.is_valid():
             sponsorship = form.save(commit=True)
             sponsorship.perks.set(form.cleaned_data["perks"])
@@ -88,7 +88,7 @@ def sponsorship_edit(request, h_pk, pk):
             sponsorship.save()
             return redirect("hackathons:sponsorships:view", h_pk=h_pk, pk=sponsorship.company.pk)
     else:
-        form = SponsorshipForm(instance=sponsorship)
+        form = SponsorshipForm(instance=sponsorship, hackathon=sponsorship.hackathon)
     return render(request, "sponsorship_edit.html", {"form": form})
 
 @login_required

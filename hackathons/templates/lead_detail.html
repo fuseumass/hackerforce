@@ -109,11 +109,13 @@
                         <h2 class="card-title">{{ contact.company }}</h2>
                     </div>
                     <div class="card-body">
+                        {% if not sponsorship %}
                         <div style="font-size: 14px">
                             <i class="fe fe-alert-triangle" style="color: red"></i>
                             <b style="font-size: 16px; color: red">This company has not been contacted.</b>
                             <br /><br />
                         </div>
+                        {% endif %}
                     <p class="required-field">
                         <label><b>Sponsorship Status: &nbsp; </b></label>
                         {% include "cards/sponsorship_status.html" %}

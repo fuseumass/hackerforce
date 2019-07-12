@@ -8,7 +8,7 @@ New Email From Industry
 
 {% block js %}
 <script type="text/javascript">
-require(["{% static 'select2/select2.min.js' %}"], function() {
+requireSelect2(function() {
     $("#id_to_industries").select2();
     $("#id_size_selection").select2();
     $("#id_primary_selection").select2();

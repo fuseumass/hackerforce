@@ -91,6 +91,13 @@ class Sponsorship(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def clean(self):
+        if self.tier.hackathon != self.hackathon:
+            raise ValidationError(f"Tier {self.tier} is not valid for hackathon {self.hackathon}")
+        if self.perk.hackathon != self.hackathon:
+            raise ValidationError(f"Perk {self.perk} is not valid for hackathon {self.hackathon}")
+
+
     class Meta:
         unique_together = ('hackathon', 'company',)
         ordering = ('company__name', 'hackathon__name')

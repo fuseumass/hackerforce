@@ -25,6 +25,20 @@ a.no-underline {
     <h1 class="page-title">
         <i class="fe fe-home page-title-icon"></i> {{current_hackathon.name}}
     </h1>
+
+    <div class="col text-right">
+        <a class="button" href="{% url 'contacts:new' %}?next={{ request.get_full_path|urlencode }}">
+            <button class="btn btn-primary ml-auto">New Contact</button>
+        </a>
+        &nbsp;
+        <a class="button" href="{% url 'companies:new' %}?next={{ request.get_full_path|urlencode }}">
+            <button class="btn btn-primary ml-auto">New Company</button>
+        </a>
+        &nbsp;
+        <a class="button" href="{% url 'hackathons:edit' h.pk %}">
+            <button class="btn btn-primary ml-auto">Edit</button>
+        </a>
+    </div>
 </div>
 
 <div class="row row-cards">
@@ -229,5 +243,22 @@ a.no-underline {
         </div>
     </div>
     -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-status bg-blue"></div>
+            <div class="card-body">
+                <h4 class="card-title">Tiers</h4>
+                {% for tier in current_hackathon.tiers.all %}
+                <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q={{ tier.name }}" class="tag tag-red">
+                    {{ tier.name }}
+                </a>
+                {% endfor %}
+
+                {% for perks in current_hackathon.perks.all %}
+                <span class="tag tag-green">{{ perk.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

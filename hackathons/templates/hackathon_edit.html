@@ -3,3 +3,20 @@
 {% block title %}
 Edit Hackathon
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_tiers").select2();
+    $("#id_perks").select2();
+});
+</script>
+<style>
+#id_tiers, #id_perks {
+    width: 100%;
+}
+.select2 {
+    width: 100% !important;
+}
+</style>
+{% endblock %}
