@@ -8,7 +8,7 @@ from hackathons.models import Hackathon
 
 @login_required
 def perk_new(request):
-    hackathon_id = request.GET.get("hackathon_id")
+    hackathon_id = request.GET.get("hackathon")
     if request.method == "POST":
         form = PerkForm(request.POST)
         if form.is_valid():

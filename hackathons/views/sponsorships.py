@@ -66,6 +66,8 @@ def sponsorship_new(request, h_pk):
             sponsorship.perks.set(form.cleaned_data["perks"])
             # sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("hackathons:sponsorships:view", h_pk=h_pk, pk=sponsorship.company.pk)
     else:
         company_pk = request.GET.get("company")
@@ -86,6 +88,8 @@ def sponsorship_edit(request, h_pk, pk):
             sponsorship.perks.set(form.cleaned_data["perks"])
             # sponsorship.tiers.set(form.cleaned_data["tiers"])
             sponsorship.save()
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("hackathons:sponsorships:view", h_pk=h_pk, pk=sponsorship.company.pk)
     else:
         form = SponsorshipForm(instance=sponsorship, hackathon=sponsorship.hackathon)
@@ -97,6 +101,8 @@ def sponsorship_delete(request, h_pk, pk):
     if request.method == "POST" and request.POST.get("delete") == "yes":
         sponsorship.delete()
         messages.success(request, f"Deleted sponsorship {sponsorship}")
+        if request.GET.get("next"):
+            return redirect(request.GET.get("next"))
         return redirect("hackathons:sponsorships:show", h_pk=h_pk)
     return render(request, "sponsorship_delete.html", sponsorship_detail_context(request, h_pk, pk))
 

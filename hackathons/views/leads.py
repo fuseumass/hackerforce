@@ -83,7 +83,7 @@ def lead_new(request, h_pk):
             company = get_object_or_404(Company, pk=contact.company.pk)
             if not sponsorship:
                 messages.info(request, f"Before you can create a lead for {contact}, you need to begin tracking {company}. Press save below and then navigate back to the contact page.")
-                return redirect(reverse("hackathons:sponsorships:new", args=(h_pk,)) + "?company=" + str(company.pk))
+                return redirect(reverse("hackathons:sponsorships:new", args=(h_pk,)) + "?company=" + str(company.pk) + "&next=" + reverse("hackathons:leads:new", args=(h_pk,)) + "?company=" + str(company.pk))
         
         initial = {
             "contact": contact if contact_pk else None,

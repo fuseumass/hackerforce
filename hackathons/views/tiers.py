@@ -6,7 +6,7 @@ from ..forms import TierForm, PerkForm, HackathonForm, SponsorshipForm
 
 @login_required
 def tier_new(request):
-    hackathon_id = request.GET.get("hackathon_id")
+    hackathon_id = request.GET.get("hackathon")
     if request.method == "POST":
         form = TierForm(request.POST)
         if form.is_valid():
