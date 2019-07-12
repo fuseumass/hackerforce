@@ -244,18 +244,43 @@ a.no-underline {
     </div>
     -->
     <div class="col-lg-6">
+
+        <div class="card-header">
+            <h4 class="card-title">Tiers</h4>
+            <div class="col text-right">
+                <a class="button" href="{% url 'hackathons:tiers:new' %}?hackathon_id={{ current_hackathon.pk }}&next={{ request.get_full_path|urlencode }}">
+                    <button class="btn btn-sm btn-primary ml-auto">New Tier</button>
+                </a>
+            </div>
+        </div>
         <div class="card">
-            <div class="card-status bg-blue"></div>
+            <div class="card-status bg-red"></div>
             <div class="card-body">
-                <h4 class="card-title">Tiers</h4>
                 {% for tier in current_hackathon.tiers.all %}
-                <a href="{% url 'hackathons:sponsorships:show' h.pk %}?q={{ tier.name }}" class="tag tag-red">
+                <a href="{% url 'hackathons:tiers:view' h.pk tier.pk %}" class="tag tag-red">
                     {{ tier.name }}
                 </a>
                 {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
 
-                {% for perks in current_hackathon.perks.all %}
-                <span class="tag tag-green">{{ perk.name }}</span>
+        <div class="card-header">
+            <h4 class="card-title">Perks</h4>
+            <div class="col text-right">
+                <a class="button" href="{% url 'hackathons:perks:new' %}?hackathon_id={{ current_hackathon.pk }}&next={{ request.get_full_path|urlencode }}">
+                    <button class="btn btn-sm btn-primary ml-auto">New Perk</button>
+                </a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-status bg-green"></div>
+            <div class="card-body">
+                {% for perk in current_hackathon.perks.all %}
+                <a href="{% url 'hackathons:perks:view' h.pk perk.pk %}" class="tag tag-green">
+                    {{ perk.name }}
+                </a>
                 {% endfor %}
             </div>
         </div>

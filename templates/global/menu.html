@@ -45,25 +45,33 @@
                 <ul class="nav nav-tabs border-0 flex-column flex-sm-row">
                 {% if h %}
                     <li class="nav-item" style="width: 175px">
-                        <a href="{% url 'dashboard:view' h.pk %}" class="nav-link text-default">
+                        <a href="{% url 'dashboard:view' h.pk %}" class="nav-link
+                        {% if 'leads' not in request.path and 'sponsorships' not in request.path and 'email' not in request.path %} nav-selected{% endif %}
+                        ">
                             <i class="fe fe-home"></i>
                             <b class="dashboard-nav-text">{{ h }}</b>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'hackathons:leads:show' h.pk %}" class="nav-link">
+                        <a href="{% url 'hackathons:leads:show' h.pk %}" class="nav-link
+                        {% if 'leads' in request.path %} nav-selected{% endif %}
+                        ">
                             <i class="fe fe-users"></i>
                             Leads
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'hackathons:sponsorships:show' h.pk %}" class="nav-link">
+                        <a href="{% url 'hackathons:sponsorships:show' h.pk %}" class="nav-link
+                        {% if 'sponsorships' in request.path %} nav-selected{% endif %}
+                        ">
                             <i class="fe fe-share-2"></i>
                             Sponsorships
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" data-toggle="dropdown" class="nav-link">
+                        <a href="#" data-toggle="dropdown" class="nav-link
+                        {% if 'email' in request.path %} nav-selected{% endif %}
+                        ">
                             <i class="fe fe-mail"></i>
                             Email
                         </a>
@@ -100,23 +108,29 @@
                     </li>
                 {% else %}
                     <li class="nav-item" style="width: 175px">
-                        <a href="{% url 'dashboard:index' %}" class="nav-link text-default">
+                        <a href="{% url 'dashboard:index' %}" class="nav-link">
                             <i class="fe fe-home"></i>
                             <b class="dashboard-nav-text">Global</b>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'hackathons:index' %}" class="nav-link">
+                        <a href="{% url 'hackathons:index' %}" class="nav-link
+                        {% if 'h/' in request.path %} nav-selected{% endif %}
+                        ">
                             <i class="dropdown-icon fe fe-calendar"></i> Hackathons
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'contacts:index' %}" class="nav-link">
+                        <a href="{% url 'contacts:index' %}" class="nav-link
+                        {% if 'global/contacts/' in request.path %} nav-selected{% endif %}
+                        ">
                             <i class="dropdown-icon fe fe-users"></i> Contacts
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'companies:index' %}" class="nav-link">
+                        <a href="{% url 'companies:index' %}" class="nav-link
+                        {% if 'global/companies/' in request.path %} nav-selected{% endif %}
+                        ">
                             <i class="dropdown-icon fe fe-share-2"></i> Companies
                         </a>
                     </li>

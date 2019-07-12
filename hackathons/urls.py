@@ -3,13 +3,15 @@ from django.urls import path, include
 from .views import hackathons, perks, sponsorships, leads, tiers
 
 urlpatterns_tiers = [
-    path("new", tiers.tier_new, name="new"),
-    path("<int:pk>/edit", tiers.tier_edit, name="edit"),
+    path("tiers/new", tiers.tier_new, name="new"),
+    path("tiers/<int:pk>/edit", tiers.tier_edit, name="edit"),
+    path("<int:h_pk>/tiers/<int:pk>", tiers.tier_detail, name="view"),
 ]
 
 urlpatterns_perks = [
-    path("new", perks.perk_new, name="new"),
-    path("<int:pk>/edit", perks.perk_edit, name="edit"),
+    path("perks/new", perks.perk_new, name="new"),
+    path("perks/<int:pk>/edit", perks.perk_edit, name="edit"),
+    path("<int:h_pk>/perks/<int:pk>", perks.perk_detail, name="view"),
 ]
 
 urlpatterns_sponsorships = [
@@ -29,8 +31,8 @@ urlpatterns_leads = [
 
 app_name = "hackathons"
 urlpatterns = [
-    path("tiers/", include((urlpatterns_tiers, "tiers"))),
-    path("perks/", include((urlpatterns_perks, "perks"))),
+    path("", include((urlpatterns_tiers, "tiers"))),
+    path("", include((urlpatterns_perks, "perks"))),
     path("", include((urlpatterns_sponsorships, "sponsorships"))),
     path("", include((urlpatterns_leads, "leads"))),
 

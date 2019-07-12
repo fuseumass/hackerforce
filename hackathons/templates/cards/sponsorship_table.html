@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load order_by %}
+{% load modify_get %}
 <div class="card" id="{{ name }}" name="{{ name }}">
     {% if color %}
         <div class="card-status bg-{{ color }}"></div>
@@ -38,7 +39,15 @@
                     <td><a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}" class="text-inherit">
                         <b>{{ s.company.name }}</b>
                     </a></td>
-                    <td>{{ s.tier }}</td>
+                    <td>
+                        {% if not s.tier %}
+                            None    
+                        {% elif inline_search_links %}
+                            <a href="{% modify_get inline_search_links s.tier.name %}" class="tag tag-red">{{ s.tier }}</a>
+                        {% else %}
+                            <span class="tag tag-red">{{ s.tier }}</span>
+                        {% endif %}
+                    </td>
                     <td>${{ s.contribution|intcomma }}</td>
                     <td>
                     {% if faked %}

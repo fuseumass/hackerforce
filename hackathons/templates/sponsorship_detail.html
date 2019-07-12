@@ -57,12 +57,12 @@
                         </p>
                         <p class="required-field">
                             <label><b>Sponsorship Tier: </b></label>
-                            <span class="tag tag-red">{{ sponsorship.tier.name }}</span>
+                            <a href="{% url 'hackathons:tiers:view' h.pk sponsorship.tier.pk %}" class="tag tag-red">{{ sponsorship.tier.name }}</a>
                         </p>
                         <p class="required-field">
                             <label><b>Selected perks: </b></label>
                             {% for perk in sponsorship.perks.all %}
-                            <span class="tag tag-green">{{ perk.name }}</span>
+                            <a href="{% url 'hackathons:perks:view' h.pk perk.pk %}" class="tag tag-green">{{ perk.name }}</a>
                             {% endfor %}
                         </p>
                         <p class="text-right">
