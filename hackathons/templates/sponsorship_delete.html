@@ -1,0 +1,32 @@
+{% extends 'sponsorship_detail.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            Delete {{ sponsorship }}
+        </h3>
+    </div>
+    <div class="card-body">
+        <p>
+        <b>Are you sure you want to delete this sponsorship?</b> This will mark <b>{{ sponsorship.company }}</b> as uncontacted for <b>{{ sponsorship.hackathon }}</b>, removing all affiliated data!
+        </p>
+        <p>
+            <b style="color: red">THIS WILL DELETE {{ sponsorship.leads.count }} AFFILIATED LEADS AND ALL OF THEIR DATA, IN ADDITION TO ALL SPONSORSHIP DATA ABOUT THIS COMPANY!</b>
+        </p>
+        <p>
+            This will not delete the company. <a href="{% url 'companies:delete' sponsorship.company.pk %}">If you would like to globally delete the company instead</a> then that will delete this affiliated sponsorship object as well.
+        </p>
+
+        <form action="" method="POST" onsubmit="if ('{{ sponsorship.leads.count }}' != '0') return confirm('This operation will delete {{ sponsorship.leads.count }} affiliated leads.')">
+            {% csrf_token %}
+            <input type="hidden" name="delete" value="yes" />
+            <input type="submit" value="Delete Sponsorship" class="btn btn-danger float-right" />
+        </form>
+    </div>
+</div>
+
+<div style="pointer-events: none; opacity: 0.5">
+    {{ block.super }}
+</div>
+{% endblock %}

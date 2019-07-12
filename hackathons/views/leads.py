@@ -1,6 +1,7 @@
 from django import forms
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from ..models import Hackathon, Sponsorship, Lead
@@ -9,7 +10,7 @@ from contacts.models import Contact
 from contacts.forms import ContactForm
 from ..forms import HackathonForm, LeadForm, SponsorshipMarkContactedForm, LeadMarkContactedForm
 
-
+@login_required
 def leads_show(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
@@ -63,7 +64,7 @@ def leads_show(request, h_pk):
         "dead": dead,
     })
 
-
+@login_required
 def lead_new(request, h_pk):
     if request.method == "POST":
         form = LeadForm(request.hackathon, None, request.POST)
@@ -91,6 +92,7 @@ def lead_new(request, h_pk):
         form = LeadForm(request.hackathon, company, initial=initial)
     return render(request, "lead_new.html", {"form": form})
 
+@login_required
 def lead_mark_contacted(request, h_pk, c_pk):
     contact = get_object_or_404(Contact, pk=c_pk)
     company = get_object_or_404(Company, pk=contact.company.pk)
@@ -120,6 +122,8 @@ def lead_mark_contacted(request, h_pk, c_pk):
                 l.save()
                 sp.save()
                 messages.success(request, f"Marked {contact} as contacted")
+                if request.GET.get("next"):
+                    return redirect(request.GET.get("next"))
                 return redirect("hackathons:leads:view", h_pk=h_pk, pk=contact.pk)
     else:
         if sponsorship:
@@ -139,6 +143,7 @@ def lead_mark_contacted(request, h_pk, c_pk):
         "contact": contact,
     })
 
+@login_required
 def lead_edit(request, h_pk, pk):
     lead = Lead.objects.filter(sponsorship__hackathon__pk=h_pk, contact__pk=pk)
     lead = lead[0] if lead else None
@@ -161,6 +166,8 @@ def lead_edit(request, h_pk, pk):
             ok = False
         if ok:
             messages.success(request, f"Updated {lead.contact}")
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("hackathons:leads:view", h_pk=h_pk, pk=lead.contact.pk)
     else:
         lead_form = LeadForm(request.hackathon, lead.sponsorship.company, instance=lead, prefix="lead")
@@ -169,7 +176,11 @@ def lead_edit(request, h_pk, pk):
     lead_form.fields['contact'].widget = forms.HiddenInput()
     return render(request, "lead_edit.html", {"lead_form": lead_form, "contact_form": contact_form})
 
+@login_required
 def lead_detail(request, h_pk, pk):
+    return render(request, "lead_detail.html", lead_detail_context(request, h_pk, pk))
+
+def lead_detail_context(request, h_pk, pk):
     contact = get_object_or_404(Contact, pk=pk)
 
     lead = Lead.objects.filter(sponsorship__hackathon__pk=h_pk, contact__pk=pk)
@@ -184,9 +195,22 @@ def lead_detail(request, h_pk, pk):
     contacts = [{"lead": lead, "contact": lead.contact} for lead in Lead.objects.filter(contact__id__in=lead_contacts)]
     contacts += [{"contact": contact} for contact in Contact.objects.filter(id__in=non_lead_contacts)]
 
-    return render(request, "lead_detail.html", {
+    return {
         "lead": lead,
         "contact": contact,
         "sponsorship": sponsorship,
         "contacts": contacts
-    })
+    }
+
+
+
+@login_required
+def lead_delete(request, h_pk, pk):
+    lead = get_object_or_404(Lead, sponsorship__hackathon__pk=h_pk, contact__pk=pk)
+    if request.method == "POST" and request.POST.get("delete") == "yes":
+        lead.delete()
+        messages.success(request, f"Marked {lead} as uncontacted")
+        if request.GET.get("next"):
+            return redirect(request.GET.get("next"))
+        return redirect("hackathons:leads:view", h_pk, lead.contact.pk)
+    return render(request, "lead_delete.html", lead_detail_context(request, h_pk, pk))

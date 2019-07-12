@@ -89,10 +89,22 @@ def sponsorship_edit(request, h_pk, pk):
             return redirect("hackathons:sponsorships:view", h_pk=h_pk, pk=sponsorship.company.pk)
     else:
         form = SponsorshipForm(instance=sponsorship, hackathon=sponsorship.hackathon)
-    return render(request, "sponsorship_edit.html", {"form": form})
+    return render(request, "sponsorship_edit.html", {"form": form, "sponsorship": sponsorship})
+
+@login_required
+def sponsorship_delete(request, h_pk, pk):
+    sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, company__pk=pk)
+    if request.method == "POST" and request.POST.get("delete") == "yes":
+        sponsorship.delete()
+        messages.success(request, f"Deleted sponsorship {sponsorship}")
+        return redirect("hackathons:sponsorships:show", h_pk=h_pk)
+    return render(request, "sponsorship_delete.html", sponsorship_detail_context(request, h_pk, pk))
 
 @login_required
 def sponsorship_detail(request, h_pk, pk):
+    return render(request, "sponsorship_detail.html", sponsorship_detail_context(request, h_pk, pk))
+
+def sponsorship_detail_context(request, h_pk, pk):
     company = get_object_or_404(Company, pk=pk)
 
     sponsorship = Sponsorship.objects.filter(hackathon__pk=h_pk, company__pk=pk)
@@ -103,12 +115,12 @@ def sponsorship_detail(request, h_pk, pk):
 
     contacts = combine_lead_and_contacts(lead_contacts, non_lead_contacts)
 
-    return render(request, "sponsorship_detail.html", {
+    return {
         "sponsorship": sponsorship,
         "company": company,
         "contacts": contacts,
         "no_contacted_employees": len(lead_contacts) == 0 if sponsorship else False
-    })
+    }
 
 def combine_lead_and_contacts(lead_contact_ids, non_lead_contact_ids):
     contacts = [{"lead": lead, "contact": lead.contact} for lead in Lead.objects.filter(contact__id__in=lead_contact_ids)]

@@ -29,7 +29,7 @@ class Company(models.Model):
     name = models.CharField(
         max_length=140, help_text='enter a company name (e.g. "Amazon")'
     )
-    industries = models.ManyToManyField(Industry)
+    industries = models.ManyToManyField(Industry, blank=True)
     location = models.CharField(max_length=140, blank=True)
     size = models.CharField(max_length=1, choices=SIZES)
     notes = models.TextField(blank=True)

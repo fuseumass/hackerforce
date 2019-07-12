@@ -3,3 +3,13 @@
 {% block title %}
 New Sponsorship
 {% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_status").select2();
+    $("#id_tier").select2();
+    $("#id_perks").select2();
+});
+</script>
+{% endblock %}

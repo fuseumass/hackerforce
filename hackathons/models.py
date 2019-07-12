@@ -92,10 +92,9 @@ class Sponsorship(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def clean(self):
-        if self.tier.hackathon != self.hackathon:
+        if self.tier and self.tier.hackathon != self.hackathon:
             raise ValidationError(f"Tier {self.tier} is not valid for hackathon {self.hackathon}")
-        if self.perk.hackathon != self.hackathon:
-            raise ValidationError(f"Perk {self.perk} is not valid for hackathon {self.hackathon}")
+        # Perks can only be checked in the form.
 
 
     class Meta:

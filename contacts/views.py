@@ -62,11 +62,13 @@ def contact_edit(request, pk):
 @login_required
 def contact_delete(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
+    leads = Lead.objects.filter(contact=contact)
+    sponsorships = Sponsorship.objects.filter(company=contact.company)
     if request.method == "POST" and request.POST.get("delete") == "yes":
         contact.delete()
         messages.success(request, f"Deleted {contact}")
         return redirect("contacts:index")
-    return render(request, "contact_delete.html", {"contact": contact})
+    return render(request, "contact_delete.html", {"contact": contact, "leads": leads, "sponsorships": sponsorships})
 
 @login_required
 def contact_detail(request, pk):

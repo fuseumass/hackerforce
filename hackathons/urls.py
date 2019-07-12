@@ -17,6 +17,7 @@ urlpatterns_perks = [
 urlpatterns_sponsorships = [
     path("<int:h_pk>/sponsorships", sponsorships.sponsorships_show, name="show"),
     path("<int:h_pk>/sponsorships/<int:pk>/edit", sponsorships.sponsorship_edit, name="edit"),
+    path("<int:h_pk>/sponsorships/<int:pk>/delete", sponsorships.sponsorship_delete, name="delete"),
     path("<int:h_pk>/sponsorships/<int:pk>", sponsorships.sponsorship_detail, name="view"),
     path("<int:h_pk>/sponsorships/new", sponsorships.sponsorship_new, name="new"),
 ]
@@ -24,6 +25,7 @@ urlpatterns_sponsorships = [
 urlpatterns_leads = [
     path("<int:h_pk>/leads", leads.leads_show, name="show"),
     path("<int:h_pk>/leads/<int:pk>/edit", leads.lead_edit, name="edit"),
+    path("<int:h_pk>/leads/<int:pk>/delete", leads.lead_delete, name="delete"),
     path("<int:h_pk>/leads/<int:pk>", leads.lead_detail, name="view"),
     path("<int:h_pk>/leads/new", leads.lead_new, name="new"),
     path("<int:h_pk>/leads/mark_contacted/<int:c_pk>", leads.lead_mark_contacted, name="mark_contacted"),

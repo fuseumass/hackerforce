@@ -6,7 +6,7 @@ from django.db.models import Q
 
 from .models import Company
 from contacts.models import Contact
-from hackathons.models import Sponsorship
+from hackathons.models import Sponsorship, Lead
 from .forms import CompanyForm
 
 # @login_required
@@ -56,6 +56,8 @@ def company_edit(request, pk):
             company.industries.set(form.cleaned_data["industries"])
             company.save()
             messages.success(request, f"Updated {company.name}")
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
             return redirect("companies:view", pk=company.pk)
     else:
         form = CompanyForm(instance=company)
@@ -64,11 +66,21 @@ def company_edit(request, pk):
 @login_required
 def company_delete(request, pk):
     company = get_object_or_404(Company, pk=pk)
+    contacts = Contact.objects.filter(company=company)
+    sponsorships = Sponsorship.objects.filter(company=company)
+    leads = Lead.objects.filter(sponsorship__in=sponsorships)
     if request.method == "POST" and request.POST.get("delete") == "yes":
         company.delete()
         messages.success(request, f"Deleted {company}")
+        if request.GET.get("next"):
+            return redirect(request.GET.get("next"))
         return redirect("companies:index")
-    return render(request, "company_delete.html", {"company": company})
+    return render(request, "company_delete.html", {
+        "company": company,
+        "contacts": contacts,
+        "sponsorships": sponsorships,
+        "leads": leads,
+    })
 
 @login_required
 def company_detail(request, pk):

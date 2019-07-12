@@ -178,6 +178,15 @@ class SponsorshipForm(forms.ModelForm):
         if hackathon:
             self.fields['tier'].queryset = Tier.objects.filter(hackathon=hackathon)
             self.fields['perks'].queryset = Perk.objects.filter(hackathon=hackathon)
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        perks = cleaned_data.get("perks")
+        hackathon = cleaned_data.get("hackathon")
+        if perks and hackathon:
+            for perk in perks:
+                if perk.hackathon != hackathon:
+                    raise ValidationError(f"Perk {perk} is not valid for hackathon {self.hackathon}")
 
 
 class SponsorshipMarkContactedForm(SponsorshipForm):

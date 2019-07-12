@@ -13,19 +13,19 @@ class CompanyForm(forms.ModelForm):
         ),
     )
     industries = forms.ModelMultipleChoiceField(
-        required=True,
+        required=False,
         queryset=Industry.objects.all(),
         widget=forms.SelectMultiple(attrs={"class": "custom-select col-md-6 col-lg-4"}),
     )
     location = forms.CharField(
         max_length=140,
-        required=True,
+        required=False,
         widget=forms.Textarea(
             attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Location", "rows": 3}
         ),
     )
     size = forms.ChoiceField(
-        required=True,
+        required=False,
         choices=(Company.SIZES),
         widget=forms.Select(
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "Size"}
