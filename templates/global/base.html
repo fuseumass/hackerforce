@@ -59,7 +59,13 @@
     <div class="content my-3 my-md-5 container">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-{{ message.level_tag }}{% endif %}" role="alert">{{ message }}</div>
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-{{ message.level_tag }}{% endif %}" role="alert">
+                    {% if 'safe' in message.tags %}
+                        {{ message|safe }}
+                    {% else %}
+                        {{ message }}
+                    {% endif %}
+                </div>
             {% endfor %}
         {% endif %}
         {% block content %}

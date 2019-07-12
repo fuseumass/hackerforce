@@ -39,5 +39,6 @@ def tier_edit(request, pk):
 @login_required
 def tier_detail(request, h_pk, pk):
     tier = get_object_or_404(Tier, pk=pk)
-    messages.info(request, f"Showing sponsorships with tier {tier.name}")
+    tier_url = reverse("hackathons:tiers:edit", args=(pk,)) + "?next=" + reverse("dashboard:view", args=(h_pk,))
+    messages.info(request, f"Showing sponsorships with tier {tier.name}. <a href='{tier_url}'>Edit this tier</a>", extra_tags="info safe")
     return redirect(reverse("hackathons:sponsorships:show", args=(h_pk,)) + f"?q={tier.name}")

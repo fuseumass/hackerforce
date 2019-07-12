@@ -14,6 +14,7 @@ def perk_new(request):
         if form.is_valid():
             perk = form.save(commit=False)
             perk.save()
+            messages.success(request, f"Added perk {perk}")
             if request.GET.get("next"):
                 return redirect(request.GET.get("next"))
             return redirect("hackathons:index")
@@ -31,6 +32,7 @@ def perk_edit(request, pk):
         if form.is_valid():
             perk = form.save(commit=False)
             perk.save()
+            messages.success(request, f"Edited perk {perk}")
             if request.GET.get("next"):
                 return redirect(request.GET.get("next"))
             return redirect("hackathons:index")
@@ -41,5 +43,6 @@ def perk_edit(request, pk):
 @login_required
 def perk_detail(request, h_pk, pk):
     perk = get_object_or_404(Perk, pk=pk)
-    messages.info(request, f"Showing sponsorships with perk {perk.name}")
+    perk_url = reverse("hackathons:perks:edit", args=(pk,)) + "?next=" + reverse("dashboard:view", args=(h_pk,))
+    messages.info(request, f"Showing sponsorships with perk {perk.name}. <a href='{perk_url}'>Edit this perk</a>", extra_tags="info safe")
     return redirect(reverse("hackathons:sponsorships:show", args=(h_pk,)) + f"?q={perk.name}")
