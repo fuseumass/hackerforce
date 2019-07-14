@@ -44,6 +44,18 @@
                 </div>
             {% endif %}
         </div>
+        {% if sponsorship %}
+            <div class="card-header">
+                <h2 class="col card-title">Assigned Organizers: &nbsp;
+                    {% for user in sponsorship.organizer_contacts.all %}
+                        <a href="{% url 'hackathons:sponsorships:for_user' h.pk user.pk %}" style="{% if user == request.user %}font-weight: bold{% endif %}">
+                            {{ user }}</a>{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        None
+                    {% endfor %}
+                </h2>
+            </div>
+        {% endif %}
     </div>
 
     {% if sponsorship %}

@@ -268,6 +268,7 @@ class SponsorshipAssignOrganizersForm(forms.Form):
     )
 
     users = forms.ModelMultipleChoiceField(
+        required=False,
         queryset=User.objects.all(),
         widget=forms.SelectMultiple(),
     )
@@ -287,6 +288,7 @@ class SponsorshipsForUserForm(forms.Form):
             return obj.company.name
 
     sponsorships = SponsorshipNameMultipleChoiceField(
+        required=False,
         queryset=Sponsorship.objects.all(),
         widget=forms.SelectMultiple(),
     )
