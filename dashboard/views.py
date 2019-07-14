@@ -52,6 +52,8 @@ def dashboard(request, h_pk):
     leads = Lead.objects.filter(sponsorship__hackathon=current_hackathon).order_by("-updated_at").select_related()
     lead_chart = gen_lead_chart(leads, current_hackathon)
 
+    your_sponsorships = Sponsorship.objects.filter(hackathon=current_hackathon, organizer_contacts=request.user)
+
     return render(
         request,
         "dashboard.html",
@@ -67,6 +69,7 @@ def dashboard(request, h_pk):
             "money_raised_width": money_raised_width,
             "money_expected_width": money_expected_width,
             "money_possible_width": money_possible_width,
+            "your_sponsorships": your_sponsorships,
         },
     )
 

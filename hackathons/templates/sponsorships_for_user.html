@@ -1,16 +1,25 @@
 {% extends 'global/base.html' %}
 
+{% block title %}
+Assigned Sponsorships for {{ user }}
+{% endblock %}
+
 {% block content %}
 <div class="page-header">
-    <h1 class="page-title">{{ user }}'s Sponsorships</h1>
+    <div class="col">
+        <a href="{% url 'hackathons:sponsorships:for_user_modify' h.pk user.pk %}">
+            <button class="btn btn-primary" type="button">Update Responsibilities</button>
+        </a>
+    </div>
     <div class="col">
         <form action="{% url 'hackathons:sponsorships:for_user_list' h.pk %}" method="POST">
+            {% csrf_token %}
             <div class="row gutters-xs">
                 <div class="col">
                     {{ form.user }}
                 </div>
                 <span class="col-auto">
-                    <button class="btn btn-secondary" type="button">View</button>
+                    <button class="btn btn-secondary" type="submit">View</button>
                 </span>
             </div>
         </form>
@@ -19,7 +28,7 @@
 
 <div class="my-3 my-md-5">
     <div class="container">
-        {% with card_title='Sponsorships' color='green' name='' page_var='page' order_var='order_by' show_search=1 name_q=request.GET.q inline_search_links='q' self_link_search=1 sponsorships=sponsorships %}
+        {% with card_title='Assigned Sponsorships' color='green' name='' page_var='page' order_var='order_by' show_search=1 name_q=request.GET.q inline_search_links='q' self_link_search=1 sponsorships=sponsorships %}
         {% if sponsorships %}
             {% include "cards/sponsorship_table.html" %}
         {% endif %}

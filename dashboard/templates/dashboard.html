@@ -122,25 +122,12 @@ a.no-underline {
         <div class="card-header">
             <h3 class="card-title">Your Sponsorships</h3>
             <div class="col text-right">
-                <a class="button" href="{% url 'companies:new' %}?next={{ request.get_full_path|urlencode }}">
-                    <button class="btn btn-sm btn-primary ml-auto">Update</button>
+                <a class="button" href="{% url 'hackathons:sponsorships:for_user_modify' h.pk request.user.pk %}?next={{ request.get_full_path|urlencode }}">
+                    <button class="btn btn-sm btn-primary ml-auto">Update Responsibilities</button>
                 </a>
             </div>
         </div>
         <div class="card">
-            <div class="row" style="margin: 0">
-                {% for data in your_sponsorship_chart_data %}
-                <div class="col-sm-3">
-                    <div class="card-status bg-{{ data.3 }}"></div>
-                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
-                        <div class="p-3 text-center" style="white-space: nowrap">
-                                <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
-                            <div class="mb-0">{{ data.0 }}</div>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
             <div class="table-responsive">
                 <table class="table card-table table-striped table-vcenter condensed-table">
                     <thead>
@@ -150,6 +137,7 @@ a.no-underline {
                             <th>Amount</th>
                             <th>Status</th>
                             <th>Updated</th>
+                            <th></th>
                         </tr>
                         {% endif %}
                     </thead>
@@ -168,6 +156,12 @@ a.no-underline {
                                 <td class="updated-at">
                                     {{ s.updated_at|naturaltime|slice:":-4" }}
                                 </td>
+                                <td>
+                                    <a class="icon" href="{% url 'hackathons:sponsorships:edit' h.pk s.company.pk %}">
+                                        <i class="fe fe-edit"></i>
+                                    </a>
+                                </td>
+
                         </tr>
                         {% empty %}
                         <tr><td colspan=4>

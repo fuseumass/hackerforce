@@ -8,7 +8,7 @@ from companies.models import Company
 from contacts.models import Contact
 from profiles.models import User
 from profiles.forms import UserListForm
-from ..forms import HackathonForm, SponsorshipForm, SponsorshipAssignOrganizersForm
+from ..forms import HackathonForm, SponsorshipForm, SponsorshipAssignOrganizersForm, SponsorshipsForUserForm
 
 @login_required
 def sponsorships_show(request, h_pk):
@@ -188,3 +188,24 @@ def sponsorship_assign_organizers(request, h_pk, pk):
         initial = {"sponsorship": sponsorship, "users": User.objects.filter(sponsorships=sponsorship)}
         form = SponsorshipAssignOrganizersForm(initial=initial)
     return render(request, "sponsorship_assign_organizers.html", {"form": form, "sponsorship": sponsorship})
+
+@login_required
+def sponsorships_for_user_modify(request, h_pk, user_pk):
+    hackathon = get_object_or_404(Hackathon, pk=h_pk)
+    user = get_object_or_404(User, pk=user_pk)
+    if request.method == "POST":
+        form = SponsorshipsForUserForm(request.POST, hackathon=hackathon)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            sps = form.cleaned_data['sponsorships']
+            user.sponsorships.clear()
+            for sp in sps:
+                user.sponsorships.add(sp)
+            user.save()
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
+            return redirect("hackathons:sponsorships:for_user", h_pk=h_pk, user_pk=user.pk)
+    else:
+        initial = {"user": user, "sponsorships": Sponsorship.objects.filter(hackathon=hackathon, organizer_contacts=user)}
+        form = SponsorshipsForUserForm(initial=initial, hackathon=hackathon)
+    return render(request, "sponsorships_for_user_modify.html", {"form": form, "user": user})

@@ -274,3 +274,27 @@ class SponsorshipAssignOrganizersForm(forms.Form):
     
     class Meta:
         fields = ("sponsorship", "users",)
+
+class SponsorshipsForUserForm(forms.Form):
+    user = forms.ModelChoiceField(
+        required=True,
+        queryset=User.objects.all(),
+        widget=forms.HiddenInput(),
+    )
+
+    class SponsorshipNameMultipleChoiceField(forms.ModelMultipleChoiceField):
+        def label_from_instance(self, obj):
+            return obj.company.name
+
+    sponsorships = SponsorshipNameMultipleChoiceField(
+        queryset=Sponsorship.objects.all(),
+        widget=forms.SelectMultiple(),
+    )
+
+    class Meta:
+        fields = ("user", "sponsorships",)
+
+    def __init__(self, *args, **kwargs):
+        hackathon = kwargs.pop("hackathon", None)
+        super(SponsorshipsForUserForm, self).__init__(*args, **kwargs)
+        self.fields['sponsorships'].queryset = Sponsorship.objects.filter(hackathon=hackathon)
