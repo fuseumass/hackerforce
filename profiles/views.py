@@ -32,20 +32,26 @@ def register(request):
             raw_password = form.cleaned_data.get("password1")
             # user = authenticate(username=username, password=raw_password)
 
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your hacker-force account'
-            message = render_to_string('activation.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                'token':account_activation_token.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
-            messages.info(request, "Thank you for signing up! Please check your email to activate your account.", extra_tags="info")
+            if settings.AUTO_ACTIVATE_ACCOUNTS:
+                user.is_active = True
+                user.save()
+                messages.info(request, "Your account should now be activated.", extra_tags="info")
+            else:
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your hacker-force account'
+                message = render_to_string('activation.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid':urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                    'token':account_activation_token.make_token(user),
+                })
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(
+                            mail_subject, message, to=[to_email]
+                )
+                email.send()
+                messages.info(request, "Thank you for signing up! Please check your email to activate your account.", extra_tags="info")
+
             return redirect('login')
             # login_auth(request, user)
             # return redirect("/")

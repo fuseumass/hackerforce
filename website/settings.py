@@ -36,6 +36,9 @@ SECRET_KEY = "2hp_c&e=@jq4l*_x64n26!8w&h)7*cc-qe4q#0(+as7x6c+n1#"
 PRODUCTION = bool_environ('PRODUCTION')
 DEBUG = bool_environ('DEBUG')
 
+# TODO: set to False when emails are working
+AUTO_ACTIVATE_ACCOUNTS = True
+
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
 
