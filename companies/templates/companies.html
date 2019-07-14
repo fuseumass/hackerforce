@@ -83,6 +83,10 @@
                             {% endif %}
                         </td>
                     </tr>
+                    {% empty %}
+                    <tr><td colspan=6>
+                        No companies matching criteria.
+                    </td></tr>
                     {% endfor %}
                 </tbody>
             </table>

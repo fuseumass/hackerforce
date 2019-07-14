@@ -317,7 +317,6 @@ a.no-underline {
     </div>
     -->
     <div class="col-lg-6">
-
         <div class="card-header">
             <h4 class="card-title">Tiers</h4>
             <div class="col text-right">
@@ -333,12 +332,13 @@ a.no-underline {
                 <a href="{% url 'hackathons:tiers:view' h.pk tier.pk %}" class="tag tag-red">
                     {{ tier.name }}
                 </a>
+                {% empty %}
+                There are no tiers!
                 {% endfor %}
             </div>
         </div>
     </div>
     <div class="col-lg-6">
-
         <div class="card-header">
             <h4 class="card-title">Perks</h4>
             <div class="col text-right">
@@ -354,6 +354,8 @@ a.no-underline {
                 <a href="{% url 'hackathons:perks:view' h.pk perk.pk %}" class="tag tag-green">
                     {{ perk.name }}
                 </a>
+                {% empty %}
+                There are no perks!
                 {% endfor %}
             </div>
         </div>

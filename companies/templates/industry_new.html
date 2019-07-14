@@ -1,0 +1,15 @@
+{% extends 'global/forms.html' %}
+{% block basetitle %}
+    <title>New Industry</title>
+{% endblock %}
+{% block title %}
+New Industry
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_color").select2();
+});
+</script>
+{% endblock %}

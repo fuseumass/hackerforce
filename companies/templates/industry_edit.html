@@ -1,0 +1,26 @@
+{% extends 'global/forms.html' %}
+{% block basetitle %}
+    <title>Edit Industry</title>
+{% endblock %}
+{% block title %}
+Edit Industry
+{% endblock %}
+{% block formheader %}
+{{ block.super }}
+<div class="col text-right">
+    <a class="button" href="javascript:history.go(-1)">
+        <button class="btn btn-primary ml-auto" type="button">Back</button>
+    </a>
+    <a class="button" href="{% url 'companies:industries:delete' industry.pk %}">
+        <button class="btn btn-primary ml-auto" type="button">Delete</button>
+    </a>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_color").select2();
+});
+</script>
+{% endblock %}

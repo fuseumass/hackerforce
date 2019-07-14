@@ -104,6 +104,9 @@
                             <a class="dropdown-item" href="{% url 'companies:index' %}">
                                 <i class="dropdown-icon fe fe-share-2"></i> Companies
                             </a>
+                            <a class="dropdown-item" href="{% url 'companies:industries:index' %}">
+                                <i class="dropdown-icon fe fe-filter"></i> Industries
+                            </a>
                         </div>
                     </li>
                 {% else %}
@@ -122,16 +125,23 @@
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'contacts:index' %}" class="nav-link
-                        {% if 'global/contacts/' in request.path %} nav-selected{% endif %}
+                        {% if 'global/contacts' in request.path %} nav-selected{% endif %}
                         ">
                             <i class="dropdown-icon fe fe-users"></i> Contacts
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'companies:index' %}" class="nav-link
-                        {% if 'global/companies/' in request.path %} nav-selected{% endif %}
+                        {% if 'global/companies' in request.path and not 'global/companies/industries' in request.path %} nav-selected{% endif %}
                         ">
                             <i class="dropdown-icon fe fe-share-2"></i> Companies
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'companies:industries:index' %}" class="nav-link
+                        {% if 'global/companies/industries' in request.path %} nav-selected{% endif %}
+                        ">
+                            <i class="dropdown-icon fe fe-filter"></i> Industries
                         </a>
                     </li>
                 {% endif %}

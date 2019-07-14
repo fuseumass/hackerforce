@@ -42,3 +42,23 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ("name", "industries", "location", "size", "notes")
+
+class IndustryForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(
+            attrs={"class": "form-control col-md-6 col-lg-4", "placeholder": "Name"}
+        ),
+    )
+    color = forms.ChoiceField(
+        required=True,
+        choices=Industry.COLORS,
+        widget=forms.Select(
+            attrs={"class": "custom-select col-md-6 col-lg-4",}
+        ),
+    )
+
+    class Meta:
+        model = Industry
+        fields = ("name", "color",)

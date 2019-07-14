@@ -4,11 +4,11 @@
 <div class="col-lg-6 float-left">
     <div class="row gutters-xs">
         <div class="col">
-            <a href="{% url 'companies:new' %}?next={% url 'hackathons:sponsorships:show' h.pk %}">
+            <a href="{% url 'companies:new' %}?next={% url 'hackathons:sponsorships:show' h.pk %}" class="button">
                 <button class="btn btn-primary" type="button">Add Company</button>
             </a>
             &nbsp;
-            <a href="{% url 'hackathons:sponsorships:for_user_list' h.pk %}">
+            <a href="{% url 'hackathons:sponsorships:for_user_list' h.pk %}" class="button">
                 <button class="btn btn-primary" type="button">View Responsibilities</button>
             </a>
         {% if request.GET.urlencode|length > 1 %}
