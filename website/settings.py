@@ -73,11 +73,11 @@ INSTALLED_APPS = [
     ### Project Apps ###
     ####################
     "shared",
+    "profiles",
     "companies",
     "contacts",
     "dashboard",
     "emails",
-    "profiles",
     "hackathons",
 ]
 

@@ -3,6 +3,7 @@ from django import forms
 from .models import Tier, Perk, Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
+from profiles.models import User
 from ckeditor.widgets import CKEditorWidget
 
 class HackathonForm(forms.ModelForm):
@@ -258,3 +259,18 @@ class LeadMarkContactedForm(LeadForm):
         self.fields['contact'].widget = forms.HiddenInput()
         del self.fields['status']
         del self.fields['times_contacted']
+
+class SponsorshipAssignOrganizersForm(forms.Form):
+    sponsorship = forms.ModelChoiceField(
+        required=True,
+        queryset=Sponsorship.objects.all(),
+        widget=forms.HiddenInput(),
+    )
+
+    users = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.SelectMultiple(),
+    )
+    
+    class Meta:
+        fields = ("sponsorship", "users",)

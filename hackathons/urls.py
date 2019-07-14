@@ -18,8 +18,11 @@ urlpatterns_sponsorships = [
     path("<int:h_pk>/sponsorships", sponsorships.sponsorships_show, name="show"),
     path("<int:h_pk>/sponsorships/<int:pk>/edit", sponsorships.sponsorship_edit, name="edit"),
     path("<int:h_pk>/sponsorships/<int:pk>/delete", sponsorships.sponsorship_delete, name="delete"),
+    path("<int:h_pk>/sponsorships/<int:pk>/assign_organizers", sponsorships.sponsorship_assign_organizers, name="assign_organizers"),
     path("<int:h_pk>/sponsorships/<int:pk>", sponsorships.sponsorship_detail, name="view"),
     path("<int:h_pk>/sponsorships/new", sponsorships.sponsorship_new, name="new"),
+    path("<int:h_pk>/sponsorships/for_user", sponsorships.sponsorships_for_user_list, name="for_user_list"),
+    path("<int:h_pk>/sponsorships/for_user/<int:user_pk>", sponsorships.sponsorships_for_user, name="for_user"),
 ]
 
 urlpatterns_leads = [

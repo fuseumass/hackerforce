@@ -6,7 +6,9 @@ from django.db.models import Q
 from ..models import Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
-from ..forms import HackathonForm, SponsorshipForm
+from profiles.models import User
+from profiles.forms import UserListForm
+from ..forms import HackathonForm, SponsorshipForm, SponsorshipAssignOrganizersForm
 
 @login_required
 def sponsorships_show(request, h_pk):
@@ -133,3 +135,56 @@ def combine_lead_and_contacts(lead_contact_ids, non_lead_contact_ids):
     contacts += [{"contact": contact} for contact in Contact.objects.filter(id__in=non_lead_contact_ids)]
 
     return contacts
+
+@login_required
+def sponsorships_for_user_list(request, h_pk):
+    if request.POST.get("user"):
+        return redirect("hackathons:sponsorships:for_user", h_pk=h_pk, user_pk=request.POST.get("user"))
+    form = UserListForm()
+    return render(request, "sponsorships_for_user_list.html", {"form": form})
+
+def sponsorship_paginator(request, obj):
+    q = request.GET.get('q')
+    if q:
+        obj = obj.filter(Q(company__name__icontains=q) | Q(company__industries__name__iexact=q) | Q(status__iexact=q) | Q(perks__name__iexact=q) | Q(tier__name__iexact=q))
+    obj = obj.select_related()
+    order_by = request.GET.get('order_by')
+    if order_by:
+        obj = obj.order_by(*order_by.split(',')).distinct()
+    else:
+        obj = obj.order_by("company__name").distinct()
+    paginator = Paginator(obj, 25)
+    sponsorships = paginator.get_page(request.GET.get("page"))
+    return sponsorships
+
+@login_required
+def sponsorships_for_user(request, h_pk, user_pk):
+    user = get_object_or_404(User, pk=user_pk)
+    obj = Sponsorship.objects.filter(hackathon__pk=h_pk, organizer_contacts__pk=user_pk)
+    sponsorships = sponsorship_paginator(request, obj)
+
+    return render(request, "sponsorships_for_user.html", {
+        "form": UserListForm(initial={"user": user}),
+        "user": user,
+        "sponsorships": sponsorships,
+    })
+
+@login_required
+def sponsorship_assign_organizers(request, h_pk, pk):
+    sponsorship = get_object_or_404(Sponsorship, hackathon__pk=h_pk, company__pk=pk)
+    if request.method == "POST":
+        form = SponsorshipAssignOrganizersForm(request.POST)
+        if form.is_valid():
+            users = form.cleaned_data['users']
+            sp = form.cleaned_data['sponsorship']
+            sp.organizer_contacts.clear()
+            for u in users:
+                sp.organizer_contacts.add(u)
+            sp.save()
+            if request.GET.get("next"):
+                return redirect(request.GET.get("next"))
+            return redirect("hackathons:sponsorships:view", h_pk=h_pk, pk=sponsorship.company.pk)
+    else:
+        initial = {"sponsorship": sponsorship, "users": User.objects.filter(sponsorships=sponsorship)}
+        form = SponsorshipAssignOrganizersForm(initial=initial)
+    return render(request, "sponsorship_assign_organizers.html", {"form": form, "sponsorship": sponsorship})

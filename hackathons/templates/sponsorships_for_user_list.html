@@ -1,0 +1,13 @@
+{% extends 'global/forms.html' %}
+
+{% block title %}
+Select User
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_user").select2();
+});
+</script>
+{% endblock %}

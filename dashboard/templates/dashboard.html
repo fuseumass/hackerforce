@@ -116,6 +116,71 @@ a.no-underline {
 
     </div>
     -->
+
+
+    <div class="col-lg-12">
+        <div class="card-header">
+            <h3 class="card-title">Your Sponsorships</h3>
+            <div class="col text-right">
+                <a class="button" href="{% url 'companies:new' %}?next={{ request.get_full_path|urlencode }}">
+                    <button class="btn btn-sm btn-primary ml-auto">Update</button>
+                </a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="row" style="margin: 0">
+                {% for data in your_sponsorship_chart_data %}
+                <div class="col-sm-3">
+                    <div class="card-status bg-{{ data.3 }}"></div>
+                    <a href="{% url 'hackathons:sponsorships:show' h.pk %}#{{ data.2 }}" class="text-inherit no-underline">
+                        <div class="p-3 text-center" style="white-space: nowrap">
+                                <div class="h1 m-0 mt-0 text-{{ data.3 }}">{{ data.1 }}</div>
+                            <div class="mb-0">{{ data.0 }}</div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-striped table-vcenter condensed-table">
+                    <thead>
+                        {% if your_sponsorships %}
+                        <tr>
+                            <th>Company</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Updated</th>
+                        </tr>
+                        {% endif %}
+                    </thead>
+                    <tbody>
+                        {% for s in your_sponsorships %}
+                        <tr>
+                            <td><a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}" class="text-inherit">
+                                    <b>{{ s.company.name }}</b>
+                                </a></td>
+                                <td>${{ s.contribution|intcomma }}</td>
+                                <td>
+                                    {% with sponsorship=s %}
+                                        {% include "cards/sponsorship_status.html" %}
+                                    {% endwith %}
+                                </td>
+                                <td class="updated-at">
+                                    {{ s.updated_at|naturaltime|slice:":-4" }}
+                                </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan=4>
+                            You aren't responsible for any sponsorships.<br />
+                            To add yourself to a sponsorship, hit "Assign" on a company's detail page.
+                        </td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div class="col-lg-6">
         <div class="card-header">
             <h3 class="card-title">Recent Leads</h3>
@@ -241,7 +306,6 @@ a.no-underline {
                 </table>
             </div>
         </div>
-
     </div>
     
     <!--

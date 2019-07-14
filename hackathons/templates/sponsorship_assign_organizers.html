@@ -1,0 +1,27 @@
+{% extends 'global/forms.html' %}
+
+{% block title %}
+Assign Organizers to Sponsorship
+{% endblock %}
+
+{% block formheader %}
+{{ block.super }}
+<div class="col text-right">
+    <a class="button" href="{% url 'hackathons:sponsorships:delete' h.pk sponsorship.company.pk %}">
+        <button type="button" class="btn btn-primary ml-auto">Delete</button>
+    </a>
+</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_users").select2();
+});
+</script>
+<style>
+.select2.select2-container {
+    width: 100% !important;
+}
+</style>
+{% endblock %}

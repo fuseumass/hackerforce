@@ -164,3 +164,13 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "current_hackathon")
+
+class UserListForm(forms.Form):
+    user = forms.ModelChoiceField(
+        required=True,
+        queryset=User.objects.all(),
+        widget=forms.Select(),
+    )
+    
+    class Meta:
+        fields = ("user",)
