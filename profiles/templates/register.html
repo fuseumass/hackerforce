@@ -20,7 +20,14 @@
         <link href="{% static 'tabler/plugins/maps-google/plugin.css' %}" rel="stylesheet" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         {% block css %}
-            {# additional css #}
+            <style>
+                body {
+                    background-color: #7d7d80;
+                }
+                .bottom-text, .bottom-text a[href] {
+                    color: white !important;
+                }
+            </style>
         {% endblock %}
     </head>
 
@@ -80,7 +87,7 @@
 </div>
 </div>
 
-<div class="text-center text-muted">
+<div class="text-center text-muted bottom-text">
     Already have account? <a href="{% url 'login' %}">Sign in</a>
 </div>
 </div>
