@@ -22,6 +22,7 @@ urlpatterns_sponsorships = [
     path("<int:h_pk>/sponsorships/<int:pk>", sponsorships.sponsorship_detail, name="view"),
     path("<int:h_pk>/sponsorships/new", sponsorships.sponsorship_new, name="new"),
     path("<int:h_pk>/sponsorships/for_user", sponsorships.sponsorships_for_user_list, name="for_user_list"),
+    path("<int:h_pk>/sponsorships/for_user/all", sponsorships.sponsorships_for_user_all, name="for_user_all"),
     path("<int:h_pk>/sponsorships/for_user/<int:user_pk>", sponsorships.sponsorships_for_user, name="for_user"),
     path("<int:h_pk>/sponsorships/for_user/<int:user_pk>/modify", sponsorships.sponsorships_for_user_modify, name="for_user_modify"),
 ]

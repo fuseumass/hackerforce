@@ -140,8 +140,10 @@ def combine_lead_and_contacts(lead_contact_ids, non_lead_contact_ids):
 def sponsorships_for_user_list(request, h_pk):
     if request.POST.get("user"):
         return redirect("hackathons:sponsorships:for_user", h_pk=h_pk, user_pk=request.POST.get("user"))
-    form = UserListForm()
-    return render(request, "sponsorships_for_user_list.html", {"form": form})
+    else:
+        return redirect("hackathons:sponsorships:for_user_all", h_pk=h_pk)
+    #form = UserListForm()
+    #return render(request, "sponsorships_for_user_list.html", {"form": form})
 
 def sponsorship_paginator(request, obj):
     q = request.GET.get('q')
@@ -167,6 +169,27 @@ def sponsorships_for_user(request, h_pk, user_pk):
         "form": UserListForm(initial={"user": user}),
         "user": user,
         "sponsorships": sponsorships,
+    })
+
+@login_required
+def sponsorships_for_user_all(request, h_pk):
+    user_ids = set(Sponsorship.objects.filter(hackathon__pk=h_pk)
+        .order_by('organizer_contacts__last_name','organizer_contacts__first_name')
+        .values_list('organizer_contacts__pk', flat=True))
+    user_objs = User.objects.filter(pk__in=user_ids)
+
+    users = []
+    for u in user_objs:
+        sps = Sponsorship.objects.filter(hackathon__pk=h_pk, organizer_contacts__pk=u.pk)
+        users.append({
+            "user": u,
+            "sponsorships": sps,
+        })
+        
+
+    return render(request, "sponsorships_for_user_all.html", {
+        "form": UserListForm(),
+        "users": users,
     })
 
 @login_required

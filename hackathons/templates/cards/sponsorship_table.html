@@ -21,6 +21,13 @@
             </form>
         </div>
         {% endif %}
+        {% if update_responsibilities_user_pk %}
+            <div class="col text-right">
+                <a class="button" href="{% url 'hackathons:sponsorships:for_user_modify' h.pk update_responsibilities_user_pk %}?next={{ request.get_full_path|urlencode }}">
+                    <button class="btn btn-primary ml-auto">Update Responsibilities</button>
+                </a>
+            </div>
+        {% endif %}
     </div>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap">
@@ -77,6 +84,7 @@
         </table>
     </div>
     <div class="card-footer">
+    {% if sponsorships.paginator %}
         <div class="pagination">
             {% if sponsorships.has_previous %}
                 <div class="col text-left">
@@ -98,5 +106,9 @@
                 </div>
             {% endif %}
         </div>
+    {% else %}
+        {{ sponsorships|length }} entr{% if sponsorships|length == 1 %}y{% else %}ies{% endif %}
+    {% endif %}
     </div>
+    
 </div>

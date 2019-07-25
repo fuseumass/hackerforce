@@ -13,6 +13,10 @@ Assign Sponsorships to {{ user }}
 </div>
 {% endblock %}
 
+{% block formbodyheader %}
+<p>In order to appear on this page, a company must have been added to this hackathon.</p>
+{% endblock %}
+
 {% block js %}
 <script type="text/javascript">
 requireSelect2(function() {
