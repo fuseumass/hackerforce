@@ -1,31 +1,33 @@
 {% extends 'global/base.html' %}
 
 {% block content %}
-<div class="col-lg-3 float-left">
-    <div class="row gutters-xs">
-        <div class="col">
-            <a href="{% url 'contacts:new' %}?next={% url 'hackathons:leads:show' h.pk %}">
-                <button class="btn btn-primary" type="button">Add Contact</button>
-            </a>
-        </div>
-        {% if request.GET.urlencode|length > 1 %}
-            <div class="col">
-                <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
-            </div>
-        {% endif %}
-    </div>
-</div>
-<div class="col-lg-3 ml-auto">
-    <form action="{% url 'hackathons:leads:show' h.pk %}" method="GET">
+<div class="row">
+    <div class="col-md-6">
         <div class="row gutters-xs">
             <div class="col">
-                <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
+                <a href="{% url 'contacts:new' %}?next={% url 'hackathons:leads:show' h.pk %}">
+                    <button class="btn btn-primary" type="button">Add Contact</button>
+                </a>
             </div>
-            <span class="col-auto">
-                <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
-            </span>
+            {% if request.GET.urlencode|length > 1 %}
+                <div class="col">
+                    <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
+                </div>
+            {% endif %}
         </div>
-    </form>
+    </div>
+    <div class="col-md-4 ml-auto">
+        <form action="{% url 'hackathons:leads:show' h.pk %}" method="GET">
+            <div class="row gutters-xs">
+                <div class="col">
+                    <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
+                </div>
+                <span class="col-auto">
+                    <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="my-3 my-md-5">
