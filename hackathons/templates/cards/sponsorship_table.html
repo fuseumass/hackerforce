@@ -31,7 +31,7 @@
         {% if exclude_link_query %}
             <div class="col text-right">
                 {% with "not:"|add:exclude_link_query as inverted_q %}
-                    <a class="button" href="{% modify_get 'q' inverted_q %}">
+                    <a class="button" href="{% modify_get inline_search_links inverted_q %}">
                         <button class="btn btn-sm btn-primary ml-auto">Exclude {{ exclude_link_query }}</button>
                     </a>
                 {% endwith %}
@@ -42,11 +42,11 @@
         <table class="table card-table table-vcenter text-nowrap">
             <thead>
                 <tr>
-                    <th><a href="{% order_by_custom order_var 'company' %}#{{ name }}">Company</a></th>
-                    <th><a href="{% order_by_custom order_var 'company__industries' %}#{{ name }}">Industries</a></th>
-                    <th><a href="{% order_by_custom order_var 'tier' %}#{{ name }}">Tier</a></th>
+                    <th style="min-width: 30%"><a href="{% order_by_custom order_var 'company' %}#{{ name }}">Company</a></th>
+                    <th style="min-width: 20%"><a href="{% order_by_custom order_var 'company__industries' %}#{{ name }}">Industries</a></th>
+                    <th style="min-width: 10%"><a href="{% order_by_custom order_var 'tier' %}#{{ name }}">Tier</a></th>
                     <th><a href="{% order_by_custom order_var 'contribution' %}#{{ name }}">Contribution</a></th>
-                    <th><a href="{% order_by_custom order_var 'status' %}#{{ name }}">Status</a></th>
+                    <th style="min-width: 10%"><a href="{% order_by_custom order_var 'status' %}#{{ name }}">Status</a></th>
                     <th style="width: 115px"></th>
                 </tr>
             </thead>
@@ -74,7 +74,7 @@
                             <span class="tag tag-red">{{ s.tier }}</span>
                         {% endif %}
                     </td>
-                    <td>${{ s.contribution|intcomma }}</td>
+                    <td style="text-align: center">${{ s.contribution|intcomma }}</td>
                     <td>
                     {% if faked %}
                         {% with sponsorship=None %}

@@ -15,7 +15,7 @@
         &nbsp; 
         <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
         &nbsp; 
-        {% if not "not:" in request.GET.q %}
+        {% if request.GET.q and not "not:" in request.GET.q %}
             {% with "not:"|add:request.GET.q as inverted_q %}
                 <a href="{% modify_get 'q' inverted_q %}"><button class="btn btn-primary" type="button">Invert Query</button></a>
             {% endwith %}

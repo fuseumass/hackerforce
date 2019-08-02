@@ -30,12 +30,13 @@ def sponsorships_show(request, h_pk):
     def sponsorship_wrapper(name, states):
         obj = state_filter(states)
         q = get_q(name)
-        q_rules = Q(company__name__icontains=q) | Q(company__industries__name__iexact=q) | Q(status__iexact=q) | Q(perks__name__iexact=q) | Q(tier__name__iexact=q)
+        q_rules = lambda q: Q(company__name__icontains=q) | Q(company__industries__name__iexact=q) | Q(status__iexact=q) | Q(perks__name__iexact=q) | Q(tier__name__iexact=q)
         if q:
             if q.startswith("not:"):
-                obj = obj.exclude(q_rules)
+                q = q[4:]
+                obj = obj.exclude(q_rules(q))
             else:
-                obj = obj.filter(q_rules)
+                obj = obj.filter(q_rules(q))
         obj = obj.select_related()
         return paginator_wrapper(name, obj.order_by("company__name").distinct())
     
@@ -43,8 +44,13 @@ def sponsorships_show(request, h_pk):
         companies_for_hackathon = Company.objects.filter(sponsorships__hackathon__pk=h_pk).values_list("pk", flat=True)
         obj = Company.objects.exclude(pk__in=companies_for_hackathon)
         q = get_q(name)
+        q_rules = lambda q: Q(name__icontains=q) | Q(industries__name__iexact=q)
         if q:
-            obj = obj.filter(Q(name__icontains=q) | Q(industries__name__iexact=q))
+            if q.startswith("not:"):
+                q = q[4:]
+                obj = obj.exclude(q_rules(q))
+            else:
+                obj = obj.filter(q_rules(q))
         obj = obj.select_related()
         return paginator_wrapper(name, fake_sponsorship(obj.order_by("name").distinct()))
 

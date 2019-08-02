@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def modify_get(context, arg_name, arg_value):
-    get = dict(context.request.GET)
+    get = dict({k: v[0] if v else None for k, v in context.request.GET.items()})
     if arg_name in get:
         del get[arg_name]
     existing = urllib.parse.urlencode(get)
