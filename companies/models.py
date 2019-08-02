@@ -23,7 +23,6 @@ class Industry(models.Model):
 
 
 class Company(models.Model):
-    STATUSES = (("U", "Uncontacted"), ("C", "Contacted"), ("D", "Donated"))
     SIZES = (("L", "Large"), ("M", "Medium"), ("S", "Small"))
 
     name = models.CharField(

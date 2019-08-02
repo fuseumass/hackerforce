@@ -9,7 +9,7 @@ class Contact(models.Model):
     last_name = models.CharField(max_length=50)
 
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='contacts')
-    position = models.CharField(max_length=100)
+    position = models.CharField(max_length=100, blank=True)
     primary = models.BooleanField(default=False)
 
     email = models.EmailField()
