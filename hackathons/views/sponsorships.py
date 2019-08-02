@@ -30,8 +30,12 @@ def sponsorships_show(request, h_pk):
     def sponsorship_wrapper(name, states):
         obj = state_filter(states)
         q = get_q(name)
+        q_rules = Q(company__name__icontains=q) | Q(company__industries__name__iexact=q) | Q(status__iexact=q) | Q(perks__name__iexact=q) | Q(tier__name__iexact=q)
         if q:
-            obj = obj.filter(Q(company__name__icontains=q) | Q(company__industries__name__iexact=q) | Q(status__iexact=q) | Q(perks__name__iexact=q) | Q(tier__name__iexact=q))
+            if q.startswith("not:"):
+                obj = obj.exclude(q_rules)
+            else:
+                obj = obj.filter(q_rules)
         obj = obj.select_related()
         return paginator_wrapper(name, obj.order_by("company__name").distinct())
     

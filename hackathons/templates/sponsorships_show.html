@@ -1,4 +1,5 @@
 {% extends 'global/base.html' %}
+{% load modify_get %}
 
 {% block content %}
 <div class="row">
@@ -13,6 +14,12 @@
     {% if request.GET.urlencode|length > 1 %}
         &nbsp; 
         <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
+        &nbsp; 
+        {% if not "not:" in request.GET.q %}
+            {% with "not:"|add:request.GET.q as inverted_q %}
+                <a href="{% modify_get 'q' inverted_q %}"><button class="btn btn-primary" type="button">Invert Query</button></a>
+            {% endwith %}
+        {% endif %}
     {% endif %}
     </div>
     <div class="col-md-4 ml-auto">
@@ -41,7 +48,7 @@
             {% include "cards/sponsorship_table.html" %}
         {% endif %}
         {% endwith %}
-        {% with card_title='Uncontacted Companies' color='gray-dark' name='uncontacted' page_var='uncontacted_page' order_var='uncontacted_order_by' show_search=0 name_q=request.GET.uncontacted_q inline_search_links='q' sponsorships=uncontacted faked=1 %}
+        {% with card_title='Uncontacted Companies' color='gray-dark' name='uncontacted' page_var='uncontacted_page' order_var='uncontacted_order_by' show_search=0 name_q=request.GET.uncontacted_q inline_search_links='q' exclude_link_query="Imported Data" sponsorships=uncontacted faked=1 %}
         {% if sponsorships %}
             {% include "cards/sponsorship_table.html" %}
         {% endif %}

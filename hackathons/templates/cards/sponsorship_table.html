@@ -28,12 +28,22 @@
                 </a>
             </div>
         {% endif %}
+        {% if exclude_link_query %}
+            <div class="col text-right">
+                {% with "not:"|add:exclude_link_query as inverted_q %}
+                    <a class="button" href="{% modify_get 'q' inverted_q %}">
+                        <button class="btn btn-sm btn-primary ml-auto">Exclude {{ exclude_link_query }}</button>
+                    </a>
+                {% endwith %}
+            </div>
+        {% endif %}
     </div>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap">
             <thead>
                 <tr>
                     <th><a href="{% order_by_custom order_var 'company' %}#{{ name }}">Company</a></th>
+                    <th><a href="{% order_by_custom order_var 'company__industries' %}#{{ name }}">Industries</a></th>
                     <th><a href="{% order_by_custom order_var 'tier' %}#{{ name }}">Tier</a></th>
                     <th><a href="{% order_by_custom order_var 'contribution' %}#{{ name }}">Contribution</a></th>
                     <th><a href="{% order_by_custom order_var 'status' %}#{{ name }}">Status</a></th>
@@ -47,10 +57,19 @@
                         <b>{{ s.company.name }}</b>
                     </a></td>
                     <td>
+                        {% for industry in s.company.industries.all %}
+                            <a href="{% modify_get inline_search_links industry.name %}" class="tag tag-{{ industry.color }}" title="Filter by this industry">
+                                {{ industry.name }}
+                            </a>
+                        {% endfor %}
+                    </td>
+                    <td>
                         {% if not s.tier %}
                             None    
                         {% elif inline_search_links %}
-                            <a href="{% modify_get inline_search_links s.tier.name %}" class="tag tag-red">{{ s.tier }}</a>
+                            <a href="{% modify_get inline_search_links s.tier.name %}" class="tag tag-red" title="Filter by this tier">
+                                {{ s.tier }}
+                            </a>
                         {% else %}
                             <span class="tag tag-red">{{ s.tier }}</span>
                         {% endif %}
@@ -95,7 +114,8 @@
             {% endif %}
 
             <span class="btn">
-                Page {{ sponsorships.number }} of {{ sponsorships.paginator.num_pages }}
+                Page {{ sponsorships.number }} of {{ sponsorships.paginator.num_pages }} &nbsp;&ndash;&nbsp;
+                {{ sponsorships.paginator.count }} entr{% if sponsorships.paginator.count == 1 %}y{% else %}ies{% endif %}
             </span>
 
             {% if sponsorships.has_next %}

@@ -18,26 +18,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
     {% block basetitle %}
     {% endblock %}
-    <style type="text/css">
-    .dashboard-nav-text {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    .nav-link.nav-selected {
-        color: #495057 !important;
-        border-color: #495057 !important;
-    }
-    a.button {
-        text-decoration: none !important;
-    }
-    </style>
+
     <link href="{% static 'tabler/css/dashboard.css' %}" rel="stylesheet" />
     <link href="{% static 'tabler/plugins/charts-c3/plugin.css' %}" rel="stylesheet" />
     <link href="{% static 'tabler/plugins/maps-google/plugin.css' %}" rel="stylesheet" />
     <link href="{% static 'select2/select2.min.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-        crossorigin="anonymous">
+        crossorigin="anonymous" />
+    <link href="{% static 'global/custom.css' %}" rel="stylesheet" />
+    
     {% block css %}
     {# additional css #}
     {% endblock %}

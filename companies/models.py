@@ -23,7 +23,7 @@ class Industry(models.Model):
 
 
 class Company(models.Model):
-    SIZES = (("L", "Large"), ("M", "Medium"), ("S", "Small"))
+    SIZES = (("L", "Large"), ("M", "Medium"), ("S", "Small"), ("U", "Unknown"))
 
     name = models.CharField(
         max_length=140, help_text='enter a company name (e.g. "Amazon")'
