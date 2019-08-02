@@ -2,8 +2,8 @@ from django.db import models
 from django.db.models import Q
 from django.template import Template, Context
 from django.utils import timezone
-from multiselectfield import MultiSelectField
 
+from shared.forms.fields import MultiSelectField
 from companies.models import Company, Industry
 from profiles.models import User
 from contacts.models import Contact
