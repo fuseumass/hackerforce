@@ -50,6 +50,9 @@
     {% endif %}
     <form class="card" action="" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+        {% endif %}
         <div class="card-body p-6">
             <div class="card-title">Login to your CRM account</div>
     

@@ -85,6 +85,9 @@ def login(request):
         user = authenticate(username=username, password=raw_password)
         if user is not None:
             login_auth(request, user)
+            next = request.POST.get("next")
+            if next and not "://" in next:
+                return redirect(next)
             return redirect("/")
         else:
             messages.error(request, "Invalid username or password", extra_tags="danger")
