@@ -43,6 +43,7 @@
             <thead>
                 <tr>
                     <th style="min-width: 30%"><a href="{% order_by_custom order_var 'company' %}#{{ name }}">Company</a></th>
+                    <th style="width: 0; text-align: center"><a href="{% order_by_custom order_var 'company__contacts__count' %}#{{ name }}">Contacts</a></th>
                     <th style="min-width: 20%"><a href="{% order_by_custom order_var 'company__industries' %}#{{ name }}">Industries</a></th>
                     <th style="min-width: 10%"><a href="{% order_by_custom order_var 'tier' %}#{{ name }}">Tier</a></th>
                     <th><a href="{% order_by_custom order_var 'contribution' %}#{{ name }}">Contribution</a></th>
@@ -53,9 +54,16 @@
             <tbody>
                 {% for s in sponsorships %}
                 <tr>
-                    <td><a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}" class="text-inherit">
+                    <td style="cursor: pointer" onclick="this.children[0].click()">
+                        <a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}" class="text-inherit">
                         <b>{{ s.company.name }}</b>
-                    </a></td>
+                    </a>
+                    </td>
+                    <td style="text-align: center; cursor: pointer" onclick="this.children[0].click()">
+                        <a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}#contacts" class="text-inherit">
+                            {{ s.company.contacts.count }}
+                        </a>
+                    </td>
                     <td>
                         {% for industry in s.company.industries.all %}
                             <a href="{% modify_get inline_search_links industry.name %}" class="tag tag-{{ industry.color }}" title="Filter by this industry">

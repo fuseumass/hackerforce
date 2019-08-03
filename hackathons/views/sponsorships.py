@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Q
+from django.db.models import Count, Q
 from ..models import Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
@@ -28,7 +28,7 @@ def sponsorships_show(request, h_pk):
         return request.GET["q"] if request.GET.get("q") else request.GET.get(f"{name}_q")
     
     def sponsorship_wrapper(name, states):
-        obj = state_filter(states)
+        obj = state_filter(states).annotate(company__contacts__count=Count('company__contacts'))
         q = get_q(name)
         q_rules = lambda q: Q(company__name__icontains=q) | Q(company__industries__name__iexact=q) | Q(status__iexact=q) | Q(perks__name__iexact=q) | Q(tier__name__iexact=q)
         if q:
