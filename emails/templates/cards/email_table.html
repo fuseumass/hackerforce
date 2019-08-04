@@ -1,0 +1,41 @@
+{% load order_by %}
+<table class="table card-table table-vcenter text-nowrap">
+    {% if emails %}
+    <thead>
+        <tr>
+            <th><a href="{% order_by 'internal_title' %}">Internal Title</a></th>
+            <th><a href="{% order_by 'subject' %}">Subject</a></th>
+            <th><a href="#">Status</a></th>
+            <th><a href="{% order_by 'last_update' %}">Last Update</a></th>
+            <th></th>
+        </tr>
+    </thead>
+    {% endif %}
+    <tbody>
+        {% for email in emails %}
+        <tr>
+            <td><a href="{% url 'emails:view' h.pk email.pk %}" class="text-inherit">
+                <b>{{ email.internal_title }}</b>
+            </a></td>
+            <td><a href="{% url 'emails:view' h.pk email.pk %}" class="text-inherit">
+                {{ email.subject }}
+            </a></td>
+            <td>
+                {% include "cards/email_status.html" %}
+            </td>
+            <td>
+                {{ email.last_update }}
+            </td>
+            <td>
+                <a class="icon" href="{% url 'emails:edit' h.pk email.pk %}">
+                    <i class="fe fe-edit"></i>
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan=5>No emails to display.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

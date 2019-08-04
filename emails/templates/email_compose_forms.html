@@ -6,3 +6,22 @@
     <code>{% verbatim %}{{ contact.first_name }} {{ contact.last_name }} {{ company.name }}{% endverbatim %}</code>
 </div>
 {% endblock %}
+
+{% block formheader %}
+{{ block.super }}
+{% if existing %}
+<div class="col text-right">
+    <a class="button" href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url 'emails:view' h.pk existing.pk %}{% endif %}">
+        <button class="btn btn-primary ml-auto" type="button">Back</button>
+    </a>
+    &nbsp;
+    <a class="button" href="{% url 'emails:change_type' h.pk existing.pk %}">
+        <button class="btn btn-primary ml-auto" type="button">Change Type</button>
+    </a>
+    &nbsp;
+    <a class="button" href="{% url 'emails:delete' h.pk existing.pk %}">
+        <button class="btn btn-danger ml-auto" type="button">Delete</button>
+    </a>
+</div>
+{% endif %}
+{% endblock %}

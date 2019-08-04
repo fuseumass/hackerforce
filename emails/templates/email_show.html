@@ -1,0 +1,45 @@
+{% extends 'global/base.html' %}
+
+{% block basetitle %}
+    <title>Draft Emails</title>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <a href="{% url 'emails:compose' h.pk %}" class="button">
+            <button class="btn btn-primary" type="button">Compose Email</button>
+        </a>
+    {% if request.GET.urlencode|length > 1 %}
+        &nbsp; 
+        <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
+    {% endif %}
+    </div>
+    <div class="col-md-4 ml-auto">
+        <form action="{% url 'emails:show' h.pk %}" method="GET">
+            <div class="row gutters-xs">
+                <div class="col">
+                    <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
+                </div>
+                <span class="col-auto">
+                    <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="my-3 my-md-5">
+    <div class="container">
+        {% with card_title="Drafts" emails=drafts %}
+            {% include "cards/email_card.html" %}
+        {% endwith %}
+        
+        {% with card_title="Scheduled" emails=scheduled %}
+            {% include "cards/email_card.html" %}
+        {% endwith %}
+
+        {% with card_title="Sent" emails=sent %}
+            {% include "cards/email_card.html" %}
+        {% endwith %}
+    </div>
+</div>
+{% endblock %}

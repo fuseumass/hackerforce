@@ -201,3 +201,10 @@ class ComposeFromIndustryForm(forms.ModelForm):
     class Meta:
         model = Email
         fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'subject', 'body')
+
+class EmailChangeTypeForm(forms.Form):
+    TYPE_CHOICES = ((Email.FROM_CONTACTS, "From contacts"), (Email.FROM_COMPANY, "From company"), (Email.FROM_INDUSTRY, "From industry"))
+    new_type = forms.ChoiceField(choices=TYPE_CHOICES)
+
+    class Meta:
+        fields = ('new_type',)

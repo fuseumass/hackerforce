@@ -57,6 +57,19 @@ class Email(models.Model):
             return self.FROM_COMPANY
         else:
             return self.FROM_INDUSTRY
+    
+    def clear_current_type(self):
+        if self.email_type == self.FROM_CONTACTS:
+            self.to_contacts.clear()
+        elif self.email_type == self.FROM_COMPANY:
+            self.to_companies.clear()
+            self.primary_selection = None
+            self.contacted_selection = None
+        elif self.email_type == self.FROM_INDUSTRY:
+            self.primary_selection = None
+            self.contacted_selection = None
+            self.size_selection = None
+            self.to_industries.clear()            
 
     def get_leads_and_contacts(self):
         if self.email_type == self.FROM_CONTACTS:
@@ -137,9 +150,6 @@ class Email(models.Model):
 
             if not contacted_zero_times and not contacted_1plus_times:
                 times_contacted = Q()
-            
-            print("times_contacted:", times_contacted)
-            print("primary", primary)
             
             sizes = self.size_selection
             if not sizes:

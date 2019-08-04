@@ -69,24 +69,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" data-toggle="dropdown" class="nav-link
+                        <a href="{% url 'emails:show' h.pk %}" class="nav-link
                         {% if 'email' in request.path %} nav-selected{% endif %}
                         ">
                             <i class="fe fe-mail"></i>
                             Email
                         </a>
-                        <div class="dropdown-menu dropdown-menu-universe dropdown-menu-arrow">
-                            <a class="dropdown-item" href="{% url 'emails:compose' h.pk %}">
-                                <i class="dropdown-icon fe fe-plus"></i> New Email
-                            </a>
-                            <a class="dropdown-item" href="{% url 'emails:drafts' h.pk %}" class="nav-link">
-                                <i class="fe fe-mail"></i>
-                                Drafts
-                            </a>
-                            <a class="dropdown-item" href="{% url 'emails:sent' h.pk %}">
-                                <i class="dropdown-icon fe fe-send"></i> Sent
-                            </a>
-                        </div>
                     </li>
 
                     <li class="nav-item">

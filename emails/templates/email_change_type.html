@@ -1,0 +1,20 @@
+{% extends 'global/forms.html' %}
+{% block basetitle %}
+    <title>Change Email Type</title>
+{% endblock %}
+
+{% block title %}
+Change Email Type
+{% endblock %}
+
+{% block formbodyheader %}
+<p>Current type: {{ email.email_type }}</p>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+requireSelect2(function() {
+    $("#id_new_type").select2();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,9 @@
+<span style="white-space: nowrap">
+    {% if email.status == 'draft' %}
+        <span class="status-icon bg-indigo"></span> Draft
+    {% elif email.status == 'scheduled' %}
+        <span class="status-icon bg-orange"></span> Scheduled
+    {% elif email.status == 'sent' %}
+        <span class="status-icon bg-green"></span> Sent
+    {% endif %}
+</span>

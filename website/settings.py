@@ -39,6 +39,10 @@ DEBUG = bool_environ('DEBUG')
 # TODO: set to False when emails are working
 AUTO_ACTIVATE_ACCOUNTS = True
 
+FROM_EMAIL = "HackUMass <sponsorship@hackumass.com>"
+BCC_EMAIL = "HackUMass <hackerforce-bcc@hackumass.com>"
+REPLY_TO_EMAIL = "HackUMass <sponsorship@hackumass.com>"
+
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
 
@@ -190,7 +194,18 @@ STATICFILES_STORAGE = 'shared.storage.CompressedManifestStaticFilesStorage'
 django_heroku.settings(locals())
 
 # Email thing
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if 'SENDGRID_API_KEY' in os.environ:
+    SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_USER = 'apikey'
+    EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+else:
+    print("WARNING: No email backend configured.")
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # EMAIL_HOST = "TODO: email host"
 # EMAIL_HOST_USER = "TODO: email host user"
