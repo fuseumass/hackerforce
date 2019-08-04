@@ -112,7 +112,8 @@
             </th>
             <td>
               {% for c in email.to_companies.all %}
-                {{ c }}{% if not forloop.last %}, {% endif %}
+                <a href="{% url 'hackathons:sponsorships:view' h.pk c.pk %}">
+                  {{ c }}</a>{% if not forloop.last %}, {% endif %}
               {% endfor %}
             </td>
           </tr>
@@ -146,6 +147,8 @@
             <td>
               {% for p in email.primary_selection %}
                 {% if p == 'P' %}Primary{% elif p == 'NP' %}Not Primary{% endif %}{% if not forloop.last %}, {% endif %}
+              {% empty %}
+                Any
               {% endfor %}
             </td>
           </tr>
@@ -160,6 +163,8 @@
                 Contacted 1x{% elif c == 'C2' %}
                 Contacted 2x{% elif c == 'C3' %}
                 Contacted 3x or more{% endif %}{% if not forloop.last %}, {% endif %}
+              {% empty %}
+                Any
               {% endfor %}
             </td>
           </tr>

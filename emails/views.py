@@ -131,18 +131,30 @@ def compose_from_contacts(request, h_pk):
 @login_required
 def compose_from_company(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
+    existing_pk = request.GET.get("pk")
+    existing = get_object_or_404(Email, pk=existing_pk) if existing_pk else None
     if request.method == "POST":
-        form = ComposeFromCompanyForm(request.POST)
+        if existing_pk:
+            form = ComposeFromCompanyForm(request.POST, instance=existing)
+        else:
+            form = ComposeFromCompanyForm(request.POST)
         if form.is_valid():
             email = form.save(commit=False)
             email.hackathon = hackathon
-            email.status = 'draft'
+            if not existing_pk:
+                email.status = 'draft'
             email.save()
             email.to_companies.set(form.cleaned_data["to_companies"])
             email.save()
-            messages.success(
-                request, f"Created email with subject: {email.subject}")
-            return redirect("emails:drafts", h_pk=h_pk)
+            if existing_pk:
+                messages.success(
+                request, f"Updated email: {email.internal_title}")
+            else:
+                messages.success(
+                    request, f"Created email: {email.internal_title}")
+            return redirect("emails:view", h_pk=h_pk, pk=email.pk)
+    elif existing_pk:
+        form = ComposeFromCompanyForm(instance=existing)
     else:
         form = ComposeFromCompanyForm()
     return render(request, "email_compose_from_company.html", {"form": form})

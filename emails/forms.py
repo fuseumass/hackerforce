@@ -81,7 +81,7 @@ class ComposeFromCompanyForm(forms.ModelForm):
     primary_selection = MultiSelectFormField(
         label="Which are:",
         help_text="Primary status (ignored if unset)",
-        required=True,
+        required=False,
         choices=(Email.PRIMARY_CHOICES),
         widget=forms.SelectMultiple(
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": ""}
@@ -91,7 +91,7 @@ class ComposeFromCompanyForm(forms.ModelForm):
     contacted_selection = MultiSelectFormField(
         label="Which have been:",
         help_text="Contacted this many times (ignored if unset)",
-        required=True,
+        required=False,
         choices=(Email.CONTACTED_CHOICES),
         widget=forms.SelectMultiple(
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": ""}
@@ -137,7 +137,7 @@ class ComposeFromIndustryForm(forms.ModelForm):
 
     to_industries = forms.ModelMultipleChoiceField(
         label="With industries:",
-        help_text="Company industries (ignored if unset) AND",
+        help_text="Company industries AND",
         required=True,
         queryset=Industry.objects.all(),
         widget=forms.SelectMultiple(

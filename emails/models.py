@@ -70,11 +70,15 @@ class Email(models.Model):
             #  * times contacted (all options OR'd, ignored if unset)
             #  * contact's primary status in their company (all options OR'd, ignored if unset)
             primary = [True if s == 'P' else False for s in self.primary_selection]
+            if not primary:
+                primary = [True, False]
 
             times_contacted = Q(times_contacted=-1)
             contacted_zero_times = False
             contacted_1plus_times = False
+            empty_contacted_field = True
             for c in self.contacted_selection:
+                empty_contacted_field = False
                 if c == 'U':
                     contacted_zero_times = True
                 else:
@@ -88,6 +92,9 @@ class Email(models.Model):
 
             if not contacted_zero_times and not contacted_1plus_times:
                 times_contacted = Q()
+            
+            if empty_contacted_field:
+                times_contacted = Q()
 
             leads = Lead.objects.filter((Q(sponsorship__hackathon=self.hackathon) & \
                 Q(contact__company__in=self.to_companies.all()) & \
@@ -96,7 +103,7 @@ class Email(models.Model):
             
             
             without_leads = Contact.objects.none()
-            if contacted_zero_times:
+            if contacted_zero_times or empty_contacted_field:
                 without_leads = Contact.objects.exclude(leads__sponsorship__hackathon=self.hackathon).filter(
                     Q(company__in=self.to_companies.all()) & \
                     Q(primary__in=primary))
@@ -108,6 +115,8 @@ class Email(models.Model):
             #  * contact's number of times contacted (all options OR'd, ignored if unset)
             #  * contact's primary status in their company (all options OR'd, ignored if unset)
             primary = [True if s == 'P' else False for s in self.primary_selection]
+            if not primary:
+                primary = [True, False, None]
 
             times_contacted = Q(times_contacted=-1)
             contacted_zero_times = False
@@ -141,10 +150,9 @@ class Email(models.Model):
             without_leads = Contact.objects.none()
             if contacted_zero_times or empty_contacted_field:
                 without_leads = Contact.objects.exclude(leads__sponsorship__hackathon=self.hackathon).filter(
-                    Q(company__industries__in=self.to_industries.all()) |
-                    Q(company__size__in=self.size_selection) |
-                    Q(primary__in=primary)
-                )
+                    Q(company__industries__in=self.to_industries.all()) & \
+                    Q(company__size__in=self.size_selection) & \
+                    Q(primary__in=primary))
             
             return leads, without_leads
     
