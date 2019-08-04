@@ -21,6 +21,9 @@ def emails(request, h_pk):
 
 @login_required
 def email_detail(request, h_pk, pk):
+    return render(request, "email_detail.html", email_detail_context(request, h_pk, pk))
+
+def email_detail_context(request, h_pk, pk):
     email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
@@ -35,19 +38,37 @@ def email_detail(request, h_pk, pk):
 
     uses_context = ("{" + "{") in email.body
 
-    return render(request, "email_detail_view.html", {
+    return {
         "email": email,
         "hackathon": hackathon,
         "contacts": contacts,
         "companies": companies,
         "uses_context": uses_context,
-    })
+    }
 
 @login_required
 def email_edit(request, h_pk, pk):
     email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
-    if email.email_type == Email.FROM_INDUSTRY:
-        return redirect(reverse("emails:compose_from_industry", args=(h_pk,))+f"?pk={email.pk}")
+    
+    if email.email_type == Email.FROM_CONTACTS:
+        route = "emails:compose_from_contacts"
+    elif email.email_type == Email.FROM_COMPANY:
+        route = "emails:compose_from_company"
+    elif email.email_type == Email.FROM_INDUSTRY:
+        route = "emails:compose_from_industry"
+
+    return redirect(reverse(route, args=(h_pk,))+f"?pk={email.pk}")
+
+
+@login_required
+def email_delete(request, h_pk, pk):
+    email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
+
+    if request.method == "POST" and request.POST.get("delete") == "yes":
+        email.delete()
+        messages.success(request, f"Deleted {email}")
+        return redirect("emails:drafts")
+    return render(request, "email_delete.html", email_detail_context(request, h_pk, pk))
 
 
 @login_required
@@ -111,21 +132,33 @@ def sent(request, h_pk):
 @login_required
 def compose_from_contacts(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
+    existing_pk = request.GET.get("pk")
+    existing = get_object_or_404(Email, pk=existing_pk) if existing_pk else None
     if request.method == "POST":
-        form = ComposeFromContactsForm(request.POST)
+        if existing_pk:
+            form = ComposeFromContactsForm(request.POST, instance=existing)
+        else:
+            form = ComposeFromContactsForm(request.POST)
         if form.is_valid():
             email = form.save(commit=False)
             email.hackathon = hackathon
-            email.status = 'draft'
+            if not existing_pk:
+                email.status = 'draft'
             email.save()
             email.to_contacts.set(form.cleaned_data["to_contacts"])
             email.save()
-            messages.success(
-                request, f"Created email with subject: {email.subject}")
+            if existing_pk:
+                messages.success(
+                request, f"Updated email: {email.internal_title}")
+            else:
+                messages.success(
+                    request, f"Created email: {email.internal_title}")
             return redirect("emails:view", h_pk=h_pk, pk=email.pk)
+    elif existing_pk:
+        form = ComposeFromContactsForm(instance=existing)
     else:
         form = ComposeFromContactsForm()
-    return render(request, "email_compose_from_contacts.html", {"form": form})
+    return render(request, "email_compose_from_contacts.html", {"form": form, "existing": existing})
 
 
 @login_required
@@ -157,7 +190,7 @@ def compose_from_company(request, h_pk):
         form = ComposeFromCompanyForm(instance=existing)
     else:
         form = ComposeFromCompanyForm()
-    return render(request, "email_compose_from_company.html", {"form": form})
+    return render(request, "email_compose_from_company.html", {"form": form, "existing": existing})
 
 
 @login_required

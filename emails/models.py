@@ -13,7 +13,7 @@ class Email(models.Model):
     """Object representing an Email."""
     STATUS_CHOICES = [("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")]
     CONTACTED_CHOICES = [("U", "Uncontacted"), ("C1", "Contacted 1x"), ("C2", "Contacted 2x"), ("C3", "Contacted 3x or more")]
-    SIZE_CHOICES = [("S", "Small"), ("M", "Medium"), ("L", "Large")]
+    SIZE_CHOICES = Company.SIZES
     PRIMARY_CHOICES = [("P", "Primary"), ("NP", "Not-Primary")]
 
     hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE, related_name="emails")
@@ -116,7 +116,7 @@ class Email(models.Model):
             #  * contact's primary status in their company (all options OR'd, ignored if unset)
             primary = [True if s == 'P' else False for s in self.primary_selection]
             if not primary:
-                primary = [True, False, None]
+                primary = [True, False]
 
             times_contacted = Q(times_contacted=-1)
             contacted_zero_times = False
@@ -140,18 +140,22 @@ class Email(models.Model):
             
             print("times_contacted:", times_contacted)
             print("primary", primary)
+            
+            sizes = self.size_selection
+            if not sizes:
+                sizes = dict(Company.SIZES).keys()
 
             leads = Lead.objects.filter(Q(sponsorship__hackathon=self.hackathon) &
                 times_contacted & \
                 Q(contact__company__industries__in=self.to_industries.all()) & \
-                Q(contact__company__size__in=self.size_selection) & \
+                Q(contact__company__size__in=sizes) & \
                 Q(contact__primary__in=primary))
             
             without_leads = Contact.objects.none()
             if contacted_zero_times or empty_contacted_field:
                 without_leads = Contact.objects.exclude(leads__sponsorship__hackathon=self.hackathon).filter(
                     Q(company__industries__in=self.to_industries.all()) & \
-                    Q(company__size__in=self.size_selection) & \
+                    Q(company__size__in=sizes) & \
                     Q(primary__in=primary))
             
             return leads, without_leads

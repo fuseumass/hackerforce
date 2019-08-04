@@ -136,6 +136,8 @@
             <td>
               {% for s in email.size_selection %}
                 {{ s }}{% if not forloop.last %}, {% endif %}
+              {% empty %}
+                Any
               {% endfor %}
             </td>
           </tr>
