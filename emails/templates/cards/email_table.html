@@ -6,7 +6,11 @@
             <th><a href="{% order_by 'internal_title' %}">Internal Title</a></th>
             <th><a href="{% order_by 'subject' %}">Subject</a></th>
             <th><a href="#">Status</a></th>
-            <th><a href="{% order_by 'last_update' %}">Last Update</a></th>
+            {% if sent %}
+                <th><a href="{% order_by 'time_sent' %}">Sent At</a></th>
+            {% else %}
+                <th><a href="{% order_by 'last_update' %}">Last Update</a></th>
+            {% endif %}
             <th></th>
         </tr>
     </thead>
@@ -24,7 +28,11 @@
                 {% include "cards/email_status.html" %}
             </td>
             <td>
-                {{ email.last_update }}
+                {% if sent %}
+                    {{ email.time_sent }}
+                {% else %}
+                    {{ email.last_update }}
+                {% endif %}
             </td>
             <td>
                 <a class="icon" href="{% url 'emails:edit' h.pk email.pk %}">

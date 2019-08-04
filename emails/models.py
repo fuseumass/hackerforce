@@ -38,12 +38,8 @@ class Email(models.Model):
 
     sent_contacts = models.ManyToManyField(Contact, blank=True, related_name="emails_sent")
 
-    time_scheduled = models.DateTimeField(
-        default=timezone.now, auto_now_add=False, blank=True
-    )
-    time_sent = models.DateTimeField(
-        default=timezone.now, auto_now_add=False, blank=True
-    )
+    time_scheduled = models.DateTimeField(blank=True)
+    time_sent = models.DateTimeField(blank=True)
 
     last_update = models.DateTimeField(auto_now_add=True, blank=True)
 

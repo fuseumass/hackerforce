@@ -32,12 +32,12 @@
         {% with card_title="Drafts" emails=drafts %}
             {% include "cards/email_card.html" %}
         {% endwith %}
-        
+
         {% with card_title="Scheduled" emails=scheduled %}
             {% include "cards/email_card.html" %}
         {% endwith %}
 
-        {% with card_title="Sent" emails=sent %}
+        {% with card_title="Sent" emails=sent sent=1 %}
             {% include "cards/email_card.html" %}
         {% endwith %}
     </div>

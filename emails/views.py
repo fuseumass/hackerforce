@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.utils import timezone
 
 from contacts.models import Contact
 from companies.models import Company
@@ -110,11 +111,13 @@ def email_duplicate(request, h_pk, pk):
         if request.POST.get("copy_filters"):
             email.populate_settable_m2m_from(old_email)
             email.save()
+            with_msg = "with filters"
         else:
             for c in old_email.sent_contacts.all():
                 email.to_contacts.add(c)
             email.save()
-        messages.success(request, f"Copied {email}. You can now modify the new email or change its type.")
+            with_msg = "with contacts data"
+        messages.success(request, f"Copied {email} {with_msg}. You can now modify the new email or change its type.")
         return redirect("emails:edit", h_pk=h_pk, pk=email.pk)
     return render(request, "email_duplicate.html", email_detail_context(request, h_pk, pk))
 
@@ -172,6 +175,7 @@ def send_message(request, h_pk, pk):
             lead.save()
 
         email.status = Email.SENT
+        email.time_sent = timezone.now()
         email.save()
         num = len(contacts)
         messages.success(request, f"Sent email to {num} contacts. Created {new_sps} new sponsorships and {new_leads} new leads.")
