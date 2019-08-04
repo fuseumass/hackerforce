@@ -39,9 +39,9 @@ DEBUG = bool_environ('DEBUG')
 # TODO: set to False when emails are working
 AUTO_ACTIVATE_ACCOUNTS = True
 
-FROM_EMAIL = "HackUMass <sponsorship@hackumass.com>"
+FROM_EMAIL = "HackUMass <sponsors@hackumass.com>"
 BCC_EMAIL = "HackUMass <hackerforce-bcc@hackumass.com>"
-REPLY_TO_EMAIL = "HackUMass <sponsorship@hackumass.com>"
+REPLY_TO_EMAIL = "HackUMass <sponsors@hackumass.com>"
 
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
