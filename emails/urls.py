@@ -10,6 +10,7 @@ urlpatterns = [
     path("h/<int:h_pk>/emails/<int:pk>/send", views.send_message, name="send"),
     path("h/<int:h_pk>/emails/<int:pk>/edit", views.email_edit, name="edit"),
     path("h/<int:h_pk>/emails/<int:pk>/change_type", views.email_change_type, name="change_type"),
+    path("h/<int:h_pk>/emails/<int:pk>/duplicate", views.email_duplicate, name="duplicate"),
     path("h/<int:h_pk>/emails/<int:pk>/delete", views.email_delete, name="delete"),
     path("h/<int:h_pk>/emails", views.show, name="show"),
     path("h/<int:h_pk>/emails/sent", views.sent, name="sent"),

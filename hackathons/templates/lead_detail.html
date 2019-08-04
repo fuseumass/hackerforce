@@ -151,6 +151,20 @@
             </div>
         </div>
     {% endif %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Sent Emails</h2>
+        </div>
+        <div class="card-body">
+            {% if emails %}
+                {% include "cards/email_table.html" %}
+            {% else %}
+                No emails to display.
+            {% endif %}
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <h2 class="card-title">Other Company Contacts</h2>

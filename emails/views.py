@@ -8,7 +8,7 @@ from django.db.models import Q
 from contacts.models import Contact
 from companies.models import Company
 from emails.sending import send_email_now
-from hackathons.models import Hackathon
+from hackathons.models import Hackathon, Sponsorship, Lead
 from hackathons.views.sponsorships import combine_lead_and_contacts
 
 from .models import Email
@@ -39,6 +39,14 @@ def email_detail_context(request, h_pk, pk):
         hackathon__pk=h_pk).first()} for c in Company.objects.filter(pk__in=company_ids)]
 
     uses_context = ("{" + "{") in email.body
+
+    if email.status == Email.SENT:
+        sent_companies = Company.objects.filter(pk__in=email.sent_contacts.values_list("company__pk", flat=True))
+        companies = [{"company": c, "sponsorship": c.sponsorships.filter(hackathon__pk=h_pk).first()} for c in sent_companies]
+
+        lead_pks = set(Lead.objects.filter(sponsorship__hackathon__pk=h_pk, contact__in=email.sent_contacts.all()).values_list("contact__pk", flat=True))
+        contact_pks = set(email.sent_contacts.values_list("pk", flat=True)) - lead_pks
+        contacts = combine_lead_and_contacts(lead_pks, contact_pks)
 
     return {
         "email": email,
@@ -89,6 +97,26 @@ def email_delete(request, h_pk, pk):
         return redirect("emails:show", h_pk=h_pk)
     return render(request, "email_delete.html", email_detail_context(request, h_pk, pk))
 
+@login_required
+def email_duplicate(request, h_pk, pk):
+    old_email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
+    email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
+
+    if request.method == "POST" and request.POST.get("duplicate") == "yes":
+        email.pk = None
+        email.internal_title += " (Copy)"
+        email.status = Email.DRAFT
+        email.save()
+        if request.POST.get("copy_filters"):
+            email.populate_settable_m2m_from(old_email)
+            email.save()
+        else:
+            for c in old_email.sent_contacts.all():
+                email.to_contacts.add(c)
+            email.save()
+        messages.success(request, f"Copied {email}. You can now modify the new email or change its type.")
+        return redirect("emails:edit", h_pk=h_pk, pk=email.pk)
+    return render(request, "email_duplicate.html", email_detail_context(request, h_pk, pk))
 
 @login_required
 def render_message(request, h_pk, pk):
@@ -118,18 +146,35 @@ def send_message(request, h_pk, pk):
         "contact__pk", flat=True), non_leads.values_list("pk", flat=True))
 
     if request.method == "POST" and request.POST.get("send_now") == "yes":
-        
-        
+        new_sps = 0
+        new_leads = 0
         for c in contacts:
             contact = c['contact']
             message = email.render_body(contact)
             print(f"SENDING: {email.subject} TO: {contact} ({contact.email})")
             print(send_email_now(email.subject, message, contact.email))
+            email.sent_contacts.add(contact)
 
-        
+            sponsorship = Sponsorship.objects.filter(hackathon__pk=h_pk, company=contact.company)
+            if sponsorship.exists():
+                sponsorship = sponsorship.first()
+            else:
+                sponsorship = promote_to_sponsorship(h_pk, contact.company)
+                new_sps += 1
+            
+            lead = Lead.objects.filter(sponsorship=sponsorship, contact=contact)
+            if lead.exists():
+                lead = lead.first()
+                lead.times_contacted += 1
+            else:
+                lead = promote_to_lead(sponsorship, contact)
+                new_leads += 1
+            lead.save()
+
+        email.status = Email.SENT
+        email.save()
         num = len(contacts)
-
-        messages.success(request, f"Sent email to {num} contacts.")
+        messages.success(request, f"Sent email to {num} contacts. Created {new_sps} new sponsorships and {new_leads} new leads.")
         return redirect("emails:view", h_pk=h_pk, pk=pk)
 
     context = email_detail_context(request, h_pk, pk)
@@ -137,6 +182,19 @@ def send_message(request, h_pk, pk):
     context["num_recipients"] = len(contacts)
     return render(request, "email_send_message.html", context)
 
+def promote_to_sponsorship(h_pk, company):
+    return Sponsorship.objects.create(
+        hackathon=get_object_or_404(Hackathon, pk=pk),
+        company=company,
+        status=Sponsorship.CONTACTED
+    )
+
+def promote_to_lead(sponsorship, contact):
+    return Lead.objects.create(
+        sponsorship=sponsorship,
+        contact=contact,
+        status=Lead.CONTACTED
+    )
 
 @login_required
 def show(request, h_pk):

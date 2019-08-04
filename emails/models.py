@@ -12,6 +12,9 @@ from hackathons.models import Hackathon, Lead
 class Email(models.Model):
     """Object representing an Email."""
     STATUS_CHOICES = [("sent", "Sent"), ("draft", "Draft"), ("scheduled", "Scheduled")]
+    SENT = 'sent'
+    DRAFT = 'draft'
+    SCHEDULED = 'scheduled'
     CONTACTED_CHOICES = [("U", "Uncontacted"), ("C1", "Contacted 1x"), ("C2", "Contacted 2x"), ("C3", "Contacted 3x or more")]
     SIZE_CHOICES = Company.SIZES
     PRIMARY_CHOICES = [("P", "Primary"), ("NP", "Not-Primary")]
@@ -32,6 +35,8 @@ class Email(models.Model):
     body = models.TextField(help_text="Enter the message body")
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+
+    sent_contacts = models.ManyToManyField(Contact, blank=True, related_name="emails_sent")
 
     time_scheduled = models.DateTimeField(
         default=timezone.now, auto_now_add=False, blank=True
@@ -69,14 +74,31 @@ class Email(models.Model):
             self.primary_selection = None
             self.contacted_selection = None
             self.size_selection = None
-            self.to_industries.clear()            
+            self.to_industries.clear()
+    
+    def populate_settable_m2m_from(self, other):
+        for c in other.to_companies.all():
+            self.to_companies.add(c)
+        for c in other.to_contacts.all():
+            self.to_contacts.add(c)
+        for i in other.to_industries.all():
+            self.to_industries.add(i)
+
+    def _leads_and_contacts_from(self, contacts):
+        leads = Lead.objects.filter(contact__in=contacts.all(), sponsorship__hackathon=self.hackathon)
+        without_leads = contacts.exclude(leads__sponsorship__hackathon=self.hackathon)
+        return leads, without_leads
 
     def get_leads_and_contacts(self):
-        if self.email_type == self.FROM_CONTACTS:
+        if self.status == Email.SENT:
+            # When an email is sent, we persist the contacts which we sent the email
+            # to in a new field, and override get_leads_and_contacts.
+            return self._leads_and_contacts_from(self.sent_contacts)
+
+        elif self.email_type == self.FROM_CONTACTS:
             # FROM_CONTACTS: Returns the contacts/leads of the specified contacts
-            leads = Lead.objects.filter(contact__in=self.to_contacts.all(), sponsorship__hackathon=self.hackathon)
-            without_leads = self.to_contacts.exclude(leads__sponsorship__hackathon=self.hackathon)
-            return leads, without_leads
+            return self._leads_and_contacts_from(self.to_contacts)
+
         elif self.email_type == self.FROM_COMPANY:
             # FROM_COMPANY: AND of the following inputs:
             #  * companies which were entered (all options OR'd)

@@ -8,6 +8,7 @@ from ..models import Hackathon, Sponsorship, Lead
 from companies.models import Company
 from contacts.models import Contact
 from contacts.forms import ContactForm
+from emails.models import Email
 from ..forms import HackathonForm, LeadForm, SponsorshipMarkContactedForm, LeadMarkContactedForm
 
 @login_required
@@ -195,11 +196,14 @@ def lead_detail_context(request, h_pk, pk):
     contacts = [{"lead": lead, "contact": lead.contact} for lead in Lead.objects.filter(contact__id__in=lead_contacts)]
     contacts += [{"contact": contact} for contact in Contact.objects.filter(id__in=non_lead_contacts)]
 
+    emails = Email.objects.filter(sent_contacts=contact)
+
     return {
         "lead": lead,
         "contact": contact,
         "sponsorship": sponsorship,
-        "contacts": contacts
+        "contacts": contacts,
+        "emails": emails,
     }
 
 

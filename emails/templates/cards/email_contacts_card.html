@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">{{ title }}</h2>
+    </div>
+    <div class="card-body">
+        {% if uses_context %}
+            {% with show_company_name=1 view_action_button=1 email_render_pk=email.pk %}
+                {% include "cards/lead_contacts_combined_table.html" %}
+            {% endwith %}
+        {% else %}
+            {% with show_company_name=1 view_action_button=1 %}
+                {% include "cards/lead_contacts_combined_table.html" %}
+            {% endwith %}
+        {% endif %}
+    </div>
+</div>

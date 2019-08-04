@@ -12,9 +12,15 @@
         <button class="btn btn-primary ml-auto">Edit</button>
       </a> &nbsp;
 
-      <a class="button" href="{% url 'emails:send' h.pk email.pk %}">
-          <button class="btn btn-danger ml-auto">Send</button>
+      <a class="button" href="{% url 'emails:duplicate' h.pk email.pk %}">
+          <button class="btn btn-primary ml-auto">Make Copy</button>
+        </a> &nbsp;
+  
+      {% if email.status != 'sent' %}
+        <a class="button" href="{% url 'emails:send' h.pk email.pk %}">
+          <button class="btn btn-primary ml-auto">Send</button>
         </a>
+      {% endif %}
     </div>
   </div>
 
@@ -152,100 +158,31 @@
   </div>
   {% endif %}
 
-  {% if not email.to_companies.count and not email.to_contacts.count %}
-  <div class="card">
-    <div class="card-header">
-      <h2 class="card-title">Matched Companies</h2>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-          <table class="table card-table table-vcenter text-nowrap">
-              <thead>
-                  <tr>
-                      <th>Company</th>
-                      <th>Industries</th>
-                      <th>Size</th>
-                      <th>Tier</th>
-                      <th>Contribution</th>
-                      <th>Status</th>
-                      <th></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for c in companies %}
-                  <tr>
-                      <td><a href="{% url 'hackathons:sponsorships:view' h.pk c.company.pk %}" class="text-inherit">
-                          <b>{{ c.company }}</b>
-                      </a></td>
-                      <td>
-                      {% for i in c.company.industries.all %}
-                          <span class="tag tag-{{ i.color }}">{{ i.name }}</span>
-                      {% endfor %}
-                      </td>
-                      <td>
-                      {% if c.company.size == 'S' %}
-                          <span class="tag tag-green">S</span>
-                      {% endif %}
-                      {% if c.company.size == 'M' %}
-                          <span class="tag tag-yellow">M</span>
-                      {% endif %}
-                      {% if c.company.size == 'L' %}
-                          <span class="tag tag-red">L</span>
-                      {% endif %}
-                      </td>
-                      <td>
-                        {% if c.sponsorship %}
-                          {{ c.sponsorship.tier }}
-                        {% else %}
-                          None
-                        {% endif %}
-                      </td>
-                      <td>
-                        {% if c.sponsorship %}
-                          ${{ c.sponsorship.contribution|intcomma }}
-                        {% else %}
-                          None
-                        {% endif %}
-                      </td>
-                      <td>
-                          {% with sponsorship=c.sponsorship %}
-                              {% include "cards/sponsorship_status.html" %}
-                          {% endwith %}
-                      </td>
-                      <td>
-                          <a class="tag tag-green float-right" href="{% url 'hackathons:sponsorships:view' h.pk c.company.pk %}">
-                              View Company
-                          </a>
-                      </td>
-                  </tr>
-                  {% empty %}
-                  <tr><td colspan=6>
-                  No companies.
-                  </td></tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-      </div>
-    </div>
-  </div>
-  {% endif %}
+  {% if email.status == 'sent' %}
+    {% with title="Sent Companies" %}
+      {% include "cards/email_companies_card.html" %}
+    {% endwith %}
+
+    {% with title="Sent Contacts" %}
+      {% include "cards/email_contacts_card.html" %}
+    {% endwith %}
+  {% else %}
+    {% if not email.to_companies.count and not email.to_contacts.count %}
+      {% with title="Matched Companies" %}
+        {% include "cards/email_companies_card.html" %}
+      {% endwith %}
+    {% endif %}
   
-  <div class="card">
-      <div class="card-header">
-          <h2 class="card-title">{% if email.to_contacts.count %}Selected Contacts{% else %}Matched Contacts{% endif %}</h2>
-      </div>
-      <div class="card-body">
-        {% if uses_context %}
-          {% with show_company_name=1 view_action_button=1 email_render_pk=email.pk %}
-            {% include "cards/lead_contacts_combined_table.html" %}
-          {% endwith %}
-        {% else %}
-          {% with show_company_name=1 view_action_button=1 %}
-            {% include "cards/lead_contacts_combined_table.html" %}
-          {% endwith %}
-        {% endif %}
-      </div>
-  </div>
+    {% if email.to_contacts.count %}
+      {% with title="Selected Contacts" %}
+        {% include "cards/email_contacts_card.html" %}
+      {% endwith %}
+    {% else %}
+      {% with title="Matched Contacts" %}
+        {% include "cards/email_contacts_card.html" %}
+      {% endwith %}
+    {% endif %}
+  {% endif %}
 
 </div>
 {% endblock %}
