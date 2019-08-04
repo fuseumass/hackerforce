@@ -9,6 +9,15 @@ from shared.fields import GroupedModelMultiChoiceField
 
 class ComposeFromContactsForm(forms.ModelForm):
 
+    internal_title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Internal Title",
+            }
+        )
+    )
+
     to_contacts = GroupedModelMultiChoiceField(
         required=True,
         queryset=Contact.objects.order_by("company"),
@@ -21,7 +30,6 @@ class ComposeFromContactsForm(forms.ModelForm):
     )
 
     subject = forms.CharField(
-        max_length=50,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -44,38 +52,53 @@ class ComposeFromContactsForm(forms.ModelForm):
 
     class Meta:
         model = Email
-        fields = ('to_contacts', 'subject', 'body')
+        fields = ('internal_title', 'to_contacts', 'subject', 'body')
 
 class ComposeFromCompanyForm(forms.ModelForm):
 
+    internal_title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Internal Title",
+            }
+        )
+    )
+
     to_companies = forms.ModelMultipleChoiceField(
+        label="Send to:",
+        help_text="Contacts from these companies",
         required=True,
         queryset=Company.objects.all(),
         widget=forms.SelectMultiple(
             attrs={
                 "class": "col-sm-10",
+                "placeholder": "Companies list",
             }
         ),
     )
 
     primary_selection = MultiSelectFormField(
+        label="Which are:",
+        help_text="Primary status (ignored if unset)",
         required=True,
         choices=(Email.PRIMARY_CHOICES),
         widget=forms.SelectMultiple(
-            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "To Whom?"}
+            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": ""}
         ),
     )
 
     contacted_selection = MultiSelectFormField(
+        label="Which have been:",
+        help_text="Contacted this many times (ignored if unset)",
         required=True,
         choices=(Email.CONTACTED_CHOICES),
         widget=forms.SelectMultiple(
-            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "To Whom?"}
+            attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": ""}
         ),
     )
 
     subject = forms.CharField(
-        max_length=50,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -98,11 +121,23 @@ class ComposeFromCompanyForm(forms.ModelForm):
 
     class Meta:
         model = Email
-        fields = ('to_companies', 'primary_selection', 'contacted_selection', 'subject', 'body')
+        fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'subject', 'body')
 
 class ComposeFromIndustryForm(forms.ModelForm):
 
+    internal_title = forms.CharField(
+        help_text="Send emails to contacts at companies which match...",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Internal Title",
+            }
+        )
+    )
+
     to_industries = forms.ModelMultipleChoiceField(
+        label="With industries:",
+        help_text="Company industries (ignored if unset) AND",
         required=True,
         queryset=Industry.objects.all(),
         widget=forms.SelectMultiple(
@@ -113,7 +148,9 @@ class ComposeFromIndustryForm(forms.ModelForm):
     )
 
     size_selection = MultiSelectFormField(
-        required=True,
+        label="With size:",
+        help_text="Company size (ignored if unset) AND",
+        required=False,
         choices=(Email.SIZE_CHOICES),
         widget=forms.SelectMultiple(
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "To Whom?"}
@@ -121,7 +158,9 @@ class ComposeFromIndustryForm(forms.ModelForm):
     )
 
     primary_selection = MultiSelectFormField(
-        required=True,
+        label="Which are:",
+        help_text="Primary status (ignored if unset) AND",
+        required=False,
         choices=(Email.PRIMARY_CHOICES),
         widget=forms.SelectMultiple(
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "To Whom?"}
@@ -129,7 +168,9 @@ class ComposeFromIndustryForm(forms.ModelForm):
     )
 
     contacted_selection = MultiSelectFormField(
-        required=True,
+        label="Which have been:",
+        help_text="Contacted status (ignored if unset)",
+        required=False,
         choices=(Email.CONTACTED_CHOICES),
         widget=forms.SelectMultiple(
             attrs={"class": "custom-select col-md-6 col-lg-4", "placeholder": "To Whom?"}
@@ -137,7 +178,6 @@ class ComposeFromIndustryForm(forms.ModelForm):
     )
 
     subject = forms.CharField(
-        max_length=50,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -160,4 +200,4 @@ class ComposeFromIndustryForm(forms.ModelForm):
 
     class Meta:
         model = Email
-        fields = ('to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'subject', 'body')
+        fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'subject', 'body')

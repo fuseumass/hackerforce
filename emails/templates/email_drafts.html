@@ -26,22 +26,32 @@
             <table class="table card-table table-vcenter text-nowrap">
                 <thead>
                     <tr>
+                        <th><a href="{% order_by 'internal_title' %}">Internal Title</a></th>
                         <th><a href="{% order_by 'subject' %}">Subject</a></th>
                         <th><a href="#">Type</a></th>
                         <th><a href="{% order_by 'last_update' %}">Last Update</a></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for email in emails %}
                     <tr>
                         <td><a href="{% url 'emails:view' h.pk email.pk %}" class="text-inherit">
-                            <b>{{ email.subject }}</b>
+                            <b>{{ email.internal_title }}</b>
+                        </a></td>
+                        <td><a href="{% url 'emails:view' h.pk email.pk %}" class="text-inherit">
+                            {{ email.subject }}
                         </a></td>
                         <td>
                             {{ email.email_type }}
                         </td>
                         <td>
                             {{ email.last_update }}
+                        </td>
+                        <td>
+                            <a class="icon" href="{% url 'emails:edit' h.pk email.pk %}">
+                                <i class="fe fe-edit"></i>
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}

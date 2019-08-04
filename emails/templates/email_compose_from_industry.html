@@ -1,9 +1,9 @@
 {% extends 'email_compose_forms.html' %}
 {% block basetitle %}
-    <title>New Email</title>
+    <title>{% if existing %}Edit{% else %}New{% endif %} Email</title>
 {% endblock %}
 {% block title %}
-New Email From Industry
+{% if existing %}Edit{% else %}New{% endif %} Email From Industry
 {% endblock %}
 
 {% block js %}

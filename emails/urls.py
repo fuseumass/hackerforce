@@ -5,8 +5,9 @@ from . import views
 app_name = 'emails'
 
 urlpatterns = [
-    path("h/<int:h_pk>/emails/view/<int:pk>", views.email_detail, name="view"),
-    path("h/<int:h_pk>/emails/render/<int:pk>", views.render_message, name="render"),
+    path("h/<int:h_pk>/emails/<int:pk>", views.email_detail, name="view"),
+    path("h/<int:h_pk>/emails/<int:pk>/render", views.render_message, name="render"),
+    path("h/<int:h_pk>/emails/<int:pk>/edit", views.email_edit, name="edit"),
     path("h/<int:h_pk>/emails/drafts", views.drafts, name="drafts"),
     path("h/<int:h_pk>/emails/sent", views.sent, name="sent"),
     path("h/<int:h_pk>/emails/compose", views.emails, name="compose"),

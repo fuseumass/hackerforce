@@ -25,7 +25,9 @@ class Email(models.Model):
     size_selection = MultiSelectField(choices=SIZE_CHOICES, max_choices=3, blank=True)
     primary_selection = MultiSelectField(choices=PRIMARY_CHOICES, max_choices=2, blank=True)
 
-    subject = models.CharField(max_length=100, help_text="Enter an email subject")
+    internal_title = models.CharField(max_length=200, help_text="Enter an internal title for this email")
+
+    subject = models.CharField(max_length=200, help_text="Enter an email subject")
 
     body = models.TextField(help_text="Enter the message body")
 
@@ -58,10 +60,15 @@ class Email(models.Model):
 
     def get_leads_and_contacts(self):
         if self.email_type == self.FROM_CONTACTS:
+            # FROM_CONTACTS: Returns the contacts/leads of the specified contacts
             leads = Lead.objects.filter(contact__in=self.to_contacts.all(), sponsorship__hackathon=self.hackathon)
             without_leads = self.to_contacts.exclude(leads__sponsorship__hackathon=self.hackathon)
             return leads, without_leads
         elif self.email_type == self.FROM_COMPANY:
+            # FROM_COMPANY: AND of the following inputs:
+            #  * companies which were entered (all options OR'd)
+            #  * times contacted (all options OR'd, ignored if unset)
+            #  * contact's primary status in their company (all options OR'd, ignored if unset)
             primary = [True if s == 'P' else False for s in self.primary_selection]
 
             times_contacted = Q(times_contacted=-1)
@@ -77,7 +84,7 @@ class Email(models.Model):
                 elif c == 'C2':
                     times_contacted.add(Q(times_contacted=2), Q.OR)
                 elif c == 'C3':
-                    times_contacted.add(Q(times_contacted__geq=3), Q.OR)
+                    times_contacted.add(Q(times_contacted__gte=3), Q.OR)
 
             if not contacted_zero_times and not contacted_1plus_times:
                 times_contacted = Q()
@@ -96,12 +103,18 @@ class Email(models.Model):
             
             return leads, without_leads
         elif self.email_type == self.FROM_INDUSTRY:
+            # FROM_INDUSTRY: AND of the following inputs:
+            #  * company's industries (all options OR'd, ignored if unset)
+            #  * contact's number of times contacted (all options OR'd, ignored if unset)
+            #  * contact's primary status in their company (all options OR'd, ignored if unset)
             primary = [True if s == 'P' else False for s in self.primary_selection]
 
             times_contacted = Q(times_contacted=-1)
             contacted_zero_times = False
             contacted_1plus_times = False
+            empty_contacted_field = True
             for c in self.contacted_selection:
+                empty_contacted_field = False
                 if c == 'U':
                     contacted_zero_times = True
                 else:
@@ -111,23 +124,26 @@ class Email(models.Model):
                 elif c == 'C2':
                     times_contacted.add(Q(times_contacted=2), Q.OR)
                 elif c == 'C3':
-                    times_contacted.add(Q(times_contacted__geq=3), Q.OR)
+                    times_contacted.add(Q(times_contacted__gte=3), Q.OR)
 
             if not contacted_zero_times and not contacted_1plus_times:
                 times_contacted = Q()
+            
+            print("times_contacted:", times_contacted)
+            print("primary", primary)
 
-            leads = Lead.objects.filter(Q(sponsorship__hackathon=self.hackathon) & (
-                times_contacted | \
-                Q(contact__company__industries__in=self.to_industries.all()) | \
-                Q(contact__company__size__in=self.size_selection) | \
-                Q(contact__primary__in=primary)))
+            leads = Lead.objects.filter(Q(sponsorship__hackathon=self.hackathon) &
+                times_contacted & \
+                Q(contact__company__industries__in=self.to_industries.all()) & \
+                Q(contact__company__size__in=self.size_selection) & \
+                Q(contact__primary__in=primary))
             
             without_leads = Contact.objects.none()
-            if contacted_zero_times:
+            if contacted_zero_times or empty_contacted_field:
                 without_leads = Contact.objects.exclude(leads__sponsorship__hackathon=self.hackathon).filter(
-                    company__industries__in=self.to_industries.all(),
-                    company__size__in=self.size_selection,
-                    primary__in=primary
+                    Q(company__industries__in=self.to_industries.all()) |
+                    Q(company__size__in=self.size_selection) |
+                    Q(primary__in=primary)
                 )
             
             return leads, without_leads
@@ -146,4 +162,4 @@ class Email(models.Model):
 
     def __str__(self):
         """String for representing the Email Model"""
-        return self.subject
+        return f"{self.internal_title} ({self.subject})"

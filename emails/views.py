@@ -1,5 +1,5 @@
 from pprint import pformat
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -43,6 +43,12 @@ def email_detail(request, h_pk, pk):
         "uses_context": uses_context,
     })
 
+@login_required
+def email_edit(request, h_pk, pk):
+    email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
+    if email.email_type == Email.FROM_INDUSTRY:
+        return redirect(reverse("emails:compose_from_industry", args=(h_pk,))+f"?pk={email.pk}")
+
 
 @login_required
 def render_message(request, h_pk, pk):
@@ -64,11 +70,30 @@ def render_message(request, h_pk, pk):
 
 
 @login_required
+def send_message(request, h_pk, pk):
+    email = get_object_or_404(Email, hackathon__pk=h_pk, pk=pk)
+
+    leads, non_leads = email.get_leads_and_contacts()
+    contacts = combine_lead_and_contacts(leads.values_list(
+        "contact__pk", flat=True), non_leads.values_list("pk", flat=True))
+    
+    for c in contacts:
+        print("contact", c)
+        message = email.render_body(c.contact)
+        print("message:", message)
+
+    return render(request, "email_send_message.html", {
+        "email": email,
+        "contacts": contacts,
+    })
+
+
+@login_required
 def drafts(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
     emails = Email.objects.filter(hackathon=hackathon)
 
-    order_by = request.GET.get("order_by")
+    order_by = request.GET.get("order_by") or "internal_title"
     if order_by:
         emails = emails.order_by(*order_by.split(","))
 
@@ -126,18 +151,31 @@ def compose_from_company(request, h_pk):
 @login_required
 def compose_from_industry(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
+    existing_pk = request.GET.get("pk")
+    existing = get_object_or_404(Email, pk=existing_pk) if existing_pk else None
     if request.method == "POST":
-        form = ComposeFromIndustryForm(request.POST)
+        if existing_pk:
+            form = ComposeFromIndustryForm(request.POST, instance=existing)
+        else:
+            form = ComposeFromIndustryForm(request.POST)
         if form.is_valid():
             email = form.save(commit=False)
             email.hackathon = hackathon
-            email.status = 'draft'
+            if not existing_pk:
+                email.status = 'draft'
             email.save()
             email.to_industries.set(form.cleaned_data["to_industries"])
             email.save()
-            messages.success(
-                request, f"Created email with subject: {email.subject}")
-            return redirect("emails:drafts", h_pk=h_pk)
+            if existing_pk:
+                messages.success(
+                request, f"Updated email: {email.internal_title}")
+            else:
+                messages.success(
+                    request, f"Created email: {email.internal_title}")
+            return redirect("emails:view", h_pk=h_pk, pk=email.pk)
+    elif existing_pk:
+        form = ComposeFromIndustryForm(instance=existing)
     else:
         form = ComposeFromIndustryForm()
-    return render(request, "email_compose_from_industry.html", {"form": form})
+
+    return render(request, "email_compose_from_industry.html", {"form": form, "existing": existing})
