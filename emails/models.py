@@ -31,8 +31,8 @@ class Email(models.Model):
     internal_title = models.CharField(max_length=200, help_text="Enter an internal title for this email")
 
     subject = models.CharField(max_length=200, help_text="Enter an email subject")
-
     body = models.TextField(help_text="Enter the message body")
+    attach_packet = models.BooleanField(default=False, help_text="Whether the sponsorship packet should be attached")
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
 

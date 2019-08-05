@@ -52,7 +52,11 @@
             {{ email.email_type }}
           </p>
           <p>
-            <label><b>Status:</b> {% include "cards/email_status.html" %}</label>
+            {% if email.attach_packet %}
+            Sponsorship packet <b style="color: green">attached</b>
+            {% else %}
+            Sponsorship packet <b style="color: red">not attached</b>
+            {% endif %}
           </p>
           <p class="text-right">
             Last Updated: {{ email.last_update }}
