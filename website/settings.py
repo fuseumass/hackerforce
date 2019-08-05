@@ -207,6 +207,10 @@ if 'SENDGRID_API_KEY' in os.environ:
     EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
+elif 'AWS_ACCESS_KEY_ID' in os.environ:
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    EMAIL_BACKEND = 'django_ses.SESBackend'
 else:
     print("WARNING: No email backend configured.")
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
