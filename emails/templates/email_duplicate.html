@@ -28,7 +28,7 @@
             <input type="hidden" name="duplicate" value="yes" />
 
             {% if email.status == 'sent' %}
-            <span style="border: 2px solid red; padding: 5px 10px; border-radius: 5px">
+            <span style="background: rgba(255,0,0,0.5); padding: 5px 10px; border-radius: 5px">
                 <input type="checkbox" name="copy_filters" id="copy_filters" value="1" />
                 <label for="copy_filters">Copy the filters for this email instead of the sent contacts.</label><br />
                 IMPORTANT: The contacts which are matched by this filter may have changed since the email was sent.

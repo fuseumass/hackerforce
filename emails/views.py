@@ -1,10 +1,13 @@
 from pprint import pformat
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.conf import settings
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.utils import timezone
+
+import os
 
 from contacts.models import Contact
 from companies.models import Company
@@ -154,8 +157,12 @@ def send_message(request, h_pk, pk):
         for c in contacts:
             contact = c['contact']
             message = email.render_body(contact)
-            print(f"SENDING: {email.subject} TO: {contact} ({contact.email})")
-            print(send_email_now(email.subject, message, contact.email))
+            packet_file = None
+            if email.attach_packet:
+                packet_file = os.path.join(settings.PROJECT_ROOT, 'static', settings.SPONSORSHIP_PACKET_FILE)
+
+            print(f"SENDING: {email.subject} TO: {contact} ({contact.email}) ATTACHMENT: {packet_file}")
+            print(send_email_now(email.subject, message, contact.email, packet_file))
             email.sent_contacts.add(contact)
 
             sponsorship = Sponsorship.objects.filter(hackathon__pk=h_pk, company=contact.company)
@@ -184,6 +191,10 @@ def send_message(request, h_pk, pk):
     context = email_detail_context(request, h_pk, pk)
     context["contacts_to_send"] = contacts
     context["num_recipients"] = len(contacts)
+    try:
+        context["sponsorship_packet_file"] = settings.SPONSORSHIP_PACKET_FILE
+    except Exception:
+        messages.warning(request, "There is no sponsorship packet defined in settings!")
     return render(request, "email_send_message.html", context)
 
 def promote_to_sponsorship(h_pk, company):

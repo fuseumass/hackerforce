@@ -7,8 +7,7 @@ from ckeditor.widgets import CKEditorWidget
 
 from shared.fields import GroupedModelMultiChoiceField
 
-class ComposeFromContactsForm(forms.ModelForm):
-
+class ComposeBaseForm(forms.ModelForm):
     internal_title = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -18,6 +17,32 @@ class ComposeFromContactsForm(forms.ModelForm):
         )
     )
 
+    subject = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Subject",
+            }
+        ),
+    )
+
+    body = forms.CharField(
+        required=True,
+        widget=CKEditorWidget(
+            config_name = 'default',
+            attrs={"placeholder": "Body"}
+        ),
+    )
+
+    attach_packet = forms.BooleanField()
+
+    class Meta:
+        model = Email
+        fields = ('internal_title', 'subject', 'body', 'attach_packet',)
+
+
+class ComposeFromContactsForm(ComposeBaseForm):
     to_contacts = GroupedModelMultiChoiceField(
         required=True,
         queryset=Contact.objects.order_by("company"),
@@ -52,19 +77,9 @@ class ComposeFromContactsForm(forms.ModelForm):
 
     class Meta:
         model = Email
-        fields = ('internal_title', 'to_contacts', 'subject', 'body')
+        fields = ('internal_title', 'to_contacts', 'subject', 'body', 'attach_packet',)
 
 class ComposeFromCompanyForm(forms.ModelForm):
-
-    internal_title = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Internal Title",
-            }
-        )
-    )
-
     to_companies = forms.ModelMultipleChoiceField(
         label="Send to:",
         help_text="Contacts from these companies",
@@ -98,43 +113,11 @@ class ComposeFromCompanyForm(forms.ModelForm):
         ),
     )
 
-    subject = forms.CharField(
-        required=True,
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Subject",
-            }
-        ),
-    )
-
-    body = forms.CharField(
-        required=True,
-        widget=CKEditorWidget(
-            config_name = 'default',
-            attrs={"placeholder": "Body"}
-        ),
-    )
-
-    status = "draft"
-
-
     class Meta:
         model = Email
-        fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'subject', 'body')
+        fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'subject', 'body', 'attach_packet',)
 
-class ComposeFromIndustryForm(forms.ModelForm):
-
-    internal_title = forms.CharField(
-        help_text="Send emails to contacts at companies which match...",
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Internal Title",
-            }
-        )
-    )
-
+class ComposeFromIndustryForm(ComposeBaseForm):
     to_industries = forms.ModelMultipleChoiceField(
         label="With industries:",
         help_text="Company industries AND",
@@ -177,30 +160,9 @@ class ComposeFromIndustryForm(forms.ModelForm):
         ),
     )
 
-    subject = forms.CharField(
-        required=True,
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Subject",
-            }
-        ),
-    )
-
-    body = forms.CharField(
-        required=True,
-        widget=CKEditorWidget(
-            config_name = 'default',
-            attrs={"placeholder": "Body"}
-        ),
-    )
-
-    status = "draft"
-
-
     class Meta:
         model = Email
-        fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'subject', 'body')
+        fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'subject', 'body', 'attach_packet',)
 
 class EmailChangeTypeForm(forms.Form):
     TYPE_CHOICES = ((Email.FROM_CONTACTS, "From contacts"), (Email.FROM_COMPANY, "From company"), (Email.FROM_INDUSTRY, "From industry"))

@@ -43,6 +43,9 @@ FROM_EMAIL = "HackUMass <sponsors@hackumass.com>"
 BCC_EMAIL = "HackUMass <hackerforce-bcc@hackumass.com>"
 REPLY_TO_EMAIL = "HackUMass <sponsors@hackumass.com>"
 
+# The name of the sponsorship packet, stored in the website/static folder
+SPONSORSHIP_PACKET_FILE = "HackUMass_Sponsorship_Packet_2019.pdf"
+
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
 

@@ -24,6 +24,11 @@
             <li>{{ c.contact }} - {{ c.contact.email }}</li>
             {% endfor %}
         </ul>
+        {% if email.attach_packet %}
+            <p>The <a href="/static/{{ sponsorship_packet_file }}">sponsorship packet</a> will be attached to the message.</p>
+        {% else %}
+            <p>The sponsorship packet <b>WILL NOT BE ATTACHED TO THIS EMAIL.</p>
+        {% endif %}
 
         <form action="" method="POST" onsubmit="return confirm('This will send an email to {{ num_recipients }} recipients.')">
             {% csrf_token %}
