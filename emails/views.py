@@ -191,6 +191,9 @@ def send_message(request, h_pk, pk):
     context = email_detail_context(request, h_pk, pk)
     context["contacts_to_send"] = contacts
     context["num_recipients"] = len(contacts)
+    context["email_from"] = settings.FROM_EMAIL
+    context["email_bcc"] = settings.BCC_EMAIL
+    context["email_reply_to"] = settings.REPLY_TO_EMAIL
     try:
         context["sponsorship_packet_file"] = settings.SPONSORSHIP_PACKET_FILE
     except Exception:

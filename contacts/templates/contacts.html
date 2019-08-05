@@ -1,5 +1,6 @@
 {% extends 'global/base.html' %}
 {% load order_by %}
+{% load modify_get %}
 {% block basetitle %}
     <title>Contacts</title>
 {% endblock %}
@@ -67,7 +68,7 @@
         <div class="pagination">
             {% if contacts.has_previous %}
                 <div class="col text-left">
-                    <a href="?page={{ contacts.previous_page_number }}" class="button">
+                    <a href="{% modify_get 'page' contacts.previous_page_number %}" class="button">
                         <button type="button" class="btn btn-primary">&laquo; Previous</button>
                     </a>
                 </div>
@@ -79,7 +80,7 @@
 
             {% if contacts.has_next %}
                 <div class="col text-right">
-                    <a href="?page={{ contacts.next_page_number }}" class="button">
+                    <a href="{% modify_get 'page' contacts.next_page_number %}" class="button">
                         <button type="button" class="btn btn-primary">Next &raquo;</button>
                     </a>
                 </div>
