@@ -25,7 +25,7 @@ def companies(request):
     if order_by:
         companies = companies.order_by(*order_by.split(","))
 
-    paginator = Paginator(companies, 25)
+    paginator = Paginator(companies.distinct(), 25)
     page = request.GET.get("page")
     companies = paginator.get_page(page)
     return render(request, "companies.html", context={"companies": companies})

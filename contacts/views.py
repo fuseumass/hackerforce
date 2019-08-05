@@ -20,7 +20,7 @@ def contacts(request):
     if order_by:
         contacts = contacts.order_by(*order_by.split(","))
 
-    paginator = Paginator(contacts, 25)
+    paginator = Paginator(contacts.distinct(), 25)
     page = request.GET.get("page")
     contacts = paginator.get_page(page)
     return render(request, "contacts.html", {"contacts": contacts})
