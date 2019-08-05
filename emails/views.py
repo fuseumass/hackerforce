@@ -202,7 +202,7 @@ def send_message(request, h_pk, pk):
 
 def promote_to_sponsorship(h_pk, company):
     return Sponsorship.objects.create(
-        hackathon=get_object_or_404(Hackathon, pk=pk),
+        hackathon=get_object_or_404(Hackathon, pk=h_pk),
         company=company,
         status=Sponsorship.CONTACTED
     )
