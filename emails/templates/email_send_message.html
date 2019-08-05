@@ -16,6 +16,9 @@
         <b>Are you sure you want to send this message immediately to {{ num_recipients }} recipients?</b>
         </p>
 
+        <p>From: <b>{{ email_from }}</b></p>
+        <p>BCC: <b>{{ email_bcc }}</b></p>
+        <p>Reply To: <b>{{ email_reply_to }}</b></p>
         <p>Subject: <b>{{ email.subject }}</b></p>
         <p>Body: {{ email.body|truncatechars:100 }}</p>
         <p>Recipients:</p>

@@ -39,7 +39,7 @@ DEBUG = bool_environ('DEBUG')
 # TODO: set to False when emails are working
 AUTO_ACTIVATE_ACCOUNTS = True
 
-FROM_EMAIL = "HackUMass <sponsors@hackumass.com>"
+FROM_EMAIL = "Alexa Hirt <alexahirt@hackumass.com>"
 BCC_EMAIL = "HackUMass <hackerforce-bcc@hackumass.com>"
 REPLY_TO_EMAIL = "HackUMass <sponsors@hackumass.com>"
 

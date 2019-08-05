@@ -1,3 +1,4 @@
+{% load modify_get %}
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">{{ card_title }}</h3>
@@ -25,7 +26,7 @@
         <div class="pagination">
             {% if emails.has_previous %}
                 <div class="col text-left">
-                    <a href="?page={{ emails.previous_page_number }}" class="button">
+                    <a href="{% modify_get 'page' emails.previous_page_number %}" class="button">
                         <button type="button" class="btn btn-primary">&laquo; Previous</button>
                     </a>
                 </div>
@@ -37,7 +38,7 @@
 
             {% if emails.has_next %}
                 <div class="col text-right">
-                    <a href="?page={{ emails.next_page_number }}" class="button">
+                    <a href="{% modify_get 'page' emails.next_page_number %}" class="button">
                         <button type="button" class="btn btn-primary">Next &raquo;</button>
                     </a>
                 </div>
