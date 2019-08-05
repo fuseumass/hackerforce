@@ -35,7 +35,7 @@ class ComposeBaseForm(forms.ModelForm):
         ),
     )
 
-    attach_packet = forms.BooleanField()
+    attach_packet = forms.BooleanField(required=False)
 
     class Meta:
         model = Email
