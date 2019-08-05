@@ -55,7 +55,7 @@
                         </div>
                     </td>
                     <td>
-                        <a class="icon" href="{% url 'contacts:edit' contact.pk %}">
+                        <a class="icon" href="{% url 'contacts:edit' contact.pk %}?next={{ request.get_full_path|urlencode }}">
                             <i class="fe fe-edit"></i>
                         </a>
                     </td>
