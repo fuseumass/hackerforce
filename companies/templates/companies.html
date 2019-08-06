@@ -37,6 +37,7 @@
                         <th><a href="{% order_by 'name' %}">Name</a></th>
                         <th>Industries</th>
                         <th><a href="{% order_by 'size' %}">Size</a></th>
+                        <th><a href="{% order_by 'contacts__count' %}">Contacts</a></th>
                         <th><a href="{% order_by 'updated' %}">Updated</a></th>
                         <th></th>
                         <th></th>
@@ -66,6 +67,7 @@
                             <span class="tag tag-red">Large</span>
                             {% endif %}
                         </td>
+                        <td>{{ company.contacts.count }}</td>
                         <td> {{ company.updated }} </td>
                     <td class="text-right">
                             <div class="item-action dropdown">
