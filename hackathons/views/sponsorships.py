@@ -60,7 +60,7 @@ def sponsorships_show(request, h_pk):
     confirmed = sponsorship_wrapper("confirmed", [Sponsorship.CONFIRMED, Sponsorship.PAID])
     in_progress = sponsorship_wrapper("in_progress", [Sponsorship.CONTACTED, Sponsorship.RESPONDED])
     dead = sponsorship_wrapper("dead", [Sponsorship.GHOSTED, Sponsorship.DENIED])
-    uncontacted = company_wrapper("companies")
+    uncontacted = company_wrapper("uncontacted")
 
     return render(request, "sponsorships_show.html", {
         "confirmed": confirmed,
