@@ -13,3 +13,7 @@ a.button {
 .tag.tag-yellow {
     color: black;
 }
+.tag-brown {
+    background-color: brown;
+    color: #fff;
+}
