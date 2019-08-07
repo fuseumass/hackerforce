@@ -10,6 +10,9 @@ class Industry(models.Model):
         ("purple", "purple"),
         ("orange", "orange"),
         ("yellow", "yellow"),
+        ("red", "red"),
+        ("brown", "brown"),
+        ("pink", "pink"),
     )  # temp hack to color tags
 
     name = models.CharField(max_length=20)
