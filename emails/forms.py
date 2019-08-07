@@ -104,7 +104,7 @@ class ComposeFromCompanyForm(forms.ModelForm):
     )
 
     contacted_selection = MultiSelectFormField(
-        label="Which have been:",
+        label="With contacts who have been:",
         help_text="Contacted this many times (ignored if unset)",
         required=False,
         choices=(Email.CONTACTED_CHOICES),
@@ -113,15 +113,17 @@ class ComposeFromCompanyForm(forms.ModelForm):
         ),
     )
 
+    exclude_contacted_companies = forms.BooleanField(required=False)
+
     class Meta:
         model = Email
-        fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'subject', 'body', 'attach_packet',)
+        fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'exclude_contacted_companies', 'subject', 'body', 'attach_packet',)
 
 class ComposeFromIndustryForm(ComposeBaseForm):
     to_industries = forms.ModelMultipleChoiceField(
         label="With industries:",
-        help_text="Company industries AND",
-        required=True,
+        help_text="Company industries (ignored if unset) AND",
+        required=False,
         queryset=Industry.objects.all(),
         widget=forms.SelectMultiple(
             attrs={
@@ -151,8 +153,8 @@ class ComposeFromIndustryForm(ComposeBaseForm):
     )
 
     contacted_selection = MultiSelectFormField(
-        label="Which have been:",
-        help_text="Contacted status (ignored if unset)",
+        label="With contacts which have been:",
+        help_text="Contacted this many times (ignored if unset)",
         required=False,
         choices=(Email.CONTACTED_CHOICES),
         widget=forms.SelectMultiple(
@@ -160,9 +162,11 @@ class ComposeFromIndustryForm(ComposeBaseForm):
         ),
     )
 
+    exclude_contacted_companies = forms.BooleanField(required=False)
+
     class Meta:
         model = Email
-        fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'subject', 'body', 'attach_packet',)
+        fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'exclude_contacted_companies', 'subject', 'body', 'attach_packet',)
 
 class EmailChangeTypeForm(forms.Form):
     TYPE_CHOICES = ((Email.FROM_CONTACTS, "From contacts"), (Email.FROM_COMPANY, "From company"), (Email.FROM_INDUSTRY, "From industry"))

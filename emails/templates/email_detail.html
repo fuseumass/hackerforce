@@ -162,6 +162,18 @@
               {% endfor %}
             </td>
           </tr>
+          <tr>
+            <th>
+              With Company Status:
+            </th>
+            <td>
+              {% if email.exclude_contacted_companies %}
+                <b style="color: red">excluding</b> contacted companies
+              {% else %}
+                <b style="color: green">including</b> contacted companies
+              {% endif %}
+            </td>
+          </tr>
         </table>
       </div>
     </div>

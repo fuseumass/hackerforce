@@ -27,7 +27,8 @@ class Email(models.Model):
     contacted_selection = MultiSelectField(max_choices=4, choices=CONTACTED_CHOICES, blank=True)
     size_selection = MultiSelectField(choices=SIZE_CHOICES, max_choices=3, blank=True)
     primary_selection = MultiSelectField(choices=PRIMARY_CHOICES, max_choices=2, blank=True)
-
+    exclude_contacted_companies = models.BooleanField(default=False, help_text="Whether to exclude all contacts from companies who have already been contacted")
+    
     internal_title = models.CharField(max_length=200, help_text="Enter an internal title for this email")
 
     subject = models.CharField(max_length=200, help_text="Enter an email subject")
@@ -126,11 +127,14 @@ class Email(models.Model):
             
             if empty_contacted_field:
                 times_contacted = Q()
-
-            leads = Lead.objects.filter((Q(sponsorship__hackathon=self.hackathon) & \
-                Q(contact__company__in=self.to_companies.all()) & \
-                times_contacted & \
-                Q(contact__primary__in=primary)))
+            
+            if self.exclude_contacted_companies:
+                leads = Lead.objects.none()
+            else:
+                leads = Lead.objects.filter((Q(sponsorship__hackathon=self.hackathon) & \
+                    Q(contact__company__in=self.to_companies.all()) & \
+                    times_contacted & \
+                    Q(contact__primary__in=primary)))
             
             
             without_leads = Contact.objects.none()
@@ -173,11 +177,14 @@ class Email(models.Model):
             if not sizes:
                 sizes = dict(Company.SIZES).keys()
 
-            leads = Lead.objects.filter(Q(sponsorship__hackathon=self.hackathon) &
-                times_contacted & \
-                Q(contact__company__industries__in=self.to_industries.all()) & \
-                Q(contact__company__size__in=sizes) & \
-                Q(contact__primary__in=primary))
+            if self.exclude_contacted_companies:
+                leads = Lead.objects.none()
+            else:
+                leads = Lead.objects.filter(Q(sponsorship__hackathon=self.hackathon) &
+                    times_contacted & \
+                    Q(contact__company__industries__in=self.to_industries.all()) & \
+                    Q(contact__company__size__in=sizes) & \
+                    Q(contact__primary__in=primary))
             
             without_leads = Contact.objects.none()
             if contacted_zero_times or empty_contacted_field:
