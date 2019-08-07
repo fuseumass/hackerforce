@@ -115,7 +115,7 @@
         <div class="pagination">
             {% if sponsorships.has_previous %}
                 <div class="col text-left">
-                    <a href="?{% modify_get page_var sponsorships.previous_page_number %}#{{ name }}" class="button">
+                    <a href="{% modify_get page_var sponsorships.previous_page_number %}#{{ name }}" class="button">
                         <button type="button" class="btn btn-primary">&laquo; Previous</button>
                     </a>
                 </div>
