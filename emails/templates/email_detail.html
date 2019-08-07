@@ -52,6 +52,12 @@
             {{ email.email_type }}
           </p>
           <p>
+            <label><b>Matched companies:</b></label> {{ companies|length }}
+          </p>
+          <p>
+            <label><b>Matched contacts:</b></label> {{ contacts|length }}
+          </p>
+          <p>
             {% if email.attach_packet %}
             Sponsorship packet <b style="color: green">attached</b>
             {% else %}
