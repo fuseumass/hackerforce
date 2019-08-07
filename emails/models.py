@@ -7,7 +7,7 @@ from shared.forms.fields import MultiSelectField
 from companies.models import Company, Industry
 from profiles.models import User
 from contacts.models import Contact
-from hackathons.models import Hackathon, Lead
+from hackathons.models import Hackathon, Lead, Sponsorship
 
 class Email(models.Model):
     """Object representing an Email."""
@@ -142,6 +142,9 @@ class Email(models.Model):
                 without_leads = Contact.objects.exclude(leads__sponsorship__hackathon=self.hackathon).filter(
                     Q(company__in=self.to_companies.all()) & \
                     Q(primary__in=primary))
+                if self.exclude_contacted_companies:
+                    contacted_companies_pk = Sponsorship.objects.filter(hackathon=self.hackathon).values_list("company__pk", flat=True)
+                    without_leads = without_leads.exclude(company__in=contacted_companies_pk)
             
             return leads, without_leads
         elif self.email_type == self.FROM_INDUSTRY:
@@ -192,6 +195,10 @@ class Email(models.Model):
                     Q(company__industries__in=self.to_industries.all()) & \
                     Q(company__size__in=sizes) & \
                     Q(primary__in=primary))
+                
+                if self.exclude_contacted_companies:
+                    contacted_companies_pk = Sponsorship.objects.filter(hackathon=self.hackathon).values_list("company__pk", flat=True)
+                    without_leads = without_leads.exclude(company__in=contacted_companies_pk)
             
             return leads, without_leads
     
