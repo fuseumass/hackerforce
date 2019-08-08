@@ -19,7 +19,7 @@ def sponsorships_show(request, h_pk):
 
     def paginator_wrapper(name, obj):
         order_by = request.GET.get(f"{name}_order_by")
-        if order_by:
+        if order_by and type(obj) != list:
             obj = obj.order_by(order_by)
         paginator = Paginator(obj, 25)
         return paginator.get_page(request.GET.get(f"{name}_page"))
@@ -43,6 +43,7 @@ def sponsorships_show(request, h_pk):
     def company_wrapper(name):
         companies_for_hackathon = Company.objects.filter(sponsorships__hackathon__pk=h_pk).values_list("pk", flat=True)
         obj = Company.objects.exclude(pk__in=companies_for_hackathon)
+        obj = obj.annotate(contacts__count=Count('contacts'))
         q = get_q(name)
         q_rules = lambda q: Q(name__icontains=q) | Q(industries__name__iexact=q)
         if q:
@@ -51,8 +52,13 @@ def sponsorships_show(request, h_pk):
                 obj = obj.exclude(q_rules(q))
             else:
                 obj = obj.filter(q_rules(q))
+        order_by = request.GET.get(f"{name}_order_by")
+        if order_by:
+            obj = obj.order_by(order_by.replace("company__", ""))
+        else:
+            obj = obj.order_by("name")
         obj = obj.select_related()
-        return paginator_wrapper(name, fake_sponsorship(obj.order_by("name").distinct()))
+        return paginator_wrapper(name, fake_sponsorship(obj.distinct()))
 
     def fake_sponsorship(company):
         return [Sponsorship(pk=0, company=c, tier=None, contribution=0) for c in company]
