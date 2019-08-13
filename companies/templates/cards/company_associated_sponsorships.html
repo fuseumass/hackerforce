@@ -33,7 +33,7 @@
                         </td>
                         <td>${{sponsorship.contribution|intcomma}}</td>
                         <td class="text-nowrap">{{sponsorship.updated_at}}</td>
-                        <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' sponsorship.hackathon.pk sponsorship.pk %}"
+                        <td class="w-1"><a href="{% url 'hackathons:sponsorships:edit' sponsorship.hackathon.pk sponsorship.company.pk %}"
                                 class="icon"><i class="fe fe-edit"></i></a></td>
                     </tr>
                     {% empty %}
