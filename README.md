@@ -1,4 +1,4 @@
-# HackerForce
+# <img src="https://github.com/hackumass/hackerforce/raw/master/website/static/hackerforce-logo.png" height=32 alt="HackerForce Logo" /> HackerForce
 `HackerForce` is a tool created to help hackathon organizers manage their sponsorship leads and keep track of contacts, emails and more. Every year hackathon organizers need to contact hundreds of contacts who work at hundreds of companies to request sponsorship. The process for this usually involves various rounds of customized emails to various groupings of companies. This tool aims to create a user friendly interface to see the status of various companies, store the details of certain contacts and overall manage the information required for hackathon sponsorship.
 
 Many aspects of the application are similar to the CRM tool known as SalesForce and the project idea can be simply summed up as a subset of SalesForce features that is open-source and extensible for use by hackathon organizers or anyone else who desires an open-source, free CRM tool.
@@ -6,14 +6,15 @@ Many aspects of the application are similar to the CRM tool known as SalesForce 
 For set up see below. For more documentation, see the wiki.
 
 ## Docker Setup
-1. Ignore all of the environment setup below.
-2. Install Docker on your machine. For non-Linux hosts, open the Docker application as well.
-3. Build: `$ docker build -t hacker-force .`
-4. Runserver: ```$ docker run -v `pwd`:/app -p 8080:8080 -it hacker-force```
-5. Shell: ```$ docker exec -it `docker ps --format '{{.ID}}' -f 'ancestor=hacker-force'` /bin/bash```
-6. Log in as `admin` `admin`
+1. Install Docker on your machine. For non-Linux hosts, open the Docker application as well.
+2. Build: `$ docker build -t hacker-force .`
+3. Runserver: ```$ docker run -v `pwd`:/app -p 8080:8080 -it hacker-force```
+4. Shell: ```$ docker exec -it `docker ps --format '{{.ID}}' -f 'ancestor=hacker-force'` /bin/bash```
+5. Log in as `admin` `admin`. You should be able to navigate through the application and interact with dummy data!
 
-## Environment Setup
+## Custom Environment Setup
+
+These instructions shouldn't be necessary, as Docker is the preferred setup.
 
 ### Installing Python 3.6 with Pyenv and installing Pyenv
 ```sh
@@ -86,8 +87,5 @@ git push heroku master
 
 heroku run python manage.py migrate
 ```
-
-See also, a [ready-made application](https://github.com/heroku/python-getting-started), ready to deploy.
-
 
 ## License: MIT
