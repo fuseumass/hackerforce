@@ -57,20 +57,6 @@ SPONSORSHIP_PACKET_URL = str_environ("SPONSORSHIP_PACKET_URL")
 # redownloaded from SPONSORSHIP_PACKET_URL.
 SPONSORSHIP_PACKET_FILE = str_environ("SPONSORSHIP_PACKET_FILE")
 
-def get_packet_file_path():
-    return os.path.join(PROJECT_ROOT, 'static', SPONSORSHIP_PACKET_FILE) if SPONSORSHIP_PACKET_FILE else None
-
-def fetch_packet():
-    if SPONSORSHIP_PACKET_FILE and SPONSORSHIP_PACKET_URL:
-        if not os.path.exists(get_packet_file_path()):
-            print("Downloading the sponsorship packet...")
-            import requests
-            r = requests.get(SPONSORSHIP_PACKET_URL, stream=True)
-            if r.status_code == 200:
-                with open(get_packet_file_path(), 'wb') as f:
-                    for chunk in r.iter_content(1024):
-                        f.write(chunk)
-
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
 
@@ -302,5 +288,3 @@ try:
     from .settings_secret import *
 except ImportError:
     pass
-
-fetch_packet()

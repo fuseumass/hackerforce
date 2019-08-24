@@ -20,9 +20,11 @@ from django.contrib import admin
 from django.conf.urls import url
 from profiles import views as profile_views
 from dashboard import views as dashboard_views
+from shared import packet
 
 
 admin.autodiscover()
+packet.fetch_packet()
 
 from profiles.views import register, login, logout, trigger_500
 
