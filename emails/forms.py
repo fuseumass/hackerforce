@@ -115,6 +115,24 @@ class ComposeFromCompanyForm(forms.ModelForm):
 
     exclude_contacted_companies = forms.BooleanField(required=False)
 
+    subject = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Subject",
+            }
+        ),
+    )
+
+    body = forms.CharField(
+        required=True,
+        widget=CKEditorWidget(
+            config_name = 'default',
+            attrs={"placeholder": "Body"}
+        ),
+    )
+
     class Meta:
         model = Email
         fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'exclude_contacted_companies', 'subject', 'body', 'attach_packet',)
@@ -163,6 +181,24 @@ class ComposeFromIndustryForm(ComposeBaseForm):
     )
 
     exclude_contacted_companies = forms.BooleanField(required=False)
+
+    subject = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Subject",
+            }
+        ),
+    )
+
+    body = forms.CharField(
+        required=True,
+        widget=CKEditorWidget(
+            config_name = 'default',
+            attrs={"placeholder": "Body"}
+        ),
+    )
 
     class Meta:
         model = Email
