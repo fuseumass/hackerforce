@@ -21,5 +21,6 @@ django-extensions = "*"
 django-multiselectfield="*"
 django-debug-toolbar = "*"
 django-ses = "*"
+requests = "*"
 
 [dev-packages]

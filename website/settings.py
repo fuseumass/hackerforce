@@ -26,6 +26,11 @@ def bool_environ(name):
         return os.environ[name].lower() == 'true'
     return False
 
+def str_environ(name, default=None):
+    if name in os.environ:
+        return os.environ[name]
+    return default
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -39,12 +44,32 @@ DEBUG = bool_environ('DEBUG')
 # TODO: set to False when emails are working
 AUTO_ACTIVATE_ACCOUNTS = True
 
-FROM_EMAIL = "Alexa Hirt <alexahirt@hackumass.com>"
-BCC_EMAIL = "HackUMass <hackerforce-bcc@hackumass.com>"
-REPLY_TO_EMAIL = "HackUMass <sponsors@hackumass.com>"
+FROM_EMAIL = str_environ("FROM_EMAIL")
+BCC_EMAIL = str_environ("BCC_EMAIL")
+REPLY_TO_EMAIL = str_environ("REPLY_TO_EMAIL")
 
-# The name of the sponsorship packet, stored in the website/static folder
-SPONSORSHIP_PACKET_FILE = "HackUMass_Sponsorship_Packet_2019.pdf"
+# The URL for the sponsorship packet, to download if SPONSORSHIP_PACKET_FILE
+# does not exist in the filesystem.
+SPONSORSHIP_PACKET_URL = str_environ("SPONSORSHIP_PACKET_URL")
+
+# The local name of the sponsorship packet, to be stored in the website/static
+# folder. If this file exists, it will be used. Otherwise, it will be
+# redownloaded from SPONSORSHIP_PACKET_URL.
+SPONSORSHIP_PACKET_FILE = str_environ("SPONSORSHIP_PACKET_FILE")
+
+def get_packet_file_path():
+    return os.path.join(PROJECT_ROOT, 'static', SPONSORSHIP_PACKET_FILE) if SPONSORSHIP_PACKET_FILE else None
+
+def fetch_packet():
+    if SPONSORSHIP_PACKET_FILE and SPONSORSHIP_PACKET_URL:
+        if not os.path.exists(get_packet_file_path()):
+            print("Downloading the sponsorship packet...")
+            import requests
+            r = requests.get(SPONSORSHIP_PACKET_URL, stream=True)
+            if r.status_code == 200:
+                with open(get_packet_file_path(), 'wb') as f:
+                    for chunk in r.iter_content(1024):
+                        f.write(chunk)
 
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
@@ -272,3 +297,10 @@ LOGGING = {
         },
     },
 }
+
+try:
+    from .settings_secret import *
+except ImportError:
+    pass
+
+fetch_packet()
