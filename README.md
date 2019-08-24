@@ -1,4 +1,8 @@
 # <img src="https://github.com/hackumass/hackerforce/raw/master/website/static/hackerforce-logo.png" height=32 alt="HackerForce Logo" /> HackerForce
+
+<a href="https://www.youtube.com/watch?v=2RprLpSDjKU"><img src="https://i.imgur.com/NwLoofi.png" alt="HackerForce Demo Video" width=400></a>
+
+
 `HackerForce` is a tool created to help hackathon organizers manage their sponsorship leads and keep track of contacts, emails and more. Every year hackathon organizers need to contact hundreds of contacts who work at hundreds of companies to request sponsorship. The process for this usually involves various rounds of customized emails to various groupings of companies. This tool aims to create a user friendly interface to see the status of various companies, store the details of certain contacts and overall manage the information required for hackathon sponsorship.
 
 Many aspects of the application are similar to the CRM tool known as SalesForce and the project idea can be simply summed up as a subset of SalesForce features that is open-source and extensible for use by hackathon organizers or anyone else who desires an open-source, free CRM tool.
