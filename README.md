@@ -11,9 +11,9 @@ For set up see below. For more documentation, see the wiki.
 
 ## Docker Setup
 1. Install Docker on your machine. For non-Linux hosts, open the Docker application as well.
-2. Build: `$ docker build -t hacker-force .`
-3. Runserver: ```$ docker run -v `pwd`:/app -p 8080:8080 -it hacker-force```
-4. Shell: ```$ docker exec -it `docker ps --format '{{.ID}}' -f 'ancestor=hacker-force'` /bin/bash```
+2. Build: `$ ./docker-build.sh`
+3. Runserver: ```$ ./docker-run.sh```
+4. Shell: ```$ ./docker-shell.sh```
 5. Log in as `admin` `admin`. You should be able to navigate through the application and interact with dummy data!
 
 ## Custom Environment Setup
