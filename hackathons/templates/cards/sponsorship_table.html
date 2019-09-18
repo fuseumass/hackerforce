@@ -28,15 +28,22 @@
                 </a>
             </div>
         {% endif %}
-        {% if exclude_link_query %}
-            <div class="col text-right">
+
+        <div class="col text-right">
+            {% if exclude_link_query %}
                 {% with "not:"|add:exclude_link_query as inverted_q %}
                     <a class="button" href="{% modify_get inline_search_links inverted_q %}">
                         <button class="btn btn-sm btn-primary ml-auto">Exclude {{ exclude_link_query }}</button>
                     </a>
                 {% endwith %}
-            </div>
-        {% endif %}
+            {% endif %}
+
+            {% if link_summary %}
+                <a class="button" href="{% url 'hackathons:sponsorships:summary' h.pk %}?show={{ link_summary }}&{{ request.GET.urlencode }}">
+                    <button class="btn btn-sm btn-primary ml-auto">View Summary</button>
+                </a>
+            {% endif %}
+        </div>
     </div>
     <div class="table-responsive">
         <table class="table card-table table-vcenter text-nowrap">

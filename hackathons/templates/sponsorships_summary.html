@@ -1,0 +1,138 @@
+{% extends 'global/base.html' %}
+{% load modify_get %}
+
+{% block content %}
+<style>
+table.small-th th {
+    padding-left: 10px !important;
+    padding-right: 3px !important;
+    width: 0;
+    font-size: 12px;
+}
+</style>
+<div class="row">
+    <div class="col-md-6">
+        <a href="{% url 'hackathons:sponsorships:show' h.pk %}?{{ request.GET.urlencode }}#{{ request.GET.show }}" class="button">
+            <button class="btn btn-primary" type="button">View List</button>
+        </a>
+    {% if request.GET.urlencode|length > 1 %}
+        &nbsp; 
+        <a href="?"><button class="btn btn-primary" type="button">Reset Filters</button></a>
+        &nbsp; 
+        {% if request.GET.q and not "not:" in request.GET.q %}
+            {% with "not:"|add:request.GET.q as inverted_q %}
+                <a href="{% modify_get 'q' inverted_q %}"><button class="btn btn-primary" type="button">Invert Query</button></a>
+            {% endwith %}
+        {% endif %}
+    {% endif %}
+    &nbsp;
+    <span style="white-space: nowrap">Viewing <b>{{ show_type }}</b> sponsorships.</span>
+    </div>
+    <div class="col-md-4 ml-auto">
+        <form action="{% url 'hackathons:sponsorships:summary' h.pk %}" method="GET">
+            <div class="row gutters-xs">
+                <div class="col">
+                    <input class="form-control" placeholder="Search for..." type="text" name="q" value="{{ request.GET.q }}" />
+                </div>
+                <span class="col-auto">
+                    <button class="btn btn-secondary" type="button"><i class="fe fe-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="my-3 my-md-5">
+    <div class="row">
+        {% for s in sponsorships %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-status bg-blue"></div>
+                    <a href="{% url 'hackathons:sponsorships:view' h.pk s.company.pk %}" style="color: inherit">
+                        <div class="card-header">
+                            <div class="card-title">{{ s.company.name }}</div>
+                        </div>
+                    </a>
+                    {% if faked %}
+                        <a class="tag tag-red" style="position: absolute; top: 15px; right: 15px" href="{% url 'hackathons:sponsorships:new' h.pk %}?company={{ s.company.pk }}">
+                            Mark Contacted
+                        </a>
+                    {% else %}
+                        <a class="icon" href="{% url 'hackathons:sponsorships:edit' h.pk s.company.pk %}" style="position: absolute; top: 15px; right: 15px">
+                            <i class="fe fe-edit"></i>
+                        </a>
+                    {% endif %}
+                    <div class="table-responsive">
+                        <table class="table card-table table-striped table-vcenter condensed-table small-th">
+                            <tr>
+                                <th>Status:</th>
+                                <td>
+                                    {% if faked %}
+                                        {% with sponsorship=None %}
+                                            {% include "cards/sponsorship_status.html" %}
+                                        {% endwith %}
+                                    {% else %}
+                                        {% with sponsorship=s %}
+                                            {% include "cards/sponsorship_status.html" %}
+                                        {% endwith %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% if not faked %}
+                            <tr>
+                                <th>Tiers:</th>
+                                <td>
+                                {% if not s.tier %}
+                                    None    
+                                {% else %}
+                                    <a href="{% modify_get 'q' s.tier.name %}" class="tag tag-red" title="Filter by this tier">
+                                        {{ s.tier }}
+                                    </a>
+                                {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Perks:</th>
+                                <td>
+                                    {% for perk in s.perks.all %}
+                                        <a href="{% url 'hackathons:perks:view' h.pk perk.pk %}?show_summary=1" class="tag tag-green">{{ perk.name }}</a>
+                                    {% empty %}
+                                        None
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Contrib:</th>
+                                <td>${{ s.contribution|intcomma }}</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <th>Industries:</th>
+                                <td>
+                                {% for industry in s.company.industries.all %}
+                                <a href="{% modify_get 'q' industry.name %}" class="tag tag-{{ industry.color }}" title="Filter by this industry">
+                                    {{ industry.name }}
+                                </a>
+                                {% empty %}
+                                    None
+                                {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                        {% if s.notes %}
+                            <div class="card-footer">
+                                {{ s.notes|safe }}
+                            </div>
+                        {% endif %}
+                        {% if s.company.notes %}
+                            <div class="card-footer">
+                                {{ s.company.notes|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -12,6 +12,22 @@ from ..forms import HackathonForm, SponsorshipForm, SponsorshipAssignOrganizersF
 
 @login_required
 def sponsorships_show(request, h_pk):
+    return render(request, "sponsorships_show.html", sponsorships_show_context(request, h_pk))
+
+@login_required
+def sponsorships_summary(request, h_pk):
+    show_ctx = sponsorships_show_context(request, h_pk)
+    s = request.GET.get("show")
+    if s in show_ctx:
+        sponsorships = show_ctx[s]
+        show_type = s.replace('_', ' ')
+    else:
+        sponsorships = show_ctx["confirmed"]
+        show_type = "confirmed"
+
+    return render(request, "sponsorships_summary.html", {"sponsorships": sponsorships, "show_type": show_type, "faked": show_type == "uncontacted"})
+
+def sponsorships_show_context(request, h_pk):
     hackathon = get_object_or_404(Hackathon, pk=h_pk)
 
     def state_filter(states):
@@ -68,12 +84,12 @@ def sponsorships_show(request, h_pk):
     dead = sponsorship_wrapper("dead", [Sponsorship.GHOSTED, Sponsorship.DENIED])
     uncontacted = company_wrapper("uncontacted")
 
-    return render(request, "sponsorships_show.html", {
+    return {
         "confirmed": confirmed,
         "in_progress": in_progress,
         "dead": dead,
         "uncontacted": uncontacted,
-    })
+    }
 
 @login_required
 def sponsorship_new(request, h_pk):
