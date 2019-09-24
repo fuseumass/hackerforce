@@ -114,6 +114,7 @@ class ComposeFromCompanyForm(forms.ModelForm):
     )
 
     exclude_contacted_companies = forms.BooleanField(required=False)
+    exclude_responded_companies = forms.BooleanField(required=False)
 
     subject = forms.CharField(
         required=True,
@@ -135,7 +136,7 @@ class ComposeFromCompanyForm(forms.ModelForm):
 
     class Meta:
         model = Email
-        fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'exclude_contacted_companies', 'subject', 'body', 'attach_packet',)
+        fields = ('internal_title', 'to_companies', 'primary_selection', 'contacted_selection', 'exclude_contacted_companies', 'exclude_responded_companies', 'subject', 'body', 'attach_packet',)
 
 class ComposeFromIndustryForm(ComposeBaseForm):
     to_industries = forms.ModelMultipleChoiceField(
@@ -181,6 +182,7 @@ class ComposeFromIndustryForm(ComposeBaseForm):
     )
 
     exclude_contacted_companies = forms.BooleanField(required=False)
+    exclude_responded_companies = forms.BooleanField(required=False)
 
     subject = forms.CharField(
         required=True,
@@ -202,7 +204,7 @@ class ComposeFromIndustryForm(ComposeBaseForm):
 
     class Meta:
         model = Email
-        fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'exclude_contacted_companies', 'subject', 'body', 'attach_packet',)
+        fields = ('internal_title', 'to_industries', 'size_selection', 'primary_selection', 'contacted_selection', 'exclude_contacted_companies', 'exclude_responded_companies', 'subject', 'body', 'attach_packet',)
 
 class EmailChangeTypeForm(forms.Form):
     TYPE_CHOICES = ((Email.FROM_CONTACTS, "From contacts"), (Email.FROM_COMPANY, "From company"), (Email.FROM_INDUSTRY, "From industry"))
