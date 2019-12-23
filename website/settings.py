@@ -55,7 +55,7 @@ SPONSORSHIP_PACKET_URL = str_environ("SPONSORSHIP_PACKET_URL")
 # The local name of the sponsorship packet, to be stored in the website/static
 # folder. If this file exists, it will be used. Otherwise, it will be
 # redownloaded from SPONSORSHIP_PACKET_URL.
-SPONSORSHIP_PACKET_FILE = str_environ("SPONSORSHIP_PACKET_FILE")
+SPONSORSHIP_PACKET_FILE = str_environ("SPONSORSHIP_PACKET_FILE", "sponsorship.pdf")
 
 if not PRODUCTION and 'DEBUG' not in os.environ:
     DEBUG = True
