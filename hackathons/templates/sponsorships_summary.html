@@ -55,7 +55,7 @@ table.small-th th {
                     </a>
                     {% if faked %}
                         <a class="tag tag-red" style="position: absolute; top: 15px; right: 15px" href="{% url 'hackathons:sponsorships:new' h.pk %}?company={{ s.company.pk }}">
-                            Mark Contacted
+                            Start Tracking
                         </a>
                     {% else %}
                         <a class="icon" href="{% url 'hackathons:sponsorships:edit' h.pk s.company.pk %}" style="position: absolute; top: 15px; right: 15px">
