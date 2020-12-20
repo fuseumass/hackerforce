@@ -15,6 +15,8 @@ from emails.sending import send_email_now
 from hackathons.models import Hackathon, Sponsorship, Lead
 from hackathons.views.sponsorships import combine_lead_and_contacts
 
+from shared import packet
+
 from .models import Email
 from .forms import ComposeFromContactsForm, ComposeFromCompanyForm, ComposeFromIndustryForm, EmailChangeTypeForm
 
@@ -159,7 +161,7 @@ def send_message(request, h_pk, pk):
             message = email.render_body(contact)
             packet_file = None
             if email.attach_packet:
-                packet_file = os.path.join(settings.PROJECT_ROOT, 'static', settings.SPONSORSHIP_PACKET_FILE)
+                packet_file = packet.get_packet_file_path()
 
             print(f"SENDING: {email.subject} TO: {contact} ({contact.email}) ATTACHMENT: {packet_file}")
             print(send_email_now(email.subject, message, contact.email, packet_file))
