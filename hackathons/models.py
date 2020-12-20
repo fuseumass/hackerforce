@@ -61,6 +61,7 @@ class Perk(models.Model):
 
 
 class Sponsorship(models.Model):
+    ASSIGNED = "assigned"
     CONTACTED = "contacted"
     RESPONDED = "responded"
     CONFIRMED = "confirmed"
@@ -68,6 +69,7 @@ class Sponsorship(models.Model):
     GHOSTED = "ghosted"
     PAID = "paid"
     STATUSES = (
+        (ASSIGNED, "Assigned"),
         (CONTACTED, "Contacted"),
         (RESPONDED, "Responded"),
         (CONFIRMED, "Confirmed"),
