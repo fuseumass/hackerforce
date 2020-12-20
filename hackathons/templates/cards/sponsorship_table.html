@@ -104,7 +104,7 @@
                     <td>
                     {% if faked %}
                         <a class="tag tag-red float-right" href="{% url 'hackathons:sponsorships:new' h.pk %}?company={{ s.company.pk }}">
-                            Mark Contacted
+                            Start Tracking
                         </a>
                     {% else %}
                         <a class="icon" href="{% url 'hackathons:sponsorships:edit' h.pk s.company.pk %}">

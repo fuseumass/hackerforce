@@ -80,7 +80,7 @@ def sponsorships_show_context(request, h_pk):
         return [Sponsorship(pk=0, company=c, tier=None, contribution=0) for c in company]
     
     confirmed = sponsorship_wrapper("confirmed", [Sponsorship.CONFIRMED, Sponsorship.PAID])
-    in_progress = sponsorship_wrapper("in_progress", [Sponsorship.CONTACTED, Sponsorship.RESPONDED])
+    in_progress = sponsorship_wrapper("in_progress", [Sponsorship.ASSIGNED, Sponsorship.CONTACTED, Sponsorship.RESPONDED])
     dead = sponsorship_wrapper("dead", [Sponsorship.GHOSTED, Sponsorship.DENIED])
     uncontacted = company_wrapper("uncontacted")
 

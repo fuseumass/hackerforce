@@ -100,7 +100,7 @@ def gen_sponsorship_chart(sponsorships, hackathon):
     for sp in sponsorships:
         if sp.status in [Sponsorship.CONFIRMED, Sponsorship.PAID]:
             confirmed_count += 1
-        elif sp.status in [Sponsorship.CONTACTED, Sponsorship.RESPONDED]:
+        elif sp.status in [Sponsorship.ASSIGNED, Sponsorship.CONTACTED, Sponsorship.RESPONDED]:
             progress_count += 1
         elif sp.status in [Sponsorship.DENIED, Sponsorship.GHOSTED]:
             dead_count += 1

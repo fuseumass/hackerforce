@@ -19,7 +19,7 @@
         {% else %}
             <div class="col text-right h2">
                 <a class="button" href="{% url 'hackathons:sponsorships:new' h.pk %}?company={{ company.pk }}">
-                    <button class="btn btn-primary ml-auto">Mark Contacted</button>
+                    <button class="btn btn-primary ml-auto">Start Tracking</button>
                 </a>
             </div>
         {% endif %}
@@ -34,7 +34,7 @@
                 <div class="col-sm-8 text-center" style="font-size: 14px">
                     <i class="fe fe-alert-triangle" style="color: red"></i>
                     <b style="font-size: 16px; color: red">This company has not been contacted for the current hackathon.</b><br />
-                    Press "Mark Contacted" to begin tracking this company as a potential sponsor.
+                    Press "Start Tracking" to begin tracking this company as a potential sponsor.
                 </div>
             {% elif no_contacted_employees %}
                 <div class="col-sm-8 text-center" style="font-size: 14px">
